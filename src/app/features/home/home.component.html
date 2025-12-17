@@ -1,0 +1,280 @@
+<div class="home">
+  
+  <!-- Hero Section - დროებით დამალული, მერე სხვა გვერდისთვის გამოვიყენებთ -->
+  <!-- <section class="hero">
+    <div class="container">
+      <div class="hero-content fade-in">
+        <div class="hero-text">
+          <h1 class="hero-title">
+            აღმოაჩინე შენი 
+            <span class="text-gradient">კოსმოსური ბედისწერა</span>
+          </h1>
+          <p class="hero-description">
+            საქართველოს უდიდესი ასტროლოგიური პლატფორმა - 
+            ჰოროსკოპები, ზოდიაქოს ნიშნები, მთვარის ფაზები და ბევრად მეტი
+          </p>
+          <div class="hero-buttons">
+            <button class="btn-primary" routerLink="/zodiac-signs">
+              <span>იპოვე შენი ნიშანი</span>
+              <span class="btn-arrow">→</span>
+            </button>
+            <button class="btn-secondary" routerLink="/daily-horoscope">
+              <span>დღიური ჰოროსკოპი</span>
+            </button>
+          </div>
+        </div>
+        
+        <div class="hero-visual">
+          <div class="celestial-circle float">
+            <div class="orbit orbit-1">
+              <div class="planet planet-1">🌟</div>
+            </div>
+            <div class="orbit orbit-2">
+              <div class="planet planet-2">✨</div>
+            </div>
+            <div class="orbit orbit-3">
+              <div class="planet planet-3">💫</div>
+            </div>
+            <div class="center-symbol">🔮</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="stars-background">
+      <div class="star" *ngFor="let star of stars" 
+           [style.left.%]="star.left" 
+           [style.top.%]="star.top"
+           [style.width.px]="star.size"
+           [style.height.px]="star.size"
+           [style.animation-delay]="star.delay + 's'"
+           [style.animation-duration]="star.duration + 's'">
+      </div>
+    </div>
+  </section> -->
+
+  <!-- დღიური ჰოროსკოპი - მთავარი სექცია -->
+  <section class="main-horoscope-section">
+    <div class="stars-background">
+      <div class="star" *ngFor="let star of stars" 
+           [style.left.%]="star.left" 
+           [style.top.%]="star.top"
+           [style.width.px]="star.size"
+           [style.height.px]="star.size"
+           [style.animation-delay]="star.delay + 's'"
+           [style.animation-duration]="star.duration + 's'">
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="main-header">
+        <div class="header-icon">
+          <i class="fa-solid fa-sun"></i>
+        </div>
+        <h1 class="main-title">დღის ჰოროსკოპი</h1>
+        <p class="main-subtitle">{{ getCurrentDate() }}</p>
+      </div>
+
+      <div class="horoscope-grid">
+        <a *ngFor="let sign of zodiacSigns; let i = index" 
+           [routerLink]="['/daily-horoscope', sign.id]"
+           class="horoscope-item"
+           [style.animation-delay]="i * 0.05 + 's'">
+          <div class="item-content">
+            <div class="item-icon">
+              <i class="zodiac-icon" [class]="getZodiacIconClass(sign.id)"></i>
+            </div>
+            <h3 class="item-name">{{ sign.name }}</h3>
+            <p class="item-dates">{{ sign.dateRange }}</p>
+            <span class="view-details">
+              <i class="fas fa-arrow-right"></i>
+              დეტალურად
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- მთვარის ფაზები Section -->
+  <section class="section moon-phases-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">
+          <i class="fa-solid fa-moon"></i>
+          მთვარის ფაზები
+        </h2>
+        <p class="section-description">
+          გაიგე მთვარის მიმდინარე ფაზა და მისი გავლენა შენს ცხოვრებაზე
+        </p>
+      </div>
+
+      <div class="moon-phases-grid">
+        <a routerLink="/moon-phases" class="moon-phase-card current">
+          <div class="phase-icon">🌕</div>
+          <h3 class="phase-name">სავსე მთვარე</h3>
+          <p class="phase-date">იანვარი 3, 2026</p>
+          <p class="phase-sign">კირჩხიბი ♋</p>
+          <span class="current-badge">მიმდინარე</span>
+        </a>
+
+        <a routerLink="/moon-phases" class="moon-phase-card">
+          <div class="phase-icon">🌗</div>
+          <h3 class="phase-name">კლებადი მთვარე</h3>
+          <p class="phase-date">იანვარი 10</p>
+          <p class="phase-sign">სასწორი ♎</p>
+        </a>
+
+        <a routerLink="/moon-phases" class="moon-phase-card">
+          <div class="phase-icon">🌑</div>
+          <h3 class="phase-name">ახალი მთვარე</h3>
+          <p class="phase-date">იანვარი 18</p>
+          <p class="phase-sign">თხის რქა ♑</p>
+        </a>
+
+        <a routerLink="/moon-phases" class="moon-phase-card">
+          <div class="phase-icon">🌓</div>
+          <h3 class="phase-name">მზარდი მთვარე</h3>
+          <p class="phase-date">იანვარი 26</p>
+          <p class="phase-sign">კურო ♉</p>
+        </a>
+      </div>
+
+      <div class="section-cta">
+        <a routerLink="/moon-phases" class="btn-primary">
+          <i class="fa-solid fa-calendar-days"></i>
+          <span>სრული მთვარის კალენდარი</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Zodiac Signs Section -->
+  <section class="section zodiac-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">ზოდიაქოს 12 ნიშანი</h2>
+        <p class="section-description">
+          აირჩიე შენი ნიშანი და გაიგე შენი ასტროლოგიური მახასიათებლები
+        </p>
+      </div>
+
+      <div class="zodiac-grid">
+        <a 
+          *ngFor="let sign of zodiacSigns; let i = index" 
+          [routerLink]="['/zodiac', sign.id]"
+          class="zodiac-card"
+          [class.element-fire]="sign.element === 'fire'"
+          [class.element-earth]="sign.element === 'earth'"
+          [class.element-air]="sign.element === 'air'"
+          [class.element-water]="sign.element === 'water'"
+          [style.animation-delay]="i * 0.05 + 's'">
+          
+          <div class="card-icon-wrapper">
+            <i class="zodiac-fa-icon" [class]="getZodiacIconClass(sign.id)"></i>
+          </div>
+          <div class="zodiac-symbol">{{ sign.symbol }}</div>
+          <h3 class="zodiac-name">{{ sign.name }}</h3>
+          <p class="zodiac-dates">{{ sign.dateRange }}</p>
+          <div class="zodiac-element">
+            <i [class]="getElementIcon(sign.element)"></i>
+            <span class="element-text">
+              {{ sign.element === 'fire' ? 'ცეცხლი' : 
+                 sign.element === 'earth' ? 'მიწა' :
+                 sign.element === 'air' ? 'ჰაერი' : 'წყალი' }}
+            </span>
+          </div>
+          <div class="view-link">
+            <i class="fas fa-arrow-right"></i>
+            <span>დეტალურად</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="section features-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">რას გთავაზობთ</h2>
+        <p class="section-description">
+          სრული ასტროლოგიური სერვისები ყველასთვის
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div 
+          *ngFor="let feature of features; let i = index" 
+          class="feature-card"
+          [class]="feature.gradient"
+          [style.animation-delay]="i * 0.1 + 's'">
+          
+          <div class="feature-icon">{{ feature.icon }}</div>
+          <h3 class="feature-title">{{ feature.title }}</h3>
+          <p class="feature-description">{{ feature.description }}</p>
+          <a [routerLink]="feature.link" class="feature-link">
+            გაიგე მეტი →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Moon Phases Section -->
+  <section class="section moon-section">
+    <div class="container">
+      <div class="moon-content">
+        <div class="moon-header">
+          <h2 class="section-title">მთვარის ფაზები</h2>
+          <p class="section-description">
+            მოიმარჯვეთ მთვარის ენერგია თქვენი ცხოვრებისთვის
+          </p>
+        </div>
+
+        <div class="moon-phases-grid">
+          <div 
+            *ngFor="let phase of moonPhases; let i = index" 
+            class="moon-phase-card"
+            [style.animation-delay]="i * 0.15 + 's'">
+            <div class="moon-icon">{{ phase.icon }}</div>
+            <h3 class="moon-name">{{ phase.name }}</h3>
+            <p class="moon-date">{{ phase.date }}</p>
+          </div>
+        </div>
+
+        <div class="moon-cta">
+          <button class="btn-primary" routerLink="/moon-phases">
+            <span>სრული კალენდარი</span>
+            <span>🌙</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section cta-section">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-content">
+          <h2 class="cta-title">მზად ხარ შენი ბედისწერის შესაცნობად?</h2>
+          <p class="cta-description">
+            შექმენი შენი პირადი ნატალური რუკა და გაიგე, რას გიმზადებს ვარსკვლავები
+          </p>
+          <button class="btn-primary btn-large" routerLink="/natal-chart">
+            <span>დაიწყე ახლავე</span>
+            <span class="sparkle">✨</span>
+          </button>
+        </div>
+        <div class="cta-visual">
+          <div class="mystical-orb float">
+            <div class="orb-glow"></div>
+            <div class="orb-symbol">🌟</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

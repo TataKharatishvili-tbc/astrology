@@ -1,0 +1,140 @@
+<div class="zodiac-detail" *ngIf="sign">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="constellation-pattern"></div>
+    </div>
+    
+    <div class="container">
+      <a routerLink="/" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        უკან
+      </a>
+
+      <div class="hero-content">
+        <div class="sign-icon-large">
+          <i [class]="getZodiacIconClass(sign.id)"></i>
+        </div>
+        
+        <h1 class="sign-name">{{ sign.name }}</h1>
+        <p class="sign-symbol">{{ sign.symbol }}</p>
+        <p class="sign-dates">{{ sign.dateRange }}</p>
+        
+        <div class="element-badge" [style.background]="'linear-gradient(135deg, ' + getElementColor(sign.element) + ', rgba(139, 92, 246, 0.6))'">
+          <i [class]="getElementIcon(sign.element)"></i>
+          <span>{{ sign.element }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Details Section -->
+  <div class="details-section">
+    <div class="container">
+      <!-- Characteristics -->
+      <div class="detail-card">
+        <div class="card-header">
+          <i class="fas fa-star"></i>
+          <h2>დამახასიათებელი თვისებები</h2>
+        </div>
+        <div class="traits-section">
+          <div class="positive-traits">
+            <h3 class="traits-subtitle">
+              <i class="fas fa-plus-circle"></i>
+              დადებითი
+            </h3>
+            <div class="traits-grid">
+              <div class="trait-item positive" *ngFor="let trait of sign.traits.positive">
+                <i class="fas fa-check-circle"></i>
+                <span>{{ trait }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="negative-traits">
+            <h3 class="traits-subtitle">
+              <i class="fas fa-minus-circle"></i>
+              უარყოფითი
+            </h3>
+            <div class="traits-grid">
+              <div class="trait-item negative" *ngFor="let trait of sign.traits.negative">
+                <i class="fas fa-times-circle"></i>
+                <span>{{ trait }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Compatibility -->
+      <div class="detail-card">
+        <div class="card-header">
+          <i class="fas fa-heart"></i>
+          <h2>თავსებადობა</h2>
+        </div>
+        <div class="compatibility-section">
+          <div class="comp-category">
+            <h3 class="comp-subtitle">
+              <i class="fas fa-heart"></i>
+              საუკეთესო
+            </h3>
+            <div class="compatibility-grid">
+              <div class="compatibility-item best" *ngFor="let comp of sign.compatibility.best">
+                <div class="comp-icon">{{ comp }}</div>
+                <span class="comp-name">{{ getSignName(comp) }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="comp-category">
+            <h3 class="comp-subtitle">
+              <i class="fas fa-handshake"></i>
+              კარგი
+            </h3>
+            <div class="compatibility-grid">
+              <div class="compatibility-item good" *ngFor="let comp of sign.compatibility.good">
+                <div class="comp-icon">{{ comp }}</div>
+                <span class="comp-name">{{ getSignName(comp) }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="comp-category">
+            <h3 class="comp-subtitle">
+              <i class="fas fa-exclamation-triangle"></i>
+              რთული
+            </h3>
+            <div class="compatibility-grid">
+              <div class="compatibility-item challenging" *ngFor="let comp of sign.compatibility.challenging">
+                <div class="comp-icon">{{ comp }}</div>
+                <span class="comp-name">{{ getSignName(comp) }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Other Zodiac Signs -->
+      <div class="other-signs-section">
+        <h2 class="section-title">
+          <i class="fas fa-th"></i>
+          სხვა ზოდიაქოს ნიშნები
+        </h2>
+        <div class="signs-grid">
+          <a *ngFor="let otherSign of allSigns" 
+             [routerLink]="['/zodiac', otherSign.id]"
+             class="sign-card"
+             [class.active]="otherSign.id === sign.id">
+            <div class="sign-card-icon">
+              <i [class]="getZodiacIconClass(otherSign.id)"></i>
+            </div>
+            <h3 class="sign-card-name">{{ otherSign.name }}</h3>
+            <p class="sign-card-dates">{{ otherSign.dateRange }}</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!sign" class="loading">
+  <i class="fas fa-spinner fa-spin"></i>
+  იტვირთება...
+</div>

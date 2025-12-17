@@ -1,0 +1,580 @@
+@import 'styles/variables';
+@import 'styles/mixins';
+
+.zodiac-detail {
+  min-height: 100vh;
+  background: linear-gradient(
+    180deg,
+    $bg-primary 0%,
+    darken($bg-primary, 2%) 100%
+  );
+}
+
+// ===================================
+// Hero Section
+// ===================================
+.hero-section {
+  position: relative;
+  min-height: 60vh;
+  @include flex-center;
+  overflow: hidden;
+  padding: $spacing-3xl $spacing-lg;
+  margin-top: 60px;
+
+  @include mobile {
+    min-height: 50vh;
+    padding: $spacing-2xl $spacing-md;
+  }
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at center,
+    rgba($primary-violet, 0.15) 0%,
+    transparent 70%
+  );
+  z-index: 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      45deg,
+      rgba($accent-gold, 0.05) 0%,
+      transparent 50%,
+      rgba($primary-violet, 0.05) 100%
+    );
+  }
+}
+
+.constellation-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(2px 2px at 20% 30%, rgba($text-secondary, 0.3), transparent),
+                    radial-gradient(2px 2px at 60% 70%, rgba($text-secondary, 0.3), transparent),
+                    radial-gradient(1px 1px at 50% 50%, rgba($text-secondary, 0.2), transparent),
+                    radial-gradient(1px 1px at 80% 10%, rgba($text-secondary, 0.2), transparent),
+                    radial-gradient(2px 2px at 90% 60%, rgba($text-secondary, 0.3), transparent),
+                    radial-gradient(1px 1px at 33% 80%, rgba($text-secondary, 0.2), transparent);
+  background-size: 300px 300px;
+  animation: drift 60s linear infinite;
+  opacity: 0.4;
+}
+
+@keyframes drift {
+  from { background-position: 0 0; }
+  to { background-position: 300px 300px; }
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-lg;
+  background: rgba($bg-card, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba($primary-violet, 0.2);
+  border-radius: $radius-full;
+  color: $text-secondary;
+  text-decoration: none;
+  font-size: $font-sm;
+  font-weight: $font-medium;
+  @include smooth-transition;
+  margin-bottom: $spacing-2xl;
+
+  &:hover {
+    background: rgba($bg-card, 0.6);
+    border-color: rgba($accent-gold, 0.4);
+    color: $accent-gold;
+    transform: translateX(-5px);
+  }
+}
+
+.hero-content {
+  text-align: center;
+  @include flex-column-center;
+  gap: $spacing-lg;
+}
+
+.sign-icon-large {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    rgba($primary-violet, 0.3),
+    rgba($accent-gold, 0.2)
+  );
+  @include flex-center;
+  border: 2px solid rgba($primary-violet, 0.3);
+  box-shadow: 
+    0 0 40px rgba($primary-violet, 0.4),
+    inset 0 0 30px rgba($accent-gold, 0.1);
+  animation: pulse-icon 3s ease-in-out infinite;
+
+  i {
+    font-size: 70px;
+    background: $gradient-cosmic;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 20px rgba($accent-gold, 0.4));
+  }
+
+  @include mobile {
+    width: 120px;
+    height: 120px;
+
+    i {
+      font-size: 55px;
+    }
+  }
+}
+
+@keyframes pulse-icon {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 
+      0 0 40px rgba($primary-violet, 0.4),
+      inset 0 0 30px rgba($accent-gold, 0.1);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 
+      0 0 60px rgba($primary-violet, 0.6),
+      inset 0 0 40px rgba($accent-gold, 0.2);
+  }
+}
+
+.sign-name {
+  font-size: $font-5xl;
+  font-weight: $font-bold;
+  background: $gradient-cosmic;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  line-height: 1.2;
+
+  @include mobile {
+    font-size: $font-3xl;
+  }
+}
+
+.sign-symbol {
+  font-size: $font-4xl;
+  color: $text-secondary;
+  margin: 0;
+  filter: drop-shadow(0 0 10px rgba($text-secondary, 0.3));
+
+  @include mobile {
+    font-size: $font-3xl;
+  }
+}
+
+.sign-dates {
+  font-size: $font-xl;
+  color: $text-secondary;
+  margin: 0;
+  opacity: 0.8;
+}
+
+.element-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-md $spacing-xl;
+  border-radius: $radius-full;
+  font-size: $font-lg;
+  font-weight: $font-bold;
+  color: $text-primary;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+  i {
+    font-size: $font-xl;
+  }
+}
+
+// ===================================
+// Details Section
+// ===================================
+.details-section {
+  position: relative;
+  padding: $spacing-3xl $spacing-lg;
+  z-index: 1;
+
+  @include mobile {
+    padding: $spacing-2xl $spacing-md;
+  }
+}
+
+.detail-card {
+  background: rgba($bg-card, 0.3);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba($primary-violet, 0.2);
+  border-radius: $radius-2xl;
+  padding: $spacing-2xl;
+  margin-bottom: $spacing-2xl;
+  @include smooth-transition;
+
+  &:hover {
+    border-color: rgba($primary-violet, 0.4);
+    box-shadow: 0 10px 40px rgba($primary-violet, 0.2);
+  }
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-lg;
+  border-bottom: 1px solid rgba($primary-violet, 0.15);
+
+  i {
+    font-size: $font-2xl;
+    color: $accent-gold;
+  }
+
+  h2 {
+    font-size: $font-2xl;
+    font-weight: $font-bold;
+    color: $text-primary;
+    margin: 0;
+  }
+}
+
+.traits-section {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2xl;
+}
+
+.positive-traits,
+.negative-traits {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.traits-subtitle {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  font-size: $font-lg;
+  font-weight: $font-semibold;
+  color: $text-primary;
+  margin: 0 0 $spacing-md 0;
+
+  i {
+    font-size: $font-base;
+  }
+}
+
+.positive-traits .traits-subtitle i {
+  color: #10b981;
+}
+
+.negative-traits .traits-subtitle i {
+  color: #f59e0b;
+}
+
+.traits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $spacing-md;
+}
+
+.trait-item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-md;
+  background: rgba($primary-violet, 0.05);
+  border-radius: $radius-lg;
+  border: 1px solid rgba($primary-violet, 0.1);
+  @include smooth-transition;
+
+  &.positive {
+    background: rgba(#10b981, 0.05);
+    border-color: rgba(#10b981, 0.2);
+
+    i {
+      color: #10b981;
+    }
+
+    &:hover {
+      background: rgba(#10b981, 0.1);
+      border-color: rgba(#10b981, 0.4);
+    }
+  }
+
+  &.negative {
+    background: rgba(#f59e0b, 0.05);
+    border-color: rgba(#f59e0b, 0.2);
+
+    i {
+      color: #f59e0b;
+    }
+
+    &:hover {
+      background: rgba(#f59e0b, 0.1);
+      border-color: rgba(#f59e0b, 0.4);
+    }
+  }
+
+  &:hover {
+    transform: translateX(5px);
+  }
+
+  i {
+    font-size: $font-lg;
+  }
+
+  span {
+    color: $text-secondary;
+    font-size: $font-base;
+  }
+}
+
+.compatibility-section {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2xl;
+}
+
+.comp-category {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.comp-subtitle {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  font-size: $font-lg;
+  font-weight: $font-semibold;
+  color: $text-primary;
+  margin: 0 0 $spacing-md 0;
+
+  i {
+    font-size: $font-base;
+  }
+}
+
+.comp-category:nth-child(1) .comp-subtitle i {
+  color: #ef4444;
+}
+
+.comp-category:nth-child(2) .comp-subtitle i {
+  color: #10b981;
+}
+
+.comp-category:nth-child(3) .comp-subtitle i {
+  color: #f59e0b;
+}
+
+.compatibility-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: $spacing-lg;
+}
+
+.compatibility-item {
+  @include flex-column-center;
+  gap: $spacing-sm;
+  padding: $spacing-lg;
+  background: rgba($bg-card, 0.4);
+  border-radius: $radius-xl;
+  border: 1px solid rgba($primary-violet, 0.15);
+  @include smooth-transition;
+
+  &.best {
+    border-color: rgba(#ef4444, 0.3);
+
+    &:hover {
+      background: rgba(#ef4444, 0.1);
+      border-color: rgba(#ef4444, 0.5);
+      box-shadow: 0 10px 30px rgba(#ef4444, 0.2);
+    }
+  }
+
+  &.good {
+    border-color: rgba(#10b981, 0.3);
+
+    &:hover {
+      background: rgba(#10b981, 0.1);
+      border-color: rgba(#10b981, 0.5);
+      box-shadow: 0 10px 30px rgba(#10b981, 0.2);
+    }
+  }
+
+  &.challenging {
+    border-color: rgba(#f59e0b, 0.3);
+
+    &:hover {
+      background: rgba(#f59e0b, 0.1);
+      border-color: rgba(#f59e0b, 0.5);
+      box-shadow: 0 10px 30px rgba(#f59e0b, 0.2);
+    }
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.comp-icon {
+  font-size: $font-4xl;
+  filter: drop-shadow(0 0 10px rgba($primary-violet, 0.4));
+}
+
+.comp-name {
+  font-size: $font-sm;
+  color: $text-secondary;
+  font-weight: $font-medium;
+}
+
+// ===================================
+// Other Signs Section
+// ===================================
+.other-signs-section {
+  margin-top: $spacing-3xl;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  font-size: $font-2xl;
+  font-weight: $font-bold;
+  color: $text-primary;
+  margin-bottom: $spacing-2xl;
+
+  i {
+    color: $primary-violet;
+  }
+}
+
+.signs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: $spacing-lg;
+
+  @include mobile {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-md;
+  }
+
+  @include tablet {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include desktop {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.sign-card {
+  @include flex-column-center;
+  gap: $spacing-sm;
+  padding: $spacing-xl;
+  background: rgba($bg-card, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba($primary-violet, 0.15);
+  border-radius: $radius-xl;
+  text-decoration: none;
+  @include smooth-transition;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba($bg-card, 0.4);
+    border-color: rgba($accent-gold, 0.4);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba($primary-violet, 0.2);
+
+    .sign-card-icon i {
+      color: $accent-gold;
+      transform: scale(1.2);
+    }
+  }
+
+  &.active {
+    background: rgba($accent-gold, 0.1);
+    border-color: rgba($accent-gold, 0.5);
+    box-shadow: 0 0 30px rgba($accent-gold, 0.2);
+
+    .sign-card-name {
+      color: $accent-gold;
+    }
+  }
+}
+
+.sign-card-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba($primary-violet, 0.1);
+  @include flex-center;
+
+  i {
+    font-size: $font-2xl;
+    color: $primary-violet;
+    @include smooth-transition;
+  }
+}
+
+.sign-card-name {
+  font-size: $font-base;
+  font-weight: $font-bold;
+  color: $text-primary;
+  margin: 0;
+}
+
+.sign-card-dates {
+  font-size: $font-xs;
+  color: $text-secondary;
+  margin: 0;
+  opacity: 0.7;
+}
+
+// ===================================
+// Loading
+// ===================================
+.loading {
+  min-height: 100vh;
+  @include flex-center;
+  flex-direction: column;
+  gap: $spacing-lg;
+  font-size: $font-xl;
+  color: $text-secondary;
+
+  i {
+    font-size: $font-4xl;
+    color: $primary-violet;
+  }
+}
