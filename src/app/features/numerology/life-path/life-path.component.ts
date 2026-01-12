@@ -22,7 +22,7 @@ export class LifePathComponent {
   day: number | null = null;
   month: number | null = null;
   year: number | null = null;
-  
+
   lifePathNumber: number | null = null;
   calculationSteps: string[] = [];
   showResult = false;
@@ -148,10 +148,10 @@ export class LifePathComponent {
 
     // ნაბიჯი 1: დღის შემცირება
     const daySum = this.reduceToSingleDigit(this.day, 'დღე');
-    
+
     // ნაბიჯი 2: თვის შემცირება
     const monthSum = this.reduceToSingleDigit(this.month, 'თვე');
-    
+
     // ნაბიჯი 3: წლის შემცირება
     const yearSum = this.reduceToSingleDigit(this.year, 'წელი');
 
@@ -168,7 +168,7 @@ export class LifePathComponent {
     }
 
     this.lifePathNumber = total;
-    
+
     if (total === 11 || total === 22 || total === 33) {
       this.calculationSteps.push(`\n✨ Master Number: ${total} (არ მცირდება!)`);
     } else {
@@ -180,14 +180,14 @@ export class LifePathComponent {
 
   private reduceToSingleDigit(num: number, label: string): number {
     this.calculationSteps.push(`\n🔢 ${label}: ${num}`);
-    
+
     while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
       const digits = this.getDigits(num);
       const sum = digits.reduce((a, b) => a + b, 0);
       this.calculationSteps.push(`   ${num} → ${digits.join(' + ')} = ${sum}`);
       num = sum;
     }
-    
+
     return num;
   }
 

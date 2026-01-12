@@ -2,659 +2,687 @@
 @import 'styles/mixins';
 
 .moon-calendar {
-  min-height: 100vh;
-  padding: $spacing-2xl $spacing-lg;
-  background: linear-gradient(
-    135deg,
-    $bg-primary 0%,
-    darken($bg-primary, 3%) 50%,
-    $bg-primary 100%
-  );
+    min-height: 100vh;
+    padding: $spacing-2xl $spacing-lg;
+    background: linear-gradient(135deg,
+            $bg-primary 0%,
+            darken($bg-primary, 3%) 50%,
+            $bg-primary 100%);
 
-  @include mobile {
-    padding: $spacing-xl $spacing-md;
-  }
+    @include mobile {
+        padding: $spacing-xl $spacing-md;
+    }
 }
 
-// ===================================
-// Header
-// ===================================
-.calendar-header {
-  text-align: center;
-  margin-top: 80px;
-  margin-bottom: $spacing-2xl;
-  padding: $spacing-2xl;
-  background: rgba($bg-card, 0.3);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba($primary-violet, 0.2);
-  border-radius: $radius-2xl;
-}
 
-.calendar-title {
-  font-size: $font-4xl;
-  font-weight: $font-bold;
-  background: $gradient-cosmic;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: $spacing-md;
-  @include flex-center;
-  gap: $spacing-md;
-
-  i {
-    background: $gradient-cosmic;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @include mobile {
-    font-size: $font-2xl;
-  }
-}
-
-.calendar-subtitle {
-  font-size: $font-xl;
-  color: $text-secondary;
-  margin-bottom: $spacing-sm;
-  font-weight: $font-medium;
-}
-
-.timezone-info {
-  font-size: $font-sm;
-  color: rgba($text-secondary, 0.7);
-  @include flex-center;
-  gap: $spacing-xs;
-
-  i {
-    color: $primary-violet;
-  }
-}
 
 // ===================================
 // Calendar Container
 // ===================================
 .calendar-container {
-  margin-bottom: $spacing-3xl;
-  background: rgba($bg-card, 0.25);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba($primary-violet, 0.15);
-  border-radius: $radius-2xl;
-  padding: $spacing-xl;
-  box-shadow: $shadow-xl;
-  overflow: hidden;
+    margin-bottom: $spacing-3xl;
+    background: rgba($bg-card, 0.25);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba($primary-violet, 0.15);
+    border-radius: $radius-2xl;
+    padding: $spacing-xl;
+    box-shadow: $shadow-xl;
+    overflow: hidden;
 }
 
 .table-wrapper {
-  overflow-x: auto;
-  overflow-y: visible;
-  
-  &::-webkit-scrollbar {
-    height: 8px;
-  }
+    overflow-x: auto;
+    overflow-y: visible;
 
-  &::-webkit-scrollbar-track {
-    background: rgba($bg-card, 0.3);
-    border-radius: $radius-full;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: rgba($primary-violet, 0.5);
-    border-radius: $radius-full;
-
-    &:hover {
-      background: rgba($primary-violet, 0.7);
+    &::-webkit-scrollbar {
+        height: 8px;
     }
-  }
+
+    &::-webkit-scrollbar-track {
+        background: rgba($bg-card, 0.3);
+        border-radius: $radius-full;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba($primary-violet, 0.5);
+        border-radius: $radius-full;
+
+        &:hover {
+            background: rgba($primary-violet, 0.7);
+        }
+    }
 }
 
 // ===================================
 // Table
 // ===================================
 .moon-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  min-width: 900px;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 900px;
 
-  thead {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    
-    tr {
-      background: rgba($bg-card, 0.8);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
+    thead {
+        position: sticky;
+        top: 0;
+        z-index: 10;
 
-    th {
-      padding: $spacing-lg $spacing-md;
-      text-align: left;
-      font-size: $font-sm;
-      font-weight: $font-bold;
-      color: $text-secondary;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      border-bottom: 2px solid rgba($primary-violet, 0.3);
-      white-space: nowrap;
-
-      &:first-child {
-        border-top-left-radius: $radius-lg;
-      }
-
-      &:last-child {
-        border-top-right-radius: $radius-lg;
-      }
-    }
-  }
-
-  tbody {
-    tr {
-      @include smooth-transition;
-      border-bottom: 1px solid rgba($primary-violet, 0.1);
-
-      &:hover {
-        background: rgba($primary-violet, 0.05);
-        transform: scale(1.01);
-      }
-
-      &.current-day {
-        background: rgba($accent-gold, 0.1);
-        border: 2px solid rgba($accent-gold, 0.4);
-        box-shadow: 0 0 20px rgba($accent-gold, 0.2);
-
-        .date-number {
-          background: $gradient-cosmic;
-          color: $text-primary;
-          font-weight: $font-bold;
+        tr {
+            background: rgba($bg-card, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
-      }
 
-      &.major-phase {
-        background: rgba($primary-violet, 0.08);
+        th {
+            padding: $spacing-lg $spacing-md;
+            text-align: left;
+            font-size: $font-sm;
+            font-weight: $font-bold;
+            color: $text-secondary;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid rgba($primary-violet, 0.3);
+            white-space: nowrap;
 
-        .phase-icon {
-          font-size: 32px;
-          animation: pulse-glow 2s ease-in-out infinite;
+            &:first-child {
+                border-top-left-radius: $radius-lg;
+            }
+
+            &:last-child {
+                border-top-right-radius: $radius-lg;
+            }
         }
-      }
     }
 
-    td {
-      padding: $spacing-md;
-      font-size: $font-sm;
-      color: $text-primary;
-      vertical-align: middle;
+    tbody {
+        tr {
+            @include smooth-transition;
+            border-bottom: 1px solid rgba($primary-violet, 0.1);
+
+            &:hover {
+                background: rgba($primary-violet, 0.05);
+                transform: scale(1.01);
+            }
+
+            &.current-day {
+                background: rgba($accent-gold, 0.1);
+                border: 2px solid rgba($accent-gold, 0.4);
+                box-shadow: 0 0 20px rgba($accent-gold, 0.2);
+
+                .date-number {
+                    background: $gradient-cosmic;
+                    color: $text-primary;
+                    font-weight: $font-bold;
+                }
+            }
+
+            &.major-phase {
+                background: rgba($primary-violet, 0.08);
+
+                .phase-icon {
+                    font-size: 32px;
+                    animation: pulse-glow 2s ease-in-out infinite;
+                }
+            }
+        }
+
+        td {
+            padding: $spacing-md;
+            font-size: $font-sm;
+            color: $text-primary;
+            vertical-align: middle;
+        }
     }
-  }
 }
 
 // ===================================
 // Table Cells
 // ===================================
 .date-cell {
-  width: 80px;
+    width: 80px;
 }
 
 .date-content {
-  @include flex-center;
-  flex-direction: column;
-  gap: $spacing-xs;
+    @include flex-center;
+    flex-direction: column;
+    gap: $spacing-xs;
 }
 
 .date-number {
-  font-size: $font-xl;
-  font-weight: $font-bold;
-  color: $text-secondary;
-  width: 40px;
-  height: 40px;
-  @include flex-center;
-  border-radius: $radius-full;
-  background: rgba($primary-violet, 0.1);
+    font-size: $font-xl;
+    font-weight: $font-bold;
+    color: $text-secondary;
+    width: 40px;
+    height: 40px;
+    @include flex-center;
+    border-radius: $radius-full;
+    background: rgba($primary-violet, 0.1);
 }
 
 .month-abbr {
-  font-size: $font-xs;
-  color: rgba($text-secondary, 0.6);
-  text-transform: uppercase;
+    font-size: $font-xs;
+    color: rgba($text-secondary, 0.6);
+    text-transform: uppercase;
 }
 
 .day-cell {
-  width: 100px;
-  font-weight: $font-medium;
-  color: $text-secondary;
+    width: 100px;
+    font-weight: $font-medium;
+    color: $text-secondary;
 }
 
 .phase-cell {
-  width: 200px;
+    width: 200px;
 }
 
 .phase-content {
-  display: flex;
-  gap: $spacing-md;
-  align-items: center;
+    display: flex;
+    gap: $spacing-md;
+    align-items: center;
 }
 
 .phase-icon {
-  font-size: 28px;
-  filter: drop-shadow(0 0 8px rgba($text-secondary, 0.5));
+    font-size: 28px;
+    filter: drop-shadow(0 0 8px rgba($text-secondary, 0.5));
 }
 
 .phase-info {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-xs;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
 }
 
 .phase-type {
-  font-weight: $font-medium;
-  color: $text-primary;
+    font-weight: $font-medium;
+    color: $text-primary;
 }
 
 .phase-time {
-  font-size: $font-xs;
-  color: $accent-gold;
-  font-weight: $font-bold;
+    font-size: $font-xs;
+    color: $accent-gold;
+    font-weight: $font-bold;
 }
 
 .zodiac-cell {
-  width: 180px;
+    width: 180px;
 }
 
 .zodiac-content {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-xs;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
 }
 
 .zodiac-name {
-  font-weight: $font-medium;
-  color: $primary-violet;
+    font-weight: $font-medium;
+    color: $primary-violet;
 }
 
 .sign-transition {
-  font-size: $font-xs;
-  color: rgba($text-secondary, 0.7);
-  display: flex;
-  gap: $spacing-xs;
-  align-items: center;
+    font-size: $font-xs;
+    color: rgba($text-secondary, 0.7);
+    display: flex;
+    gap: $spacing-xs;
+    align-items: center;
 
-  i {
-    color: $accent-gold;
-  }
+    i {
+        color: $accent-gold;
+    }
 
-  small {
-    color: rgba($text-secondary, 0.5);
-  }
+    small {
+        color: rgba($text-secondary, 0.5);
+    }
 }
 
 .organs-cell {
-  min-width: 250px;
+    min-width: 250px;
 }
 
 .organs-text {
-  font-size: $font-xs;
-  color: $text-secondary;
-  line-height: 1.5;
+    font-size: $font-xs;
+    color: $text-secondary;
+    line-height: 1.5;
 }
 
 .surgery-cell {
-  width: 100px;
-  text-align: center;
+    width: 100px;
+    text-align: center;
 }
 
 .surgery-badge {
-  display: inline-block;
-  padding: $spacing-xs $spacing-md;
-  border-radius: $radius-full;
-  font-size: $font-xs;
-  font-weight: $font-bold;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+    display: inline-block;
+    padding: $spacing-xs $spacing-md;
+    border-radius: $radius-full;
+    font-size: $font-xs;
+    font-weight: $font-bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 
-  &.surgery-yes {
-    background: rgba(#10b981, 0.2);
-    color: #10b981;
-    border: 1px solid rgba(#10b981, 0.4);
-  }
+    &.surgery-yes {
+        background: rgba(#10b981, 0.2);
+        color: #10b981;
+        border: 1px solid rgba(#10b981, 0.4);
+    }
 
-  &.surgery-no {
-    background: rgba(#f59e0b, 0.2);
-    color: #f59e0b;
-    border: 1px solid rgba(#f59e0b, 0.4);
-  }
+    &.surgery-no {
+        background: rgba(#f59e0b, 0.2);
+        color: #f59e0b;
+        border: 1px solid rgba(#f59e0b, 0.4);
+    }
 
-  &.surgery-no-urgent {
-    background: rgba(#ef4444, 0.2);
-    color: #ef4444;
-    border: 1px solid rgba(#ef4444, 0.4);
-    animation: pulse-warning 1.5s ease-in-out infinite;
-  }
+    &.surgery-no-urgent {
+        background: rgba(#ef4444, 0.2);
+        color: #ef4444;
+        border: 1px solid rgba(#ef4444, 0.4);
+        animation: pulse-warning 1.5s ease-in-out infinite;
+    }
 
-  &.surgery-neutral {
-    background: rgba($text-secondary, 0.1);
-    color: $text-secondary;
-    border: 1px solid rgba($text-secondary, 0.2);
-  }
+    &.surgery-neutral {
+        background: rgba($text-secondary, 0.1);
+        color: $text-secondary;
+        border: 1px solid rgba($text-secondary, 0.2);
+    }
 }
 
 // ===================================
 // Legend
 // ===================================
 .calendar-legend {
-  background: rgba($bg-card, 0.25);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba($primary-violet, 0.15);
-  border-radius: $radius-2xl;
-  padding: $spacing-2xl;
+    background: rgba($bg-card, 0.25);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba($primary-violet, 0.15);
+    border-radius: $radius-2xl;
+    padding: $spacing-2xl;
 }
 
 .legend-title {
-  font-size: $font-xl;
-  font-weight: $font-bold;
-  color: $text-primary;
-  margin-bottom: $spacing-lg;
-  display: flex;
-  gap: $spacing-sm;
-  align-items: center;
+    font-size: $font-xl;
+    font-weight: $font-bold;
+    color: $text-primary;
+    margin-bottom: $spacing-lg;
+    display: flex;
+    gap: $spacing-sm;
+    align-items: center;
 
-  i {
-    color: $primary-violet;
-  }
+    i {
+        color: $primary-violet;
+    }
 }
 
 .legend-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: $spacing-lg;
-  margin-bottom: $spacing-xl;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: $spacing-lg;
+    margin-bottom: $spacing-xl;
 
-  @include mobile {
-    grid-template-columns: 1fr;
-  }
+    @include mobile {
+        grid-template-columns: 1fr;
+    }
 }
 
 .legend-item {
-  display: flex;
-  gap: $spacing-md;
-  align-items: center;
+    display: flex;
+    gap: $spacing-md;
+    align-items: center;
 }
 
 .legend-text {
-  font-size: $font-sm;
-  color: $text-secondary;
+    font-size: $font-sm;
+    color: $text-secondary;
 }
 
 .info-box {
-  padding: $spacing-lg;
-  background: rgba($accent-gold, 0.05);
-  border: 1px solid rgba($accent-gold, 0.2);
-  border-radius: $radius-lg;
-  display: flex;
-  gap: $spacing-md;
+    padding: $spacing-lg;
+    background: rgba($accent-gold, 0.05);
+    border: 1px solid rgba($accent-gold, 0.2);
+    border-radius: $radius-lg;
+    display: flex;
+    gap: $spacing-md;
 
-  i {
-    color: $accent-gold;
-    font-size: $font-xl;
-    flex-shrink: 0;
-  }
-
-  p {
-    font-size: $font-sm;
-    color: $text-secondary;
-    line-height: 1.6;
-    margin: 0;
-
-    strong {
-      color: $text-primary;
-      font-weight: $font-bold;
+    i {
+        color: $accent-gold;
+        font-size: $font-xl;
+        flex-shrink: 0;
     }
-  }
+
+    p {
+        font-size: $font-sm;
+        color: $text-secondary;
+        line-height: 1.6;
+        margin: 0;
+
+        strong {
+            color: $text-primary;
+            font-weight: $font-bold;
+        }
+    }
 }
 
 // ===================================
 // Animations
 // ===================================
 @keyframes pulse-glow {
-  0%, 100% {
-    filter: drop-shadow(0 0 8px rgba($text-secondary, 0.5));
-    transform: scale(1);
-  }
-  50% {
-    filter: drop-shadow(0 0 20px rgba($text-secondary, 0.8));
-    transform: scale(1.1);
-  }
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px rgba($text-secondary, 0.5));
+        transform: scale(1);
+    }
+
+    50% {
+        filter: drop-shadow(0 0 20px rgba($text-secondary, 0.8));
+        transform: scale(1.1);
+    }
 }
 
 @keyframes pulse-warning {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(#ef4444, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 15px 5px rgba(#ef4444, 0.2);
-  }
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(#ef4444, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 0 15px 5px rgba(#ef4444, 0.2);
+    }
 }
 
 // ===================================
 // Current Phase Info Section
 // ===================================
 .current-phase-info {
-  margin-bottom: $spacing-3xl;
-  background: rgba($bg-card, 0.3);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba($primary-violet, 0.2);
-  border-radius: $radius-2xl;
-  padding: $spacing-2xl;
-  box-shadow: 0 10px 40px rgba($primary-violet, 0.15);
+    margin-top: 80px;
+    margin-bottom: $spacing-3xl;
+    background: rgba($bg-card, 0.3);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba($primary-violet, 0.2);
+    border-radius: $radius-2xl;
+    padding: $spacing-2xl;
+    box-shadow: 0 10px 40px rgba($primary-violet, 0.15);
+}
+
+.phase-header-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-xl;
+    margin-bottom: $spacing-xl;
+    padding-bottom: $spacing-xl;
+    border-bottom: 1px solid rgba($primary-violet, 0.15);
+
+    @include mobile {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+.phase-left {
+    flex: 1;
+}
+
+.moon-calendar-title {
+    font-size: $font-3xl;
+    font-weight: $font-bold;
+    background: $gradient-cosmic;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin: 0 0 $spacing-md 0;
+
+    i {
+        background: $gradient-cosmic;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    @include mobile {
+        font-size: $font-2xl;
+        justify-content: center;
+    }
+}
+
+.calendar-subtitle {
+    font-size: $font-lg;
+    color: $text-secondary;
+    margin-bottom: $spacing-xs;
+    font-weight: $font-medium;
+}
+
+.timezone-info {
+    font-size: $font-sm;
+    color: rgba($text-secondary, 0.7);
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    margin: 0;
+
+    @include mobile {
+        justify-content: center;
+    }
+
+    i {
+        color: $primary-violet;
+    }
+}
+
+.phase-right {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xl;
+
+    @include mobile {
+        flex-direction: column;
+    }
 }
 
 .phase-header {
-  display: flex;
-  align-items: center;
-  gap: $spacing-xl;
-  margin-bottom: $spacing-xl;
-  padding-bottom: $spacing-xl;
-  border-bottom: 1px solid rgba($primary-violet, 0.15);
+    display: flex;
+    align-items: center;
+    gap: $spacing-xl;
+    margin-bottom: $spacing-xl;
+    padding-bottom: $spacing-xl;
+    border-bottom: 1px solid rgba($primary-violet, 0.15);
 
-  @include mobile {
-    flex-direction: column;
-    text-align: center;
-  }
+    @include mobile {
+        flex-direction: column;
+        text-align: center;
+    }
 }
 
 .current-phase-icon {
-  font-size: 80px;
-  filter: drop-shadow(0 0 20px rgba($text-secondary, 0.6));
-  animation: pulse-glow 3s ease-in-out infinite;
+    font-size: 80px;
+    filter: drop-shadow(0 0 20px rgba($text-secondary, 0.6));
+    animation: pulse-glow 3s ease-in-out infinite;
 }
 
 .phase-title-group {
-  flex: 1;
+    flex: 1;
 }
 
 .current-phase-title {
-  font-size: $font-3xl;
-  font-weight: $font-bold;
-  background: $gradient-cosmic;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: $spacing-sm;
+    font-size: $font-2xl;
+    font-weight: $font-bold;
+    background: $gradient-cosmic;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: $spacing-sm;
 }
 
 .current-phase-zodiac {
-  font-size: $font-lg;
-  color: $text-secondary;
-  @include flex-center;
-  gap: $spacing-sm;
-  margin: 0;
+    font-size: $font-base;
+    color: $text-secondary;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin: 0;
 
-  @include mobile {
-    justify-content: center;
-  }
+    @include mobile {
+        justify-content: center;
+    }
 
-  i {
-    color: $accent-gold;
-  }
+    i {
+        color: $accent-gold;
+    }
 }
 
 .phase-description {
-  margin-bottom: $spacing-2xl;
-  
-  p {
-    font-size: $font-base;
-    color: $text-secondary;
-    line-height: 1.8;
-    margin: 0;
-  }
+    margin-bottom: $spacing-2xl;
+
+    p {
+        font-size: $font-base;
+        color: $text-secondary;
+        line-height: 1.8;
+        margin: 0;
+    }
 }
 
 .recommendations-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: $spacing-xl;
-  margin-bottom: $spacing-2xl;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-xl;
+    margin-bottom: $spacing-2xl;
 
-  @include mobile {
-    grid-template-columns: 1fr;
-  }
+    @include mobile {
+        grid-template-columns: 1fr;
+    }
 }
 
 .recommendation-card {
-  background: rgba($bg-card, 0.4);
-  border-radius: $radius-xl;
-  padding: $spacing-xl;
-  border: 1px solid rgba($primary-violet, 0.2);
-  @include smooth-transition;
+    background: rgba($bg-card, 0.4);
+    border-radius: $radius-xl;
+    padding: $spacing-xl;
+    border: 1px solid rgba($primary-violet, 0.2);
+    @include smooth-transition;
 
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba($primary-violet, 0.2);
-  }
-
-  &.favorable {
-    border-color: rgba(#10b981, 0.3);
-
-    .card-header i {
-      color: #10b981;
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba($primary-violet, 0.2);
     }
 
-    .recommendation-list li i {
-      color: #10b981;
-    }
-  }
+    &.favorable {
+        border-color: rgba(#10b981, 0.3);
 
-  &.unfavorable {
-    border-color: rgba(#f59e0b, 0.3);
+        .card-header i {
+            color: #10b981;
+        }
 
-    .card-header i {
-      color: #f59e0b;
+        .recommendation-list li i {
+            color: #10b981;
+        }
     }
 
-    .recommendation-list li i {
-      color: #f59e0b;
+    &.unfavorable {
+        border-color: rgba(#f59e0b, 0.3);
+
+        .card-header i {
+            color: #f59e0b;
+        }
+
+        .recommendation-list li i {
+            color: #f59e0b;
+        }
     }
-  }
 }
 
 .card-header {
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
-  margin-bottom: $spacing-lg;
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
 
-  i {
-    font-size: $font-xl;
-  }
+    i {
+        font-size: $font-xl;
+    }
 
-  h3 {
-    font-size: $font-lg;
-    font-weight: $font-bold;
-    color: $text-primary;
-    margin: 0;
-  }
+    h3 {
+        font-size: $font-lg;
+        font-weight: $font-bold;
+        color: $text-primary;
+        margin: 0;
+    }
 }
 
 .recommendation-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 
-  li {
-    display: flex;
-    align-items: flex-start;
-    gap: $spacing-md;
-    padding: $spacing-sm 0;
-    font-size: $font-sm;
-    color: $text-secondary;
-    line-height: 1.6;
+    li {
+        display: flex;
+        align-items: flex-start;
+        gap: $spacing-md;
+        padding: $spacing-sm 0;
+        font-size: $font-sm;
+        color: $text-secondary;
+        line-height: 1.6;
 
-    i {
-      margin-top: 4px;
-      font-size: $font-xs;
-      flex-shrink: 0;
+        i {
+            margin-top: 4px;
+            font-size: $font-xs;
+            flex-shrink: 0;
+        }
     }
-  }
 }
 
 .zodiac-influence {
-  background: linear-gradient(
-    135deg,
-    rgba($primary-violet, 0.1) 0%,
-    rgba($accent-gold, 0.05) 100%
-  );
-  border: 1px solid rgba($primary-violet, 0.2);
-  border-radius: $radius-xl;
-  padding: $spacing-xl;
+    background: linear-gradient(135deg,
+            rgba($primary-violet, 0.1) 0%,
+            rgba($accent-gold, 0.05) 100%);
+    border: 1px solid rgba($primary-violet, 0.2);
+    border-radius: $radius-xl;
+    padding: $spacing-xl;
 }
 
 .influence-header {
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
-  margin-bottom: $spacing-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
 
-  i {
-    color: $text-secondary;
-    font-size: $font-xl;
-  }
+    i {
+        color: $text-secondary;
+        font-size: $font-xl;
+    }
 
-  h3 {
-    font-size: $font-lg;
-    font-weight: $font-bold;
-    color: $text-primary;
-    margin: 0;
-  }
+    h3 {
+        font-size: $font-lg;
+        font-weight: $font-bold;
+        color: $text-primary;
+        margin: 0;
+    }
 }
 
 .influence-text {
-  font-size: $font-sm;
-  color: $text-secondary;
-  line-height: 1.8;
-  margin-bottom: $spacing-lg;
+    font-size: $font-sm;
+    color: $text-secondary;
+    line-height: 1.8;
+    margin-bottom: $spacing-lg;
 }
 
 .influenced-organs {
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
-  padding: $spacing-md;
-  background: rgba($bg-card, 0.3);
-  border-radius: $radius-lg;
-  font-size: $font-sm;
-  color: $text-secondary;
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-md;
+    background: rgba($bg-card, 0.3);
+    border-radius: $radius-lg;
+    font-size: $font-sm;
+    color: $text-secondary;
 
-  i {
-    color: $accent-gold;
-  }
+    i {
+        color: $accent-gold;
+    }
 
-  strong {
-    color: $text-primary;
-  }
+    strong {
+        color: $text-primary;
+    }
 }

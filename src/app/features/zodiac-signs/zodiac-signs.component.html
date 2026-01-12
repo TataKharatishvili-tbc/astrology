@@ -1,0 +1,98 @@
+<div class="zodiac-signs-page">
+    <div class="container">
+
+        <!-- Header - მთავარი გვერდის სტილით -->
+        <div class="page-header">
+            <a routerLink="/" class="back-link">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>მთავარი</span>
+            </a>
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="header-icon">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="header-text">
+                        <h1 class="page-title">ზოდიაქოს 12 ნიშანი</h1>
+                        <p class="page-subtitle">აირჩიე შენი ნიშანი და გაიგე ასტროლოგიური მახასიათებლები</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zodiac Grid -->
+        <div class="zodiac-grid">
+            <a *ngFor="let sign of zodiacSigns; let i = index" 
+               [routerLink]="['/zodiac', sign.id]"
+               class="zodiac-card" 
+               [class.element-fire]="sign.element === 'fire'"
+               [class.element-earth]="sign.element === 'earth'" 
+               [class.element-air]="sign.element === 'air'"
+               [class.element-water]="sign.element === 'water'" 
+               [style.--delay]="i * 0.05 + 's'">
+
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="getZodiacViewBox(sign.id)" class="zodiac-svg" [innerHTML]="getZodiacSvgPath(sign.id)"></svg>
+                    </div>
+                    <h3 class="zodiac-name">{{ sign.name }}</h3>
+                    <p class="zodiac-dates">{{ sign.dateRange }}</p>
+                    <div class="zodiac-element">
+                        <i [class]="getElementIcon(sign.element)"></i>
+                        <span>{{ getElementName(sign.element) }}</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Elements Info Section -->
+        <div class="elements-section">
+            <div class="section-header-new">
+                <div class="section-icon">
+                    <i class="fa-solid fa-fire-flame-curved"></i>
+                </div>
+                <div class="section-text">
+                    <h2>ოთხი ელემენტი</h2>
+                    <p>ზოდიაქოს ნიშნები იყოფა ოთხ ელემენტად</p>
+                </div>
+            </div>
+
+            <div class="elements-grid">
+                <div class="element-card fire">
+                    <div class="element-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h4>ცეცხლი</h4>
+                    <p class="element-signs">ვერძი, ლომი, მშვილდოსანი</p>
+                    <span class="element-trait">პასიონური, ენერგიული</span>
+                </div>
+                <div class="element-card earth">
+                    <div class="element-icon">
+                        <i class="fas fa-mountain"></i>
+                    </div>
+                    <h4>მიწა</h4>
+                    <p class="element-signs">კურო, ქალწული, თხის რქა</p>
+                    <span class="element-trait">პრაქტიკული, სტაბილური</span>
+                </div>
+                <div class="element-card air">
+                    <div class="element-icon">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <h4>ჰაერი</h4>
+                    <p class="element-signs">ტყუპები, სასწორი, მერწყული</p>
+                    <span class="element-trait">ინტელექტუალური, კომუნიკაბელური</span>
+                </div>
+                <div class="element-card water">
+                    <div class="element-icon">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <h4>წყალი</h4>
+                    <p class="element-signs">კირჩხიბი, მორიელი, თევზები</p>
+                    <span class="element-trait">ემოციური, ინტუიციური</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

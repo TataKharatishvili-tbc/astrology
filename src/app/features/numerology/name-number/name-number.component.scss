@@ -1,7 +1,7 @@
 @import 'styles/variables';
 @import 'styles/mixins';
 
-.life-path-container {
+.name-number-container {
     min-height: 100vh;
     padding: $spacing-2xl $spacing-lg;
     background: linear-gradient(135deg,
@@ -14,15 +14,13 @@
     }
 }
 
-// ===================================
 // Main Card Section
-// ===================================
 .main-card-section {
     margin-top: 80px;
     margin-bottom: $spacing-3xl;
 }
 
-.life-path-main-card {
+.name-main-card {
     background: rgba($bg-card, 0.3);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
@@ -121,9 +119,7 @@
     }
 }
 
-// ===================================
 // Calculator Content
-// ===================================
 .calculator-content {
     margin-top: $spacing-xl;
 }
@@ -141,75 +137,49 @@
     }
 }
 
-// Hero Section - REMOVED
-// Calculator Section - REMOVED
-.calculator-card {
-    @include glass-morphism;
-    padding: $spacing-2xl;
-    border-radius: $spacing-lg;
-    border: 1px solid rgba($primary-violet, 0.3);
-
-    .card-title {
-        @include flex-center;
-        gap: $spacing-md;
-        font-size: $font-2xl;
-        color: $text-primary;
-        margin-bottom: $spacing-xl;
-
-        i {
-            color: $accent-gold;
-        }
-    }
-}
-
 .calculator-form {
     display: flex;
     flex-direction: column;
     gap: $spacing-lg;
-
-    @media (min-width: $breakpoint-tablet) {
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
 }
 
-.input-group {
-    flex: 1;
-    min-width: 200px;
+.input-group-single {
+    width: 100%;
 
     label {
         display: block;
-        font-size: $font-sm;
+        font-size: $font-base;
         color: $text-secondary;
-        margin-bottom: $spacing-xs;
+        margin-bottom: $spacing-md;
         font-weight: 500;
+        text-align: center;
     }
 
     input {
         width: 100%;
-        padding: $spacing-md $spacing-lg;
+        max-width: 600px;
+        margin: 0 auto;
+        display: block;
+        padding: $spacing-lg $spacing-xl;
         background: rgba($bg-card, 0.3);
-        border: 1px solid rgba($primary-violet, 0.3);
-        border-radius: $spacing-sm;
+        border: 2px solid rgba($primary-violet, 0.3);
+        border-radius: $spacing-md;
         color: $text-primary;
-        font-size: $font-base;
+        font-size: $font-lg;
+        text-align: center;
+        font-weight: 500;
         transition: all 0.3s ease;
 
         &:focus {
             outline: none;
             border-color: $primary-violet;
-            box-shadow: 0 0 0 3px rgba($primary-violet, 0.1);
+            box-shadow: 0 0 0 4px rgba($primary-violet, 0.15);
         }
 
         &::placeholder {
             color: rgba($text-secondary, 0.5);
-        }
-
-        // Remove spinner arrows
-        &::-webkit-inner-spin-button,
-        &::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
+            font-size: $font-sm;
+            font-weight: normal;
         }
     }
 }
@@ -219,15 +189,12 @@
     gap: $spacing-md;
     margin-top: $spacing-md;
     flex-wrap: wrap;
-
-    @media (min-width: $breakpoint-tablet) {
-        width: 100%;
-    }
+    justify-content: center;
 }
 
 .calc-button,
 .reset-button {
-    flex: 1;
+    flex: 0 0 auto;
     min-width: 150px;
     padding: $spacing-md $spacing-xl;
     border: none;
@@ -276,10 +243,12 @@
 
 // Result Section
 .result-section {
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto $spacing-3xl;
     padding: 0 $spacing-lg;
-    animation: fadeInUp 0.6s ease;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2xl;
 }
 
 .result-card {
@@ -287,6 +256,43 @@
     padding: $spacing-2xl;
     border-radius: $spacing-lg;
     border: 2px solid rgba($primary-violet, 0.4);
+    animation: fadeInUp 0.6s ease;
+}
+
+.result-header {
+    text-align: center;
+    margin-bottom: $spacing-xl;
+
+    .result-badge {
+        display: inline-block;
+        padding: $spacing-xs $spacing-lg;
+        border-radius: 20px;
+        font-size: $font-sm;
+        font-weight: 600;
+        margin-bottom: $spacing-sm;
+
+        &.destiny {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: $text-primary;
+        }
+
+        &.soul {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: $text-primary;
+        }
+
+        &.personality {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: $text-primary;
+        }
+    }
+
+    .result-subtitle {
+        font-size: $font-base;
+        color: $text-secondary;
+        font-weight: normal;
+        margin: 0;
+    }
 }
 
 .number-display {
@@ -297,16 +303,26 @@
 
     .number-circle {
         @include flex-center;
-        width: 150px;
-        height: 150px;
-        margin: 0 auto $spacing-lg;
-        background: $gradient-cosmic;
+        width: 120px;
+        height: 120px;
+        margin: 0 auto $spacing-md;
         border-radius: 50%;
-        font-size: $font-5xl;
+        font-size: $font-4xl;
         font-weight: bold;
         color: $text-primary;
         box-shadow: $shadow-glow;
-        animation: pulse-glow 2s infinite;
+
+        &.destiny {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        &.soul {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        &.personality {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
     }
 
     .number-title {
@@ -365,8 +381,13 @@
     gap: $spacing-lg;
 
     @media (min-width: $breakpoint-tablet) {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
+}
+
+.traits-grid-simple {
+    display: grid;
+    gap: $spacing-lg;
 }
 
 .trait-card {
@@ -439,16 +460,6 @@
             color: $accent-gold;
         }
     }
-
-    &.careers {
-        h3 i {
-            color: #3b82f6;
-        }
-
-        ul li i {
-            color: #3b82f6;
-        }
-    }
 }
 
 // Info Section
@@ -466,6 +477,7 @@
 
 .info-card,
 .example-card,
+.calculation-steps,
 .master-numbers-card {
     @include glass-morphism;
     padding: $spacing-xl;
@@ -501,50 +513,58 @@
 }
 
 .example-card {
-    .example-content {
-        p {
-            margin-bottom: $spacing-md;
-            font-weight: 500;
-            color: $text-primary;
-        }
+    .pythagorean-table {
+        margin: $spacing-md 0;
+        background: rgba($bg-card, 0.3);
+        border-radius: $spacing-sm;
+        padding: $spacing-md;
+        border: 1px solid rgba($primary-violet, 0.2);
 
-        .example-calc {
-            background: rgba($bg-card, 0.3);
-            padding: $spacing-lg;
-            border-radius: $spacing-sm;
-            border: 1px solid rgba($primary-violet, 0.2);
-            color: $text-secondary;
-            font-size: $font-sm;
-            line-height: 1.8;
-            overflow-x: auto;
-            white-space: pre;
+        .table-row {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            gap: $spacing-xs;
+            margin-bottom: $spacing-xs;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            .cell {
+                padding: $spacing-sm;
+                text-align: center;
+                background: rgba($bg-card, 0.5);
+                border-radius: $spacing-xs;
+                font-size: $font-sm;
+                color: $text-secondary;
+
+                &.header {
+                    background: $gradient-cosmic;
+                    color: $text-primary;
+                    font-weight: bold;
+                    font-size: $font-base;
+                }
+            }
         }
     }
-}
 
-.calculation-steps {
-    @include glass-morphism;
-    padding: $spacing-xl;
-    border-radius: $spacing-lg;
-    border: 2px solid rgba($accent-gold, 0.4);
-    animation: fadeInUp 0.6s ease;
-
-    // @media (min-width: $breakpoint-tablet) {
-    //     grid-column: 1 / -1;
-    // }
-
-    h3 {
+    .table-note {
         display: flex;
         align-items: center;
         gap: $spacing-sm;
-        font-size: $font-xl;
-        color: $text-primary;
-        margin-bottom: $spacing-md;
+        margin-top: $spacing-md;
+        font-size: $font-xs;
+        color: $text-secondary;
 
         i {
             color: $accent-gold;
         }
     }
+}
+
+.calculation-steps {
+    border: 2px solid rgba($accent-gold, 0.4);
+    animation: fadeInUp 0.6s ease;
 
     .steps-content {
         background: rgba($bg-card, 0.3);

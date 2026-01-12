@@ -25,7 +25,7 @@ export interface MoonPhaseDay {
 export class MoonCalendarComponent {
   currentMonth = 'დეკემბერი';
   currentYear = 2025;
-  
+
   currentPhase = {
     name: 'კლებადი მთვარე',
     icon: '🌘',
@@ -51,7 +51,7 @@ export class MoonCalendarComponent {
     zodiacInfluence: 'მთვარე მორიელში აძლიერებს ინტუიციას და ემოციურ სიღრმეს. ეს დრო შესანიშნავია ფსიქოლოგიური მუშაობისთვის, ტრანსფორმაციისთვის და შინაგანი ძალების აღმოჩენისთვის. მორიელი მართავს რეგენერაციულ პროცესებს.',
     organs: 'სასქესო ორგანოები, ანუსი, შარდსადენი, პროსტატა'
   };
-  
+
   moonPhases: MoonPhaseDay[] = [
     { date: 1, dayOfWeek: 'ორშაბათი', phaseName: 'Waxing Gibbous', phaseType: 'მზარდი მთვარე', zodiacSign: 'ვერძი', influencedOrgans: 'თავი, კბილები, ენა, არტერიები', surgeryRecommendation: '-' },
     { date: 2, dayOfWeek: 'სამშაბათი', phaseName: 'Waxing Gibbous', phaseType: 'მზარდი მთვარე', zodiacSign: 'ხარი', signTransition: { time: '07:13', toSign: 'ხარი' }, influencedOrgans: 'ყელი, ხმის სიმები, ხახა, ფარისებრი ჯირკვალი', surgeryRecommendation: '-' },
@@ -91,7 +91,7 @@ export class MoonCalendarComponent {
   }
 
   getPhaseIcon(phaseName: string): string {
-    const icons: {[key: string]: string} = {
+    const icons: { [key: string]: string } = {
       'FULL MOON': '🌕',
       'NEW MOON': '🌑',
       'First Quarter': '🌓',
@@ -105,7 +105,7 @@ export class MoonCalendarComponent {
   }
 
   getSurgeryClass(recommendation: string): string {
-    switch(recommendation) {
+    switch (recommendation) {
       case 'NO!': return 'surgery-no-urgent';
       case 'No': return 'surgery-no';
       case 'Yes': return 'surgery-yes';

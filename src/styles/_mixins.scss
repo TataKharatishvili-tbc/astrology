@@ -6,241 +6,240 @@
 
 // Flexbox mixins
 @mixin flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @mixin flex-between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 @mixin flex-column {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 @mixin flex-column-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 // Grid mixins
 @mixin grid-auto-fit($min-width: 280px, $gap: 1.5rem) {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
-  gap: $gap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
+    gap: $gap;
 }
 
 @mixin grid-auto-fill($min-width: 280px, $gap: 1.5rem) {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
-  gap: $gap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
+    gap: $gap;
 }
 
 // ანიმაცია - გლუვი გადასვლა
 @mixin smooth-transition($properties: all, $duration: $transition-normal) {
-  transition: $properties $duration ease-in-out;
+    transition: $properties $duration ease-in-out;
 }
 
 // კარტის სტილები
 @mixin card-base {
-  background: $bg-card;
-  border-radius: $radius-lg;
-  padding: $spacing-lg;
-  box-shadow: $shadow-md;
-  border: 1px solid $border-primary;
-  @include smooth-transition;
+    background: $bg-card;
+    border-radius: $radius-lg;
+    padding: $spacing-lg;
+    box-shadow: $shadow-md;
+    border: 1px solid $border-primary;
+    @include smooth-transition;
 }
 
 @mixin card-hover {
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: $shadow-xl;
-    background: $bg-card-hover;
-    border-color: $primary-violet;
-  }
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: $shadow-xl;
+        background: $bg-card-hover;
+        border-color: $primary-violet;
+    }
 }
 
 // გრადიენტის ტექსტი
 @mixin gradient-text($gradient) {
-  background: $gradient;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+    background: $gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 // Glass morphism ეფექტი
 @mixin glass-morphism($blur: 10px, $opacity: 0.1) {
-  background: rgba(255, 255, 255, $opacity);
-  backdrop-filter: blur($blur);
-  -webkit-backdrop-filter: blur($blur);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, $opacity);
+    backdrop-filter: blur($blur);
+    -webkit-backdrop-filter: blur($blur);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 // მთვარის ელვარება
 @mixin glow-effect($color: $primary-violet, $intensity: 0.4) {
-  box-shadow: 0 0 20px rgba($color, $intensity);
+    box-shadow: 0 0 20px rgba($color, $intensity);
 }
 
 // ვარსკვლავური ანიმაცია
 @mixin star-shimmer {
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-      45deg,
-      transparent 30%,
-      rgba(255, 255, 255, 0.1) 50%,
-      transparent 70%
-    );
-    animation: shimmer 3s infinite;
-  }
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 70%);
+        animation: shimmer 3s infinite;
+    }
 }
 
 @keyframes shimmer {
-  0% {
-    transform: translateX(-100%) translateY(-100%);
-  }
-  100% {
-    transform: translateX(100%) translateY(100%);
-  }
+    0% {
+        transform: translateX(-100%) translateY(-100%);
+    }
+
+    100% {
+        transform: translateX(100%) translateY(100%);
+    }
 }
 
 // Responsive breakpoints
 @mixin mobile {
-  @media (max-width: $breakpoint-mobile) {
-    @content;
-  }
+    @media (max-width: $breakpoint-mobile) {
+        @content;
+    }
 }
 
 @mixin tablet {
-  @media (min-width: $breakpoint-tablet) {
-    @content;
-  }
+    @media (min-width: $breakpoint-tablet) {
+        @content;
+    }
 }
 
 @mixin desktop {
-  @media (min-width: $breakpoint-desktop) {
-    @content;
-  }
+    @media (min-width: $breakpoint-desktop) {
+        @content;
+    }
 }
 
 @mixin wide {
-  @media (min-width: $breakpoint-wide) {
-    @content;
-  }
+    @media (min-width: $breakpoint-wide) {
+        @content;
+    }
 }
 
 // Scrollbar styling
 @mixin custom-scrollbar {
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: $bg-secondary;
-    border-radius: $radius-full;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: $primary-violet;
-    border-radius: $radius-full;
-    
-    &:hover {
-      background: $primary-purple;
+    &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
     }
-  }
+
+    &::-webkit-scrollbar-track {
+        background: $bg-secondary;
+        border-radius: $radius-full;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $primary-violet;
+        border-radius: $radius-full;
+
+        &:hover {
+            background: $primary-purple;
+        }
+    }
 }
 
 // ღილაკის სტილები
 @mixin button-base {
-  padding: $spacing-sm $spacing-lg;
-  border-radius: $radius-lg;
-  font-weight: $font-semibold;
-  cursor: pointer;
-  border: none;
-  @include smooth-transition;
-  @include flex-center;
-  gap: $spacing-sm;
-  
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+    padding: $spacing-sm $spacing-lg;
+    border-radius: $radius-lg;
+    font-weight: $font-semibold;
+    cursor: pointer;
+    border: none;
+    @include smooth-transition;
+    @include flex-center;
+    gap: $spacing-sm;
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
 }
 
 @mixin button-primary {
-  @include button-base;
-  background: $gradient-cosmic;
-  color: $text-primary;
-  box-shadow: $shadow-glow;
-  
-  &:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: $shadow-xl;
-  }
-  
-  &:active:not(:disabled) {
-    transform: translateY(0);
-  }
+    @include button-base;
+    background: $gradient-cosmic;
+    color: $text-primary;
+    box-shadow: $shadow-glow;
+
+    &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: $shadow-xl;
+    }
+
+    &:active:not(:disabled) {
+        transform: translateY(0);
+    }
 }
 
 // ინპუტის სტილები
 @mixin input-base {
-  width: 100%;
-  padding: $spacing-md;
-  background: $bg-secondary;
-  border: 1px solid $border-primary;
-  border-radius: $radius-md;
-  color: $text-primary;
-  font-size: $font-base;
-  @include smooth-transition;
-  
-  &:focus {
-    outline: none;
-    border-color: $primary-violet;
-    box-shadow: 0 0 0 3px rgba($primary-violet, 0.1);
-  }
-  
-  &::placeholder {
-    color: $text-muted;
-  }
+    width: 100%;
+    padding: $spacing-md;
+    background: $bg-secondary;
+    border: 1px solid $border-primary;
+    border-radius: $radius-md;
+    color: $text-primary;
+    font-size: $font-base;
+    @include smooth-transition;
+
+    &:focus {
+        outline: none;
+        border-color: $primary-violet;
+        box-shadow: 0 0 0 3px rgba($primary-violet, 0.1);
+    }
+
+    &::placeholder {
+        color: $text-muted;
+    }
 }
 
 // კონტეინერი
 @mixin container {
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 $spacing-lg;
-  
-  @include tablet {
-    padding: 0 $spacing-xl;
-  }
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 $spacing-lg;
+
+    @include tablet {
+        padding: 0 $spacing-xl;
+    }
 }
 
 // Section spacing
 @mixin section-spacing {
-  padding: $spacing-3xl 0;
-  
-  @include tablet {
-    padding: 4rem 0;
-  }
-  
-  @include desktop {
-    padding: 5rem 0;
-  }
+    padding: $spacing-3xl 0;
+
+    @include tablet {
+        padding: 4rem 0;
+    }
+
+    @include desktop {
+        padding: 5rem 0;
+    }
 }

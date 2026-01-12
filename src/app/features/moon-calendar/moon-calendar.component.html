@@ -1,182 +1,176 @@
 <div class="moon-calendar">
-  <!-- Header -->
-  <div class="calendar-header">
-    <h1 class="calendar-title">
-      <i class="fas fa-moon"></i>
-      მთვარის კალენდარი
-    </h1>
-    <p class="calendar-subtitle">{{ currentMonth }} {{ currentYear }}</p>
-    <p class="timezone-info">
-      <i class="fas fa-map-marker-alt"></i>
-      თბილისი, საქართველო (GE)
-    </p>
-  </div>
-
-  <!-- Current Moon Phase Info -->
-  <div class="current-phase-info">
-    <div class="phase-header">
-      <span class="current-phase-icon">{{ currentPhase.icon }}</span>
-      <div class="phase-title-group">
-        <h2 class="current-phase-title">{{ currentPhase.name }}</h2>
-        <p class="current-phase-zodiac">
-          <i class="fas fa-star"></i>
-          მთვარე {{ currentPhase.zodiac }} ნიშანშია
-        </p>
-      </div>
-    </div>
-
-    <div class="phase-description">
-      <p>{{ currentPhase.description }}</p>
-    </div>
-
-    <div class="recommendations-grid">
-      <div class="recommendation-card favorable">
-        <div class="card-header">
-          <i class="fas fa-check-circle"></i>
-          <h3>ხელსაყრელია</h3>
-        </div>
-        <ul class="recommendation-list">
-          <li *ngFor="let item of currentPhase.favorable">
-            <i class="fas fa-plus"></i>
-            {{ item }}
-          </li>
-        </ul>
-      </div>
-
-      <div class="recommendation-card unfavorable">
-        <div class="card-header">
-          <i class="fas fa-times-circle"></i>
-          <h3>არახელსაყრელია</h3>
-        </div>
-        <ul class="recommendation-list">
-          <li *ngFor="let item of currentPhase.unfavorable">
-            <i class="fas fa-minus"></i>
-            {{ item }}
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="zodiac-influence">
-      <div class="influence-header">
-        <i class="fas fa-moon"></i>
-        <h3>{{ currentPhase.zodiac }} ნიშნის გავლენა</h3>
-      </div>
-      <p class="influence-text">{{ currentPhase.zodiacInfluence }}</p>
-      <div class="influenced-organs">
-        <i class="fas fa-heartbeat"></i>
-        <strong>გავლენა ორგანოებზე:</strong>
-        {{ currentPhase.organs }}
-      </div>
-    </div>
-  </div>
-
-  <!-- Calendar Table -->
-  <div class="calendar-container">
-    <div class="table-wrapper">
-      <table class="moon-table">
-        <thead>
-          <tr>
-            <th>თარიღი</th>
-            <th>დღე</th>
-            <th>მთვარის ფაზა</th>
-            <th>ზოდიაქო</th>
-            <th>გავლენა</th>
-            <th>ოპერაცია</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr 
-            *ngFor="let day of moonPhases" 
-            [class.current-day]="day.date === getCurrentDate()"
-            [class.major-phase]="day.phaseName === 'FULL MOON' || day.phaseName === 'NEW MOON'"
-          >
-            <!-- Date & Day -->
-            <td class="date-cell">
-              <div class="date-content">
-                <span class="date-number">{{ day.date }}</span>
-                <span class="month-abbr">დეკ</span>
-              </div>
-            </td>
-
-            <!-- Day of Week -->
-            <td class="day-cell">{{ day.dayOfWeek }}</td>
-
-            <!-- Moon Phase -->
-            <td class="phase-cell">
-              <div class="phase-content">
-                <span class="phase-icon">{{ getPhaseIcon(day.phaseName) }}</span>
-                <div class="phase-info">
-                  <span class="phase-type">{{ day.phaseType }}</span>
-                  <span class="phase-time" *ngIf="day.phaseTime">{{ day.phaseTime }}</span>
+    <!-- Current Moon Phase Info -->
+    <div class="current-phase-info">
+        <div class="phase-header-main">
+            <div class="phase-left">
+                <h2 class="moon-calendar-title">
+                    <i class="fas fa-moon"></i>
+                    მთვარის კალენდარი
+                </h2>
+                <p class="calendar-subtitle">{{ currentMonth }} {{ currentYear }}</p>
+                <p class="timezone-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    თბილისი, საქართველო (GE)
+                </p>
+            </div>
+            <div class="phase-right">
+                <span class="current-phase-icon">{{ currentPhase.icon }}</span>
+                <div class="phase-title-group">
+                    <h2 class="current-phase-title">{{ currentPhase.name }}</h2>
+                    <p class="current-phase-zodiac">
+                        <i class="fas fa-star"></i>
+                        მთვარე {{ currentPhase.zodiac }} ნიშანშია
+                    </p>
                 </div>
-              </div>
-            </td>
+            </div>
+        </div>
 
-            <!-- Zodiac Sign -->
-            <td class="zodiac-cell">
-              <div class="zodiac-content">
-                <span class="zodiac-name">{{ day.zodiacSign }}</span>
-                <span class="sign-transition" *ngIf="day.signTransition">
-                  <i class="fas fa-arrow-right"></i>
-                  {{ day.signTransition.toSign }}
-                  <small>({{ day.signTransition.time }})</small>
-                </span>
-              </div>
-            </td>
+        <div class="phase-description">
+            <p>{{ currentPhase.description }}</p>
+        </div>
 
-            <!-- Influenced Organs -->
-            <td class="organs-cell">
-              <span class="organs-text">{{ day.influencedOrgans }}</span>
-            </td>
+        <div class="recommendations-grid">
+            <div class="recommendation-card favorable">
+                <div class="card-header">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>ხელსაყრელია</h3>
+                </div>
+                <ul class="recommendation-list">
+                    <li *ngFor="let item of currentPhase.favorable">
+                        <i class="fas fa-plus"></i>
+                        {{ item }}
+                    </li>
+                </ul>
+            </div>
 
-            <!-- Surgery Recommendation -->
-            <td class="surgery-cell">
-              <span 
-                class="surgery-badge"
-                [ngClass]="getSurgeryClass(day.surgeryRecommendation)"
-              >
-                {{ day.surgeryRecommendation }}
-              </span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            <div class="recommendation-card unfavorable">
+                <div class="card-header">
+                    <i class="fas fa-times-circle"></i>
+                    <h3>არახელსაყრელია</h3>
+                </div>
+                <ul class="recommendation-list">
+                    <li *ngFor="let item of currentPhase.unfavorable">
+                        <i class="fas fa-minus"></i>
+                        {{ item }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="zodiac-influence">
+            <div class="influence-header">
+                <i class="fas fa-moon"></i>
+                <h3>{{ currentPhase.zodiac }} ნიშნის გავლენა</h3>
+            </div>
+            <p class="influence-text">{{ currentPhase.zodiacInfluence }}</p>
+            <div class="influenced-organs">
+                <i class="fas fa-heartbeat"></i>
+                <strong>გავლენა ორგანოებზე:</strong>
+                {{ currentPhase.organs }}
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Legend -->
-  <div class="calendar-legend">
-    <h3 class="legend-title">
-      <i class="fas fa-info-circle"></i>
-      ლეგენდა
-    </h3>
-    <div class="legend-grid">
-      <div class="legend-item">
-        <span class="surgery-badge surgery-yes">Yes</span>
-        <span class="legend-text">ოპერაციისთვის ხელსაყრელი</span>
-      </div>
-      <div class="legend-item">
-        <span class="surgery-badge surgery-no">No</span>
-        <span class="legend-text">ოპერაციისთვის ნეიტრალური</span>
-      </div>
-      <div class="legend-item">
-        <span class="surgery-badge surgery-no-urgent">NO!</span>
-        <span class="legend-text">ოპერაცია არ არის რეკომენდებული</span>
-      </div>
-      <div class="legend-item">
-        <span class="surgery-badge surgery-neutral">-</span>
-        <span class="legend-text">ნეიტრალური</span>
-      </div>
+    <!-- Calendar Table -->
+    <div class="calendar-container">
+        <div class="table-wrapper">
+            <table class="moon-table">
+                <thead>
+                    <tr>
+                        <th>თარიღი</th>
+                        <th>დღე</th>
+                        <th>მთვარის ფაზა</th>
+                        <th>ზოდიაქო</th>
+                        <th>გავლენა</th>
+                        <th>ოპერაცია</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let day of moonPhases" [class.current-day]="day.date === getCurrentDate()"
+                        [class.major-phase]="day.phaseName === 'FULL MOON' || day.phaseName === 'NEW MOON'">
+                        <!-- Date & Day -->
+                        <td class="date-cell">
+                            <div class="date-content">
+                                <span class="date-number">{{ day.date }}</span>
+                                <span class="month-abbr">დეკ</span>
+                            </div>
+                        </td>
+
+                        <!-- Day of Week -->
+                        <td class="day-cell">{{ day.dayOfWeek }}</td>
+
+                        <!-- Moon Phase -->
+                        <td class="phase-cell">
+                            <div class="phase-content">
+                                <span class="phase-icon">{{ getPhaseIcon(day.phaseName) }}</span>
+                                <div class="phase-info">
+                                    <span class="phase-type">{{ day.phaseType }}</span>
+                                    <span class="phase-time" *ngIf="day.phaseTime">{{ day.phaseTime }}</span>
+                                </div>
+                            </div>
+                        </td>
+
+                        <!-- Zodiac Sign -->
+                        <td class="zodiac-cell">
+                            <div class="zodiac-content">
+                                <span class="zodiac-name">{{ day.zodiacSign }}</span>
+                                <span class="sign-transition" *ngIf="day.signTransition">
+                                    <i class="fas fa-arrow-right"></i>
+                                    {{ day.signTransition.toSign }}
+                                    <small>({{ day.signTransition.time }})</small>
+                                </span>
+                            </div>
+                        </td>
+
+                        <!-- Influenced Organs -->
+                        <td class="organs-cell">
+                            <span class="organs-text">{{ day.influencedOrgans }}</span>
+                        </td>
+
+                        <!-- Surgery Recommendation -->
+                        <td class="surgery-cell">
+                            <span class="surgery-badge" [ngClass]="getSurgeryClass(day.surgeryRecommendation)">
+                                {{ day.surgeryRecommendation }}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    
-    <div class="info-box">
-      <i class="fas fa-exclamation-triangle"></i>
-      <p>
-        <strong>შენიშვნა:</strong> მთვარის ფაზებისა და ზოდიაქოს ნიშნების გავლენა ორგანოებზე 
-        არის ტრადიციული ასტროლოგიური ცოდნა. ოპერაციების დაგეგმვამდე აუცილებლად 
-        გაიარეთ კონსულტაცია კვალიფიციურ ექიმთან.
-      </p>
+
+    <!-- Legend -->
+    <div class="calendar-legend">
+        <h3 class="legend-title">
+            <i class="fas fa-info-circle"></i>
+            ლეგენდა
+        </h3>
+        <div class="legend-grid">
+            <div class="legend-item">
+                <span class="surgery-badge surgery-yes">Yes</span>
+                <span class="legend-text">ოპერაციისთვის ხელსაყრელი</span>
+            </div>
+            <div class="legend-item">
+                <span class="surgery-badge surgery-no">No</span>
+                <span class="legend-text">ოპერაციისთვის ნეიტრალური</span>
+            </div>
+            <div class="legend-item">
+                <span class="surgery-badge surgery-no-urgent">NO!</span>
+                <span class="legend-text">ოპერაცია არ არის რეკომენდებული</span>
+            </div>
+            <div class="legend-item">
+                <span class="surgery-badge surgery-neutral">-</span>
+                <span class="legend-text">ნეიტრალური</span>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>
+                <strong>შენიშვნა:</strong> მთვარის ფაზებისა და ზოდიაქოს ნიშნების გავლენა ორგანოებზე
+                არის ტრადიციული ასტროლოგიური ცოდნა. ოპერაციების დაგეგმვამდე აუცილებლად
+                გაიარეთ კონსულტაცია კვალიფიციურ ექიმთან.
+            </p>
+        </div>
     </div>
-  </div>
 </div>

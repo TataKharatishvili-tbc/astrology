@@ -1,0 +1,200 @@
+<div class="elements-page">
+    <div class="container">
+        <!-- Header -->
+        <div class="page-header">
+            <a routerLink="/" class="back-link">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>მთავარი</span>
+            </a>
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="header-icon">
+                        <i class="fa-solid fa-fire-flame-curved"></i>
+                    </div>
+                    <div class="header-text">
+                        <h1 class="page-title">ოთხი ელემენტი</h1>
+                        <p class="page-subtitle">გაიგე ზოდიაქოს ოთხი ძირითადი ელემენტის მნიშვნელობა</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Elements Grid -->
+        <div class="elements-grid">
+            <div class="element-card" *ngFor="let element of elements" 
+                 [class.fire]="element.id === 'fire'"
+                 [class.earth]="element.id === 'earth'"
+                 [class.air]="element.id === 'air'"
+                 [class.water]="element.id === 'water'"
+                 (click)="selectElement(element)" 
+                 [class.selected]="selectedElement?.id === element.id">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="element-icon-wrapper">
+                        <i [class]="getElementIconClass(element.id)"></i>
+                    </div>
+                    <h2>{{element.name}}</h2>
+                    <p class="element-desc">{{element.description}}</p>
+
+                    <div class="zodiac-signs-preview">
+                        <span *ngFor="let sign of element.zodiacSigns" class="sign-icon">
+                            {{sign.icon}}
+                        </span>
+                    </div>
+
+                    <button class="learn-more-btn">
+                        <span>ვრცლად</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Element Details -->
+        <div class="element-details" *ngIf="selectedElement" id="element-details">
+            <div class="details-header">
+                <div class="header-content">
+                    <div class="detail-icon-wrapper" 
+                         [class.fire]="selectedElement.id === 'fire'"
+                         [class.earth]="selectedElement.id === 'earth'"
+                         [class.air]="selectedElement.id === 'air'"
+                         [class.water]="selectedElement.id === 'water'">
+                        <i [class]="getElementIconClass(selectedElement.id)"></i>
+                    </div>
+                    <div class="header-info">
+                        <h2>{{selectedElement.name}}</h2>
+                        <p>{{selectedElement.description}}</p>
+                    </div>
+                </div>
+                <button class="close-btn" (click)="closeDetails()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="details-grid">
+                <div class="detail-section">
+                    <div class="section-icon"><i class="fa-solid fa-sparkles"></i></div>
+                    <h3>მახასიათებლები</h3>
+                    <ul class="characteristics-list">
+                        <li *ngFor="let char of selectedElement.characteristics">{{char}}</li>
+                    </ul>
+                </div>
+
+                <div class="detail-section">
+                    <div class="section-icon success"><i class="fa-solid fa-hand-fist"></i></div>
+                    <h3>ძლიერი მხარეები</h3>
+                    <ul class="strengths-list">
+                        <li *ngFor="let strength of selectedElement.strengths">{{strength}}</li>
+                    </ul>
+                </div>
+
+                <div class="detail-section">
+                    <div class="section-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <h3>სუსტი მხარეები</h3>
+                    <ul class="weaknesses-list">
+                        <li *ngFor="let weakness of selectedElement.weaknesses">{{weakness}}</li>
+                    </ul>
+                </div>
+
+                <div class="detail-section zodiac-section">
+                    <div class="section-icon"><i class="fa-solid fa-star"></i></div>
+                    <h3>ზოდიაქოს ნიშნები</h3>
+                    <div class="zodiac-cards">
+                        <a *ngFor="let sign of selectedElement.zodiacSigns" [routerLink]="['/zodiac', sign.id]"
+                            class="zodiac-card-link">
+                            <span class="zodiac-icon">{{sign.icon}}</span>
+                            <div class="zodiac-info">
+                                <h4>{{sign.name}}</h4>
+                                <p>{{sign.dates}}</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="compatibility-section">
+                <div class="section-header-small">
+                    <i class="fa-solid fa-handshake"></i>
+                    <h3>თავსებადობა სხვა ელემენტებთან</h3>
+                </div>
+                <div class="compatibility-grid">
+                    <div class="compatibility-item best">
+                        <div class="compat-label">შესანიშნავი</div>
+                        <div class="compat-elements">
+                            <span *ngFor="let el of selectedElement.compatibility.best" class="compat-tag">
+                                {{el}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="compatibility-item good">
+                        <div class="compat-label">კარგი</div>
+                        <div class="compat-elements">
+                            <span *ngFor="let el of selectedElement.compatibility.good" class="compat-tag">
+                                {{el}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="compatibility-item challenging">
+                        <div class="compat-label">გამოწვევა</div>
+                        <div class="compat-elements">
+                            <span *ngFor="let el of selectedElement.compatibility.challenging" class="compat-tag">
+                                {{el}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="advice-section">
+                <div class="advice-icon">
+                    <i class="fa-solid fa-lightbulb"></i>
+                </div>
+                <div class="advice-content">
+                    <h3>რჩევა</h3>
+                    <p>{{selectedElement.advice}}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="info-section">
+            <div class="section-header-new">
+                <div class="section-icon">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <div class="section-text">
+                    <h2>ელემენტები ასტროლოგიაში</h2>
+                    <p>ზოდიაქოს 12 ნიშანი დაყოფილია ოთხ ელემენტად</p>
+                </div>
+            </div>
+
+            <p class="info-description">
+                თითოეული ელემენტი წარმოადგენს განსხვავებულ ენერგიას და ხასიათს.
+                ელემენტების გაგება დაგეხმარებათ უკეთ გაიცნოთ საკუთარი თავი და სხვები.
+            </p>
+
+            <div class="info-grid">
+                <div class="info-card fire">
+                    <div class="info-icon"><i class="fas fa-fire"></i></div>
+                    <h4>ცეცხლი</h4>
+                    <p>ენერგია, პასია, მოქმედება</p>
+                </div>
+                <div class="info-card earth">
+                    <div class="info-icon"><i class="fas fa-mountain"></i></div>
+                    <h4>მიწა</h4>
+                    <p>სტაბილურობა, პრაქტიკა, რეალობა</p>
+                </div>
+                <div class="info-card air">
+                    <div class="info-icon"><i class="fas fa-wind"></i></div>
+                    <h4>ჰაერი</h4>
+                    <p>ინტელექტი, კომუნიკაცია, იდეები</p>
+                </div>
+                <div class="info-card water">
+                    <div class="info-icon"><i class="fas fa-water"></i></div>
+                    <h4>წყალი</h4>
+                    <p>ემოცია, ინტუიცია, სიღრმე</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

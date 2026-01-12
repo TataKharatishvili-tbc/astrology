@@ -1,0 +1,285 @@
+<div class="name-number-container">
+    <!-- Main Card Section -->
+    <section class="main-card-section">
+        <div class="name-main-card">
+            <div class="card-header-main">
+                <div class="header-left">
+                    <h1 class="main-title">
+                        <i class="fa-solid fa-signature"></i>
+                        სახელის ნუმეროლოგია
+                    </h1>
+                    <p class="main-subtitle">
+                        თითოეულ ასოს აქვს ციფრული ვიბრაცია. სახელის ვიბრაციის დასადგენად აუცილებელია
+                        თითოეული ასოს ციფრად გარდაქმნა და ჯამის ერთ ციფრამდე შემცირება.
+                    </p>
+                </div>
+                <div class="header-right">
+                    <div class="icon-display">
+                        <i class="fa-solid fa-signature"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculator Form -->
+            <div class="calculator-content">
+                <h3 class="calculator-title">
+                    <i class="fa-solid fa-pen"></i>
+                    შეიყვანეთ თქვენი სრული სახელი
+                </h3>
+
+                <form class="calculator-form" (ngSubmit)="calculate()">
+                    <div class="input-group-single">
+                        <label for="fullName">სრული სახელი (ქართულად ან ლათინურად)</label>
+                        <input type="text" id="fullName" [(ngModel)]="fullName" name="fullName"
+                            placeholder="მაგ: Giorgi Beridze ან გიორგი ბერიძე" required />
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="calc-button" [disabled]="!fullName || fullName.trim() === ''">
+                            <i class="fa-solid fa-calculator"></i>
+                            გამოთვლა
+                        </button>
+                        <button type="button" class="reset-button" (click)="reset()" *ngIf="showResult">
+                            <i class="fa-solid fa-rotate-left"></i>
+                            თავიდან
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Result Section -->
+    <section class="result-section" *ngIf="showResult && destinyNumber">
+        <!-- Destiny Number -->
+        <div class="result-card" *ngIf="getDestinyMeaning()">
+            <div class="result-header">
+                <span class="result-badge destiny">Destiny Number</span>
+                <h2 class="result-subtitle">ბედის რიცხვი - სახასიათო და შინაგანი ძალა</h2>
+            </div>
+            <div class="number-display">
+                <div class="number-circle destiny">{{ destinyNumber }}</div>
+                <h2 class="number-title">{{ getDestinyMeaning()?.title }}</h2>
+                <span class="master-badge" *ngIf="destinyNumber === 11 || destinyNumber === 22">
+                    <i class="fa-solid fa-crown"></i>
+                    Master Number
+                </span>
+            </div>
+
+            <div class="meaning-content">
+                <div class="description-section">
+                    <h3>
+                        <i class="fa-solid fa-quote-left"></i>
+                        აღწერა
+                    </h3>
+                    <p>{{ getDestinyMeaning()?.description }}</p>
+                </div>
+
+                <div class="traits-grid">
+                    <div class="trait-card strengths">
+                        <h3>
+                            <i class="fa-solid fa-star"></i>
+                            ძლიერი მხარეები
+                        </h3>
+                        <ul>
+                            <li *ngFor="let strength of getDestinyMeaning()?.strengths">
+                                <i class="fa-solid fa-check"></i>
+                                {{ strength }}
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="trait-card characteristics">
+                        <h3>
+                            <i class="fa-solid fa-fingerprint"></i>
+                            მახასიათებლები
+                        </h3>
+                        <ul>
+                            <li *ngFor="let trait of getDestinyMeaning()?.traits">
+                                <i class="fa-solid fa-circle-dot"></i>
+                                {{ trait }}
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="trait-card challenges">
+                        <h3>
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            გამოწვევები
+                        </h3>
+                        <ul>
+                            <li *ngFor="let challenge of getDestinyMeaning()?.challenges">
+                                <i class="fa-solid fa-exclamation"></i>
+                                {{ challenge }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Soul Urge Number -->
+        <div class="result-card" *ngIf="getSoulUrgeMeaning()">
+            <div class="result-header">
+                <span class="result-badge soul">Soul Urge Number</span>
+                <h2 class="result-subtitle">სულის სურვილი - შინაგანი იდეალები და ფარული სურვილები</h2>
+            </div>
+            <div class="number-display">
+                <div class="number-circle soul">{{ soulUrgeNumber }}</div>
+                <h2 class="number-title">{{ getSoulUrgeMeaning()?.title }}</h2>
+                <span class="master-badge" *ngIf="soulUrgeNumber === 11 || soulUrgeNumber === 22">
+                    <i class="fa-solid fa-crown"></i>
+                    Master Number
+                </span>
+            </div>
+
+            <div class="meaning-content">
+                <div class="description-section">
+                    <h3>
+                        <i class="fa-solid fa-heart"></i>
+                        აღწერა
+                    </h3>
+                    <p>{{ getSoulUrgeMeaning()?.description }}</p>
+                </div>
+
+                <div class="traits-grid-simple">
+                    <div class="trait-card characteristics">
+                        <h3>
+                            <i class="fa-solid fa-fingerprint"></i>
+                            მახასიათებლები
+                        </h3>
+                        <ul>
+                            <li *ngFor="let trait of getSoulUrgeMeaning()?.traits">
+                                <i class="fa-solid fa-circle-dot"></i>
+                                {{ trait }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Personality Number -->
+        <div class="result-card" *ngIf="getPersonalityMeaning()">
+            <div class="result-header">
+                <span class="result-badge personality">Personality Number</span>
+                <h2 class="result-subtitle">პიროვნების რიცხვი - პიროვნების ნამდვილი ღირებულება</h2>
+            </div>
+            <div class="number-display">
+                <div class="number-circle personality">{{ personalityNumber }}</div>
+                <h2 class="number-title">{{ getPersonalityMeaning()?.title }}</h2>
+                <span class="master-badge" *ngIf="personalityNumber === 11 || personalityNumber === 22">
+                    <i class="fa-solid fa-crown"></i>
+                    Master Number
+                </span>
+            </div>
+
+            <div class="meaning-content">
+                <div class="description-section">
+                    <h3>
+                        <i class="fa-solid fa-user"></i>
+                        აღწერა
+                    </h3>
+                    <p>{{ getPersonalityMeaning()?.description }}</p>
+                </div>
+
+                <div class="traits-grid-simple">
+                    <div class="trait-card characteristics">
+                        <h3>
+                            <i class="fa-solid fa-fingerprint"></i>
+                            მახასიათებლები
+                        </h3>
+                        <ul>
+                            <li *ngFor="let trait of getPersonalityMeaning()?.traits">
+                                <i class="fa-solid fa-circle-dot"></i>
+                                {{ trait }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="info-section">
+        <div class="info-card">
+            <h2>
+                <i class="fa-solid fa-circle-info"></i>
+                რა არის სახელის ნუმეროლოგია?
+            </h2>
+            <p>
+                სახელის ნუმეროლოგია ავლენს თქვენი სახელის ენერგიას და ვიბრაციას. ის გვიჩვენებს, თუ როგორ
+                აღიქვამენ თქვენ სხვები და რა შთაბეჭდილებას ტოვებთ გარშემომყოფებზე.
+            </p>
+            <p>
+                თითოეულ ასოს აქვს ციფრული მნიშვნელობა Pythagorean სისტემის მიხედვით, რომელიც არის
+                ნუმეროლოგიის ყველაზე პოპულარული მეთოდი.
+            </p>
+        </div>
+
+        <!-- Example or Calculation Steps -->
+        <div class="example-card" *ngIf="!showResult">
+            <h3>
+                <i class="fa-solid fa-lightbulb"></i>
+                Pythagorean ცხრილი
+            </h3>
+            <div class="pythagorean-table">
+                <div class="table-row">
+                    <div class="cell header">1</div>
+                    <div class="cell header">2</div>
+                    <div class="cell header">3</div>
+                    <div class="cell header">4</div>
+                    <div class="cell header">5</div>
+                    <div class="cell header">6</div>
+                    <div class="cell header">7</div>
+                    <div class="cell header">8</div>
+                    <div class="cell header">9</div>
+                </div>
+                <div class="table-row">
+                    <div class="cell">A J S</div>
+                    <div class="cell">B K T</div>
+                    <div class="cell">C L U</div>
+                    <div class="cell">D M V</div>
+                    <div class="cell">E N W</div>
+                    <div class="cell">F O X</div>
+                    <div class="cell">G P Y</div>
+                    <div class="cell">H Q Z</div>
+                    <div class="cell">I R</div>
+                </div>
+            </div>
+            <p class="table-note">
+                <i class="fa-solid fa-info-circle"></i>
+                ქართული ასოებიც მუშაობს იმავე პრინციპით
+            </p>
+        </div>
+
+        <!-- Calculation Steps -->
+        <div class="calculation-steps" *ngIf="showResult && calculationSteps.length > 0">
+            <h3>
+                <i class="fa-solid fa-chart-line"></i>
+                გამოთვლის პროცესი:
+            </h3>
+            <pre class="steps-content">{{ calculationSteps.join('\n') }}</pre>
+        </div>
+
+        <div class="master-numbers-card">
+            <h3>
+                <i class="fa-solid fa-crown"></i>
+                Master Numbers (11, 22)
+            </h3>
+            <p>
+                Master Numbers არის განსაკუთრებული რიცხვები ნუმეროლოგიაში, რომლებიც არ მცირდება ერთ
+                ციფრამდე. ისინი ატარებენ უფრო მაღალ ვიბრაციას და მეტ სულიერ პოტენციალს.
+            </p>
+            <ul class="master-list">
+                <li>
+                    <strong>11:</strong> სულიერი მესენჯერი - ინტუიცია და განათება
+                </li>
+                <li>
+                    <strong>22:</strong> მთავარი მშენებელი - ვიზიონერული ლიდერობა
+                </li>
+            </ul>
+        </div>
+    </section>
+</div>

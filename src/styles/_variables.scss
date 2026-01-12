@@ -3,33 +3,33 @@
 // ===================================
 
 // ძირითადი ფერები - კოსმოსური თემა
-$primary-dark: #0a0e27;           // ღრმა კოსმოსური ღამე
-$primary-purple: #6c4ab6;         // მისტიური მეწამული
-$primary-violet: #8b5cf6;         // ენერგიული იისფერი
-$primary-blue: #3b82f6;           // კოსმოსური ლურჯი
-$accent-gold: #fbbf24;            // ოქროს ელფერი (მზე)
-$accent-silver: #e5e7eb;          // ვერცხლის ელფერი (მთვარე)
-$accent-pink: #ec4899;            // სიყვარულის როზი
+$primary-dark: #0a0e27; // ღრმა კოსმოსური ღამე
+$primary-purple: #6c4ab6; // მისტიური მეწამული
+$primary-violet: #8b5cf6; // ენერგიული იისფერი
+$primary-blue: #3b82f6; // კოსმოსური ლურჯი
+$accent-gold: #fbbf24; // ოქროს ელფერი (მზე)
+$accent-silver: #e5e7eb; // ვერცხლის ელფერი (მთვარე)
+$accent-pink: #ec4899; // სიყვარულის როზი
 
 // ფონის ფერები
-$bg-primary: #0f172a;             // მთავარი ფონი
-$bg-secondary: #1e293b;           // მეორადი ფონი
-$bg-card: #1e1b4b;                // ბარათების ფონი
-$bg-card-hover: #2e2566;          // ბარათების hover
+$bg-primary: #0f172a; // მთავარი ფონი
+$bg-secondary: #1e293b; // მეორადი ფონი
+$bg-card: #1e1b4b; // ბარათების ფონი
+$bg-card-hover: #2e2566; // ბარათების hover
 $bg-gradient-start: #0f172a;
 $bg-gradient-end: #1e1b4b;
 
 // ტექსტის ფერები
-$text-primary: #f8fafc;           // ძირითადი ტექსტი
-$text-secondary: #cbd5e1;         // მეორადი ტექსტი
-$text-muted: #94a3b8;             // დამუქებული ტექსტი
-$text-gold: #fbbf24;              // აქცენტური ოქროსფერი
+$text-primary: #f8fafc; // ძირითადი ტექსტი
+$text-secondary: #cbd5e1; // მეორადი ტექსტი
+$text-muted: #94a3b8; // დამუქებული ტექსტი
+$text-gold: #fbbf24; // აქცენტური ოქროსფერი
 
 // ზოდიაქოს ნიშნების ფერები
-$zodiac-fire: #f97316;            // ცეცხლი (თხის რქა, ლომი, მშვილდოსანი)
-$zodiac-earth: #84cc16;           // მიწა (კურო, ქალწული, თხის რქა)
-$zodiac-air: #06b6d4;             // ჰაერი (წყლის დამცველი, სასწორი, ტყუპები)
-$zodiac-water: #8b5cf6;           // წყალი (კირჩხები, მორიელი, თევზები)
+$zodiac-fire: #f97316; // ცეცხლი (თხის რქა, ლომი, მშვილდოსანი)
+$zodiac-earth: #84cc16; // მიწა (კურო, ქალწული, თხის რქა)
+$zodiac-air: #06b6d4; // ჰაერი (წყლის დამცველი, სასწორი, ტყუპები)
+$zodiac-water: #8b5cf6; // წყალი (კირჩხები, მორიელი, თევზები)
 
 // ელემენტის ფერები
 $element-fire-bg: rgba(249, 115, 22, 0.1);
@@ -76,32 +76,32 @@ $breakpoint-desktop: 1024px;
 $breakpoint-wide: 1280px;
 
 // ინტერვალები
-$spacing-xs: 0.25rem;   // 4px
-$spacing-sm: 0.5rem;    // 8px
-$spacing-md: 1rem;      // 16px
-$spacing-lg: 1.5rem;    // 24px
-$spacing-xl: 2rem;      // 32px
-$spacing-2xl: 3rem;     // 48px
-$spacing-3xl: 4rem;     // 64px
+$spacing-xs: 0.25rem; // 4px
+$spacing-sm: 0.5rem; // 8px
+$spacing-md: 1rem; // 16px
+$spacing-lg: 1.5rem; // 24px
+$spacing-xl: 2rem; // 32px
+$spacing-2xl: 3rem; // 48px
+$spacing-3xl: 4rem; // 64px
 
 // ბორდერ რადიუსები
-$radius-sm: 0.375rem;   // 6px
-$radius-md: 0.5rem;     // 8px
-$radius-lg: 0.75rem;    // 12px
-$radius-xl: 1rem;       // 16px
-$radius-2xl: 1.5rem;    // 24px
+$radius-sm: 0.375rem; // 6px
+$radius-md: 0.5rem; // 8px
+$radius-lg: 0.75rem; // 12px
+$radius-xl: 1rem; // 16px
+$radius-2xl: 1.5rem; // 24px
 $radius-full: 9999px;
 
 // ფონტის ზომები
-$font-xs: 0.75rem;      // 12px
-$font-sm: 0.875rem;     // 14px
-$font-base: 1rem;       // 16px
-$font-lg: 1.125rem;     // 18px
-$font-xl: 1.25rem;      // 20px
-$font-2xl: 1.5rem;      // 24px
-$font-3xl: 1.875rem;    // 30px
-$font-4xl: 2.25rem;     // 36px
-$font-5xl: 3rem;        // 48px
+$font-xs: 0.75rem; // 12px
+$font-sm: 0.875rem; // 14px
+$font-base: 1rem; // 16px
+$font-lg: 1.125rem; // 18px
+$font-xl: 1.25rem; // 20px
+$font-2xl: 1.5rem; // 24px
+$font-3xl: 1.875rem; // 30px
+$font-4xl: 2.25rem; // 36px
+$font-5xl: 3rem; // 48px
 
 // ფონტის წონები
 $font-light: 300;

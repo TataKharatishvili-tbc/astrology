@@ -1,131 +1,99 @@
 <header class="header" [class.scrolled]="isScrolled">
-  <div class="container">
-    <div class="header-content">
-      
-      <!-- ლოგო -->
-      <div class="logo">
-        <a routerLink="/" class="logo-link" (click)="closeMobileMenu()">
-          <span class="logo-icon"><i class="fa-solid fa-sparkles"></i></span>
-          <span class="logo-text">
-            <span class="logo-main">AstroGeo</span>
-            <span class="logo-sub">ასტროლოგია</span>
-          </span>
-        </a>
-      </div>
+    <div class="container">
+        <div class="header-content">
 
-      <!-- Desktop ნავიგაცია -->
-      <nav class="desktop-nav">
-        <ul class="nav-list">
-          <li 
-            *ngFor="let item of menuItems" 
-            class="nav-item"
-            [class.has-dropdown]="item.children"
-            [class.dropdown-open]="isDropdownOpen(item.label)">
-            
-            <!-- ბმული dropdown-ის გარეშე -->
-            <a 
-              *ngIf="!item.children"
-              [routerLink]="item.path" 
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{exact: item.path === '/'}"
-              class="nav-link">
-              <i [class]="item.icon"></i>
-              <span>{{ item.label }}</span>
-            </a>
-
-            <!-- dropdown trigger -->
-            <button 
-              *ngIf="item.children"
-              class="nav-link dropdown-trigger"
-              (click)="toggleDropdown(item.label, $event)">
-              <i [class]="item.icon"></i>
-              <span>{{ item.label }}</span>
-              <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
-            </button>
-
-            <!-- dropdown მენიუ -->
-            <div *ngIf="item.children" class="dropdown-menu">
-              <a 
-                *ngFor="let child of item.children"
-                [routerLink]="child.path"
-                routerLinkActive="active"
-                class="dropdown-item"
-                (click)="closeDropdown()">
-                <span class="dropdown-item-label">{{ child.label }}</span>
-                <span class="dropdown-item-description" *ngIf="child.description">
-                  {{ child.description }}
-                </span>
-              </a>
+            <!-- ლოგო -->
+            <div class="logo">
+                <a routerLink="/" class="logo-link" (click)="closeMobileMenu()">
+                    <span class="logo-icon"><i class="fa-solid fa-sparkles"></i></span>
+                    <span class="logo-text">
+                        <span class="logo-main">AstroGeo</span>
+                        <span class="logo-sub">ასტროლოგია</span>
+                    </span>
+                </a>
             </div>
-          </li>
-        </ul>
-      </nav>
 
-      <!-- Mobile მენიუს ღილაკი -->
-      <button 
-        class="mobile-menu-btn" 
-        (click)="toggleMobileMenu()"
-        [class.open]="isMobileMenuOpen"
-        aria-label="Toggle menu">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-      </button>
+            <!-- Desktop ნავიგაცია -->
+            <nav class="desktop-nav">
+                <ul class="nav-list">
+                    <li *ngFor="let item of menuItems" class="nav-item" [class.has-dropdown]="item.children"
+                        [class.dropdown-open]="isDropdownOpen(item.label)">
+
+                        <!-- ბმული dropdown-ის გარეშე -->
+                        <a *ngIf="!item.children" [routerLink]="item.path" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact: item.path === '/'}" class="nav-link">
+                            <i [class]="item.icon"></i>
+                            <span>{{ item.label }}</span>
+                        </a>
+
+                        <!-- dropdown trigger -->
+                        <button *ngIf="item.children" class="nav-link dropdown-trigger"
+                            (click)="toggleDropdown(item.label, $event)">
+                            <i [class]="item.icon"></i>
+                            <span>{{ item.label }}</span>
+                            <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+                        </button>
+
+                        <!-- dropdown მენიუ -->
+                        <div *ngIf="item.children" class="dropdown-menu">
+                            <a *ngFor="let child of item.children" [routerLink]="child.path" routerLinkActive="active"
+                                class="dropdown-item" (click)="closeDropdown()">
+                                <span class="dropdown-item-label">{{ child.label }}</span>
+                                <span class="dropdown-item-description" *ngIf="child.description">
+                                    {{ child.description }}
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Mobile მენიუს ღილაკი -->
+            <button class="mobile-menu-btn" (click)="toggleMobileMenu()" [class.open]="isMobileMenuOpen"
+                aria-label="Toggle menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
     </div>
-  </div>
 
-  <!-- Mobile მენიუ -->
-  <div class="mobile-menu" [class.open]="isMobileMenuOpen">
-    <nav class="mobile-nav">
-      <ul class="mobile-nav-list">
-        <li 
-          *ngFor="let item of menuItems" 
-          class="mobile-nav-item"
-          [class.has-dropdown]="item.children">
-          
-          <!-- ბმული dropdown-ის გარეშე -->
-          <a 
-            *ngIf="!item.children"
-            [routerLink]="item.path" 
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{exact: item.path === '/'}"
-            class="mobile-nav-link"
-            (click)="closeMobileMenu()">
-            <i [class]="item.icon"></i>
-            <span>{{ item.label }}</span>
-          </a>
+    <!-- Mobile მენიუ -->
+    <div class="mobile-menu" [class.open]="isMobileMenuOpen">
+        <nav class="mobile-nav">
+            <ul class="mobile-nav-list">
+                <li *ngFor="let item of menuItems" class="mobile-nav-item" [class.has-dropdown]="item.children">
 
-          <!-- dropdown კონტეინერი -->
-          <div *ngIf="item.children" class="mobile-dropdown">
-            <button 
-              class="mobile-nav-link dropdown-trigger"
-              [class.active]="isDropdownOpen(item.label)"
-              (click)="toggleDropdown(item.label, $event)">
-              <i [class]="item.icon"></i>
-              <span>{{ item.label }}</span>
-              <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
-            </button>
+                    <!-- ბმული dropdown-ის გარეშე -->
+                    <a *ngIf="!item.children" [routerLink]="item.path" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: item.path === '/'}" class="mobile-nav-link"
+                        (click)="closeMobileMenu()">
+                        <i [class]="item.icon"></i>
+                        <span>{{ item.label }}</span>
+                    </a>
 
-            <div class="mobile-dropdown-content" [class.open]="isDropdownOpen(item.label)">
-              <a 
-                *ngFor="let child of item.children"
-                [routerLink]="child.path"
-                routerLinkActive="active"
-                class="mobile-dropdown-item"
-                (click)="closeMobileMenu()">
-                {{ child.label }}
-              </a>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </nav>
-  </div>
+                    <!-- dropdown კონტეინერი -->
+                    <div *ngIf="item.children" class="mobile-dropdown">
+                        <button class="mobile-nav-link dropdown-trigger" [class.active]="isDropdownOpen(item.label)"
+                            (click)="toggleDropdown(item.label, $event)">
+                            <i [class]="item.icon"></i>
+                            <span>{{ item.label }}</span>
+                            <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+                        </button>
 
-  <!-- ფონის overlay mobile menu-სთვის -->
-  <div 
-    class="mobile-overlay" 
-    [class.visible]="isMobileMenuOpen"
-    (click)="closeMobileMenu()">
-  </div>
+                        <div class="mobile-dropdown-content" [class.open]="isDropdownOpen(item.label)">
+                            <a *ngFor="let child of item.children" [routerLink]="child.path" routerLinkActive="active"
+                                class="mobile-dropdown-item" (click)="closeMobileMenu()">
+                                {{ child.label }}
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- ფონის overlay mobile menu-სთვის -->
+    <div class="mobile-overlay" [class.visible]="isMobileMenuOpen" (click)="closeMobileMenu()">
+    </div>
 </header>

@@ -1,0 +1,207 @@
+<div class="compatibility-page">
+    <!-- Falling Emojis Container -->
+    <div class="emoji-rain" *ngIf="fallingEmojis.length > 0">
+        <span 
+            *ngFor="let emoji of fallingEmojis" 
+            class="falling-emoji"
+            [style.left.%]="emoji.left"
+            [style.animation-delay.s]="emoji.delay"
+            [style.animation-duration.s]="emoji.duration"
+            [style.font-size.rem]="emoji.size">
+            {{emoji.emoji}}
+        </span>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="page-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="header-icon">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <div class="header-text">
+                        <h1 class="page-title">სასიყვარულო თავსებადობა</h1>
+                        <p class="page-subtitle">აირჩიეთ ორი ზოდიაქოს ნიშანი რომანტიული თავსებადობის შესამოწმებლად</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Selector Card -->
+        <div class="main-card">
+            <div class="selector-section">
+                <div class="sign-selector">
+                    <label>პირველი ნიშანი</label>
+                    <div class="custom-select">
+                        <select [(ngModel)]="selectedSign1" (change)="showResult = false">
+                            <option value="">აირჩიეთ ნიშანი</option>
+                            <option *ngFor="let sign of zodiacSigns" [value]="sign.id">
+                                {{sign.icon}} {{sign.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="heart-divider">
+                    <span class="heart-icon"><i class="fa-solid fa-heart"></i></span>
+                </div>
+
+                <div class="sign-selector">
+                    <label>მეორე ნიშანი</label>
+                    <div class="custom-select">
+                        <select [(ngModel)]="selectedSign2" (change)="showResult = false">
+                            <option value="">აირჩიეთ ნიშანი</option>
+                            <option *ngFor="let sign of zodiacSigns" [value]="sign.id">
+                                {{sign.icon}} {{sign.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-primary" (click)="calculate()" [disabled]="!selectedSign1 || !selectedSign2">
+                    <i class="fa-solid fa-sparkles"></i>
+                    თავსებადობის შემოწმება
+                </button>
+                <button class="btn-secondary" (click)="reset()" *ngIf="showResult">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    ხელახლა
+                </button>
+            </div>
+
+            <!-- Result Section Inside Card -->
+            <div class="result-section-inner" *ngIf="showResult && compatibilityResult">
+                <div class="result-divider"></div>
+                
+                <div class="result-header">
+                    <div class="sign-display">
+                        <span class="sign-icon">{{getSignIcon(selectedSign1)}}</span>
+                        <span class="sign-name">{{getSignName(selectedSign1)}}</span>
+                    </div>
+                    <div class="heart-connector">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                    <div class="sign-display">
+                        <span class="sign-icon">{{getSignIcon(selectedSign2)}}</span>
+                        <span class="sign-name">{{getSignName(selectedSign2)}}</span>
+                    </div>
+                </div>
+
+                <div class="compatibility-score" [ngClass]="getRatingClass()">
+                    <div class="percentage-circle">
+                        <div class="percentage-number">{{animatedPercentage}}%</div>
+                        <div class="rating-text">{{compatibilityResult.rating}}</div>
+                    </div>
+                </div>
+
+                <div class="result-content">
+                    <h2>{{compatibilityResult.title}}</h2>
+                    <p class="description">{{compatibilityResult.description}}</p>
+
+                    <div class="details-grid">
+                        <div class="detail-card strengths">
+                            <div class="card-header-icon">
+                                <i class="fa-solid fa-hand-fist"></i>
+                            </div>
+                            <h3>ძლიერი მხარეები</h3>
+                            <ul>
+                                <li *ngFor="let strength of compatibilityResult.strengths">{{strength}}</li>
+                            </ul>
+                        </div>
+
+                        <div class="detail-card challenges">
+                            <div class="card-header-icon warning">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                            <h3>გამოწვევები</h3>
+                            <ul>
+                                <li *ngFor="let challenge of compatibilityResult.challenges">{{challenge}}</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="advice-card">
+                        <div class="advice-icon">
+                            <i class="fa-solid fa-lightbulb"></i>
+                        </div>
+                        <div class="advice-content">
+                            <h3>რჩევა</h3>
+                            <p>{{compatibilityResult.advice}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="info-section">
+            <div class="section-header-new">
+                <div class="section-icon">
+                    <i class="fa-solid fa-fire-flame-curved"></i>
+                </div>
+                <div class="section-text">
+                    <h2>როგორ მუშაობს თავსებადობა?</h2>
+                    <p>ზოდიაქოს ელემენტები და მათი ურთიერთქმედება</p>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card fire">
+                    <div class="info-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3>ცეცხლის ნიშნები</h3>
+                    <p>ვერძი, ლომი, მშვილდოსანი</p>
+                    <span class="element-trait">პასიონური, ენერგიული</span>
+                </div>
+
+                <div class="info-card earth">
+                    <div class="info-icon">
+                        <i class="fas fa-mountain"></i>
+                    </div>
+                    <h3>მიწის ნიშნები</h3>
+                    <p>კურო, ქალწული, თხის რქა</p>
+                    <span class="element-trait">სტაბილური, პრაქტიკული</span>
+                </div>
+
+                <div class="info-card air">
+                    <div class="info-icon">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <h3>ჰაერის ნიშნები</h3>
+                    <p>ტყუპები, სასწორი, მერწყული</p>
+                    <span class="element-trait">ინტელექტუალური, თავისუფალი</span>
+                </div>
+
+                <div class="info-card water">
+                    <div class="info-icon">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <h3>წყლის ნიშნები</h3>
+                    <p>კირჩხიბი, მორიელი, თევზები</p>
+                    <span class="element-trait">ემოციური, ინტუიციური</span>
+                </div>
+            </div>
+
+            <div class="compatibility-guide">
+                <h3>თავსებადობის დონეები</h3>
+                <div class="guide-items">
+                    <div class="guide-item excellent">
+                        <span class="guide-percentage">80-100%</span>
+                        <span class="guide-label">შესანიშნავი თავსებადობა</span>
+                    </div>
+                    <div class="guide-item good">
+                        <span class="guide-percentage">60-79%</span>
+                        <span class="guide-label">კარგი თავსებადობა</span>
+                    </div>
+                    <div class="guide-item average">
+                        <span class="guide-percentage">40-59%</span>
+                        <span class="guide-label">საშუალო თავსებადობა</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

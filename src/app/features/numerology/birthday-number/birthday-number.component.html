@@ -1,0 +1,170 @@
+<div class="birthday-container">
+    <!-- Main Card Section -->
+    <section class="main-card-section">
+        <div class="birthday-main-card">
+            <div class="card-header-main">
+                <div class="header-left">
+                    <h1 class="main-title">
+                        <i class="fa-solid fa-cake-candles"></i>
+                        დაბადების რიცხვი
+                    </h1>
+                    <p class="main-subtitle">
+                        დაბადების რიცხვი არის ერთ-ერთი ყველაზე მნიშვნელოვანი ინფორმაცია ადამიანის შესახებ.
+                        ის გვიამბობს პიროვნულ მახასიათებლებზე, ნასწავლ გაკვეთილებზე და სისუსტეებზე, რომლებიც
+                        უნდა ავიცილოთ.
+                    </p>
+                </div>
+                <div class="header-right">
+                    <div class="icon-display">
+                        <i class="fa-solid fa-cake-candles"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculator Form -->
+            <div class="calculator-content">
+                <h3 class="calculator-title">
+                    <i class="fa-solid fa-calendar-day"></i>
+                    შეიყვანეთ დაბადების დღე
+                </h3>
+
+                <form class="calculator-form" (ngSubmit)="calculate()">
+                    <div class="input-group-single">
+                        <label for="day">დაბადების დღე (1-31)</label>
+                        <input type="number" id="day" [(ngModel)]="day" name="day" min="1" max="31"
+                            placeholder="შეიყვანეთ 1-დან 31-მდე" required />
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="calc-button" [disabled]="!day">
+                            <i class="fa-solid fa-search"></i>
+                            ნახვა
+                        </button>
+                        <button type="button" class="reset-button" (click)="reset()" *ngIf="showResult">
+                            <i class="fa-solid fa-rotate-left"></i>
+                            თავიდან
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Result Section -->
+    <section class="result-section" *ngIf="showResult && birthdayNumber && getMeaning()">
+        <div class="result-card">
+            <div class="number-display">
+                <div class="number-circle">{{ birthdayNumber }}</div>
+                <h2 class="number-title">{{ getMeaning()?.character }}</h2>
+            </div>
+
+            <div class="meaning-content">
+                <div class="description-section">
+                    <h3>
+                        <i class="fa-solid fa-quote-left"></i>
+                        აღწერა
+                    </h3>
+                    <p>{{ getMeaning()?.description }}</p>
+                </div>
+
+                <div class="traits-grid">
+                    <div class="trait-card strengths">
+                        <h3>
+                            <i class="fa-solid fa-star"></i>
+                            ძლიერი მხარეები
+                        </h3>
+                        <ul>
+                            <li *ngFor="let strength of getMeaning()?.strengths">
+                                <i class="fa-solid fa-check"></i>
+                                {{ strength }}
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="trait-card characteristics">
+                        <h3>
+                            <i class="fa-solid fa-fingerprint"></i>
+                            მახასიათებლები
+                        </h3>
+                        <ul>
+                            <li *ngFor="let trait of getMeaning()?.traits">
+                                <i class="fa-solid fa-circle-dot"></i>
+                                {{ trait }}
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="trait-card challenges">
+                        <h3>
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            გამოწვევები
+                        </h3>
+                        <ul>
+                            <li *ngFor="let challenge of getMeaning()?.challenges">
+                                <i class="fa-solid fa-exclamation"></i>
+                                {{ challenge }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="info-section">
+        <div class="info-card">
+            <h2>
+                <i class="fa-solid fa-circle-info"></i>
+                რა არის დაბადების რიცხვი?
+            </h2>
+            <p>
+                დაბადების რიცხვი არის თქვენი დაბადების დღე (1-დან 31-მდე). ეს რიცხვი ავლენს თქვენს
+                ბუნებრივ ტალანტებს, უნიკალურ თვისებებს და განსაკუთრებულობას.
+            </p>
+            <p>
+                იგი განსხვავდება ცხოვრების გზის რიცხვისგან და წარმოადგენს თქვენი პიროვნების კონკრეტულ
+                ასპექტს, რომელიც დაკავშირებულია დაბადების კონკრეტულ დღესთან.
+            </p>
+        </div>
+
+        <!-- Birthday Numbers Table (when not calculated) -->
+        <div class="numbers-table-card" *ngIf="!showResult">
+            <h3>
+                <i class="fa-solid fa-table"></i>
+                დაბადების რიცხვების მნიშვნელობები
+            </h3>
+            <div class="numbers-grid">
+                <div class="number-item" *ngFor="let meaning of birthdayMeanings">
+                    <span class="day-number">{{ meaning.day }}</span>
+                    <span class="day-character">{{ meaning.character }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="master-numbers-card">
+            <h3>
+                <i class="fa-solid fa-lightbulb"></i>
+                რჩევები
+            </h3>
+            <p>
+                დაბადების რიცხვი ავლენს თქვენს ბუნებრივ ტალანტებს და უნარებს. გამოიყენეთ ეს ცოდნა
+                თქვენი ძლიერი მხარეების გასაძლიერებლად და სისუსტეების დასაძლევად.
+            </p>
+            <ul class="tips-list">
+                <li>
+                    <i class="fa-solid fa-check-circle"></i>
+                    <strong>გაიცანით თქვენი ძლიერი მხარეები:</strong> გამოიყენეთ ისინი ყოველდღიურ ცხოვრებაში
+                </li>
+                <li>
+                    <i class="fa-solid fa-check-circle"></i>
+                    <strong>იმუშავეთ გამოწვევებზე:</strong> ისინი თქვენი ზრდის შესაძლებლობებია
+                </li>
+                <li>
+                    <i class="fa-solid fa-check-circle"></i>
+                    <strong>დაუკავშირეთ სხვა რიცხვებს:</strong> გააერთიანეთ ცხოვრების გზისა და დაბადების რიცხვი
+                </li>
+            </ul>
+        </div>
+    </section>
+</div>

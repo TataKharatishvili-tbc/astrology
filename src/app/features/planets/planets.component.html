@@ -1,0 +1,213 @@
+<div class="planets-page">
+    <div class="container">
+        <!-- Header -->
+        <div class="page-header">
+            <a routerLink="/" class="back-link">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>მთავარი</span>
+            </a>
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="header-icon">
+                        <i class="fa-solid fa-globe"></i>
+                    </div>
+                    <div class="header-text">
+                        <h1 class="page-title">პლანეტები და მათი გავლენა</h1>
+                        <p class="page-subtitle">აღმოაჩინე თითოეული პლანეტის მნიშვნელობა ასტროლოგიაში</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Planets Grid -->
+        <div class="planets-grid">
+            <div class="planet-card" *ngFor="let planet of planets; let i = index"
+                (click)="selectPlanet(planet)" 
+                [class.selected]="selectedPlanet?.id === planet.id"
+                [style.--delay]="i * 0.1 + 's'">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="planet-header">
+                        <span class="planet-symbol">{{planet.symbol}}</span>
+                        <span class="planet-icon-small">{{planet.icon}}</span>
+                    </div>
+                    <h3>{{planet.name}}</h3>
+                    <p class="planet-brief">{{planet.description.substring(0, 80)}}...</p>
+
+                    <div class="ruler-info" *ngIf="planet.rulerOf.length">
+                        <span class="ruler-label">მფარველი:</span>
+                        <div class="ruler-signs">
+                            <span *ngFor="let ruler of planet.rulerOf" class="ruler-sign">
+                                {{ruler.signIcon}} {{ruler.sign}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="keywords-preview">
+                        <span *ngFor="let keyword of planet.keywords.slice(0, 3)" class="keyword-tag">
+                            {{keyword}}
+                        </span>
+                    </div>
+
+                    <button class="details-btn">
+                        <span>დეტალურად</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Planet Details -->
+        <div class="planet-details" *ngIf="selectedPlanet" id="planet-details">
+            <div class="details-header">
+                <div class="header-left">
+                    <div class="planet-symbols">
+                        <span class="big-symbol">{{selectedPlanet.symbol}}</span>
+                        <span class="astro-symbol">{{selectedPlanet.icon}}</span>
+                    </div>
+                    <div class="header-info">
+                        <h2>{{selectedPlanet.name}}</h2>
+                        <p class="description">{{selectedPlanet.description}}</p>
+                        <div class="meta-info" *ngIf="selectedPlanet.dayOfWeek">
+                            <span class="day-tag">
+                                <i class="fa-solid fa-calendar-day"></i>
+                                {{selectedPlanet.dayOfWeek}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <button class="close-btn" (click)="closeDetails()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="represents-section">
+                <div class="section-header-small">
+                    <i class="fa-solid fa-sparkles"></i>
+                    <h3>რას წარმოადგენს</h3>
+                </div>
+                <div class="represents-grid">
+                    <div class="represent-item" *ngFor="let item of selectedPlanet.represents">
+                        <span class="dot"></span>
+                        {{item}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="details-main-grid">
+                <div class="detail-box characteristics">
+                    <div class="box-icon"><i class="fa-solid fa-star"></i></div>
+                    <h3>მახასიათებლები</h3>
+                    <ul>
+                        <li *ngFor="let char of selectedPlanet.characteristics">{{char}}</li>
+                    </ul>
+                </div>
+
+                <div class="detail-box traits-section">
+                    <div class="traits-column positive">
+                        <div class="box-icon success"><i class="fa-solid fa-check"></i></div>
+                        <h3>დადებითი</h3>
+                        <ul>
+                            <li *ngFor="let trait of selectedPlanet.positiveTraits">{{trait}}</li>
+                        </ul>
+                    </div>
+                    <div class="traits-column negative">
+                        <div class="box-icon warning"><i class="fa-solid fa-exclamation"></i></div>
+                        <h3>უარყოფითი</h3>
+                        <ul>
+                            <li *ngFor="let trait of selectedPlanet.negativeTraits">{{trait}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ruler-section" *ngIf="selectedPlanet.rulerOf.length">
+                <div class="section-header-small">
+                    <i class="fa-solid fa-crown"></i>
+                    <h3>რომელი ზოდიაქოს ნიშნის მფარველია</h3>
+                </div>
+                <div class="ruler-cards">
+                    <a *ngFor="let ruler of selectedPlanet.rulerOf" [routerLink]="['/zodiac', ruler.sign.toLowerCase()]"
+                        class="ruler-card">
+                        <span class="ruler-icon">{{ruler.signIcon}}</span>
+                        <span class="ruler-name">{{ruler.sign}}</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="influence-grid">
+                <div class="influence-card love">
+                    <div class="card-icon"><i class="fa-solid fa-heart"></i></div>
+                    <h3>სიყვარულში</h3>
+                    <p>{{selectedPlanet.inLove}}</p>
+                </div>
+                <div class="influence-card career">
+                    <div class="card-icon"><i class="fa-solid fa-briefcase"></i></div>
+                    <h3>კარიერაში</h3>
+                    <p>{{selectedPlanet.inCareer}}</p>
+                </div>
+            </div>
+
+            <div class="advice-box">
+                <div class="advice-icon">
+                    <i class="fa-solid fa-lightbulb"></i>
+                </div>
+                <div class="advice-content">
+                    <h3>რჩევა</h3>
+                    <p>{{selectedPlanet.advice}}</p>
+                </div>
+            </div>
+
+            <div class="keywords-full">
+                <div class="section-header-small">
+                    <i class="fa-solid fa-key"></i>
+                    <h3>საკვანძო სიტყვები</h3>
+                </div>
+                <div class="keywords-list">
+                    <span *ngFor="let keyword of selectedPlanet.keywords" class="keyword-badge">
+                        {{keyword}}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="info-section">
+            <div class="section-header-new">
+                <div class="section-icon">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <div class="section-text">
+                    <h2>პლანეტების როლი ასტროლოგიაში</h2>
+                    <p>თითოეული პლანეტა წარმოადგენს სხვადასხვა ენერგიას</p>
+                </div>
+            </div>
+
+            <p class="info-description">
+                მზე და მთვარე განსაზღვრავენ ძირითად პიროვნებას, ხოლო სხვა პლანეტები გავლენას ახდენენ
+                სპეციფიკურ სფეროებზე - კომუნიკაციიდან სიყვარულამდე, ქმედებიდან სულიერებამდე.
+            </p>
+
+            <div class="planet-categories">
+                <div class="category-card personal">
+                    <div class="category-icon"><i class="fa-solid fa-sun"></i></div>
+                    <h4>პერსონალური პლანეტები</h4>
+                    <p>მზე, მთვარე, მერკური, ვენერა, მარსი</p>
+                    <span class="category-desc">ეხება პიროვნულ თვისებებს</span>
+                </div>
+                <div class="category-card social">
+                    <div class="category-icon"><i class="fa-solid fa-globe"></i></div>
+                    <h4>სოციალური პლანეტები</h4>
+                    <p>იუპიტერი, სატურნი</p>
+                    <span class="category-desc">ეხება ზრდასა და სტრუქტურას</span>
+                </div>
+                <div class="category-card transpersonal">
+                    <div class="category-icon"><i class="fa-solid fa-star"></i></div>
+                    <h4>ტრანსპერსონალური</h4>
+                    <p>ურანი, ნეპტუნი, პლუტონი</p>
+                    <span class="category-desc">ეხება თაობის გავლენას</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

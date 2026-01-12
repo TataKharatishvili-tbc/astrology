@@ -1,197 +1,173 @@
 <div class="life-path-container">
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <div class="icon-wrapper">
-        <i class="fa-solid fa-calculator"></i>
-      </div>
-      <h1 class="title">ცხოვრების გზის რიცხვი</h1>
-      <p class="subtitle">
-        ცხოვრების გზის რიცხვი არის თქვენი ნუმეროლოგიური იდენტობის ყველაზე მნიშვნელოვანი ასპექტი.
-        ის ავლენს თქვენს ბუნებას, ტალანტებს და ცხოვრებისეულ მისიას.
-      </p>
-    </div>
-  </section>
+    <!-- Main Card Section -->
+    <section class="main-card-section">
+        <div class="life-path-main-card">
+            <div class="card-header-main">
+                <div class="header-left">
+                    <h1 class="main-title">
+                        <i class="fa-solid fa-calculator"></i>
+                        ცხოვრების გზის რიცხვი
+                    </h1>
+                    <p class="main-subtitle">
+                        ცხოვრების გზის რიცხვი არის თქვენი ნუმეროლოგიური იდენტობის ყველაზე მნიშვნელოვანი ასპექტი.
+                        ის ავლენს თქვენს ბუნებას, ტალანტებს და ცხოვრებისეულ მისიას.
+                    </p>
+                </div>
+                <div class="header-right">
+                    <div class="icon-display">
+                        <i class="fa-solid fa-calculator"></i>
+                    </div>
+                </div>
+            </div>
 
-  <!-- Calculator Section -->
-  <section class="calculator-section">
-    <div class="calculator-card">
-      <h2 class="card-title">
-        <i class="fa-solid fa-calculator"></i>
-        გამოთვალეთ თქვენი რიცხვი
-      </h2>
-      
-      <form class="calculator-form" (ngSubmit)="calculate()">
-        <div class="input-group">
-          <label for="day">დღე</label>
-          <input 
-            type="number" 
-            id="day" 
-            [(ngModel)]="day" 
-            name="day"
-            min="1" 
-            max="31" 
-            placeholder="1-31"
-            required
-          />
+            <!-- Calculator Form -->
+            <div class="calculator-content">
+                <h3 class="calculator-title">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    შეიყვანეთ დაბადების თარიღი
+                </h3>
+
+                <form class="calculator-form" (ngSubmit)="calculate()">
+                    <div class="input-group">
+                        <label for="day">დღე</label>
+                        <input type="number" id="day" [(ngModel)]="day" name="day" min="1" max="31" placeholder="1-31"
+                            required />
+                    </div>
+
+                    <div class="input-group">
+                        <label for="month">თვე</label>
+                        <input type="number" id="month" [(ngModel)]="month" name="month" min="1" max="12"
+                            placeholder="1-12" required />
+                    </div>
+
+                    <div class="input-group">
+                        <label for="year">წელი</label>
+                        <input type="number" id="year" [(ngModel)]="year" name="year" min="1900" max="2100"
+                            placeholder="მაგ: 1990" required />
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="calc-button" [disabled]="!day || !month || !year">
+                            <i class="fa-solid fa-calculator"></i>
+                            გამოთვლა
+                        </button>
+                        <button type="button" class="reset-button" (click)="reset()" *ngIf="showResult">
+                            <i class="fa-solid fa-rotate-left"></i>
+                            თავიდან
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Result Section -->
+    <section class="result-section" *ngIf="showResult && lifePathNumber && getMeaning()">
+        <div class="result-card">
+            <div class="number-display">
+                <div class="number-circle">{{ lifePathNumber }}</div>
+                <h2 class="number-title">{{ getMeaning()?.title }}</h2>
+                <span class="master-badge"
+                    *ngIf="lifePathNumber === 11 || lifePathNumber === 22 || lifePathNumber === 33">
+                    <i class="fa-solid fa-crown"></i>
+                    Master Number
+                </span>
+            </div>
+
+            <div class="meaning-content">
+                <div class="description-section">
+                    <h3>
+                        <i class="fa-solid fa-quote-left"></i>
+                        აღწერა
+                    </h3>
+                    <p>{{ getMeaning()?.description }}</p>
+                </div>
+
+                <div class="traits-grid">
+                    <div class="trait-card strengths">
+                        <h3>
+                            <i class="fa-solid fa-star"></i>
+                            ძლიერი მხარეები
+                        </h3>
+                        <ul>
+                            <li *ngFor="let strength of getMeaning()?.strengths">
+                                <i class="fa-solid fa-check"></i>
+                                {{ strength }}
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="trait-card characteristics">
+                        <h3>
+                            <i class="fa-solid fa-fingerprint"></i>
+                            მახასიათებლები
+                        </h3>
+                        <ul>
+                            <li *ngFor="let trait of getMeaning()?.traits">
+                                <i class="fa-solid fa-circle-dot"></i>
+                                {{ trait }}
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="trait-card challenges">
+                        <h3>
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            გამოწვევები
+                        </h3>
+                        <ul>
+                            <li *ngFor="let challenge of getMeaning()?.challenges">
+                                <i class="fa-solid fa-exclamation"></i>
+                                {{ challenge }}
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="trait-card careers">
+                        <h3>
+                            <i class="fa-solid fa-briefcase"></i>
+                            შესაფერისი კარიერა
+                        </h3>
+                        <ul>
+                            <li *ngFor="let career of getMeaning()?.careers">
+                                <i class="fa-solid fa-arrow-right"></i>
+                                {{ career }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="info-section">
+        <div class="info-card">
+            <h2>
+                <i class="fa-solid fa-circle-info"></i>
+                რა არის ცხოვრების გზის რიცხვი?
+            </h2>
+            <p>
+                ცხოვრების გზის რიცხვი არის ნუმეროლოგიის ერთ-ერთი უმთავრესი კომპონენტი. ის გამოითვლება
+                თქვენი დაბადების თარიღიდან და წარმოადგენს თქვენს ბირთვულ პიროვნებას, ტალანტებსა და
+                უნიკალურ მისიას ამ ცხოვრებაში.
+            </p>
+            <p>
+                ეს რიცხვი გეხმარებათ გაიგოთ, თუ როგორი ხართ თქვენ, რა არის თქვენი მიზანი და რა გზით
+                უნდა იაროთ წარმატებისკენ. ის ასევე ავლენს თქვენს ძლიერ მხარეებს და გამოწვევებს, რომლებიც
+                შეიძლება წააწყდეთ ცხოვრების გზაზე.
+            </p>
         </div>
 
-        <div class="input-group">
-          <label for="month">თვე</label>
-          <input 
-            type="number" 
-            id="month" 
-            [(ngModel)]="month" 
-            name="month"
-            min="1" 
-            max="12" 
-            placeholder="1-12"
-            required
-          />
-        </div>
-
-        <div class="input-group">
-          <label for="year">წელი</label>
-          <input 
-            type="number" 
-            id="year" 
-            [(ngModel)]="year" 
-            name="year"
-            min="1900" 
-            max="2100" 
-            placeholder="მაგ: 1990"
-            required
-          />
-        </div>
-
-        <div class="button-group">
-          <button type="submit" class="calc-button" [disabled]="!day || !month || !year">
-            <i class="fa-solid fa-calculator"></i>
-            გამოთვლა
-          </button>
-          <button type="button" class="reset-button" (click)="reset()" *ngIf="showResult">
-            <i class="fa-solid fa-rotate-left"></i>
-            თავიდან
-          </button>
-        </div>
-      </form>
-
-      <!-- Calculation Steps -->
-      <div class="calculation-steps" *ngIf="calculationSteps.length > 0">
-        <h3>
-          <i class="fa-solid fa-chart-line"></i>
-          გამოთვლის პროცესი:
-        </h3>
-        <pre class="steps-content">{{ calculationSteps.join('\n') }}</pre>
-      </div>
-    </div>
-  </section>
-
-  <!-- Result Section -->
-  <section class="result-section" *ngIf="showResult && lifePathNumber && getMeaning()">
-    <div class="result-card">
-      <div class="number-display">
-        <div class="number-circle">{{ lifePathNumber }}</div>
-        <h2 class="number-title">{{ getMeaning()?.title }}</h2>
-        <span class="master-badge" *ngIf="lifePathNumber === 11 || lifePathNumber === 22 || lifePathNumber === 33">
-          <i class="fa-solid fa-crown"></i>
-          Master Number
-        </span>
-      </div>
-
-      <div class="meaning-content">
-        <div class="description-section">
-          <h3>
-            <i class="fa-solid fa-quote-left"></i>
-            აღწერა
-          </h3>
-          <p>{{ getMeaning()?.description }}</p>
-        </div>
-
-        <div class="traits-grid">
-          <div class="trait-card strengths">
+        <!-- Example Card (when not calculated) -->
+        <div class="example-card" *ngIf="!showResult">
             <h3>
-              <i class="fa-solid fa-star"></i>
-              ძლიერი მხარეები
+                <i class="fa-solid fa-lightbulb"></i>
+                მაგალითი:
             </h3>
-            <ul>
-              <li *ngFor="let strength of getMeaning()?.strengths">
-                <i class="fa-solid fa-check"></i>
-                {{ strength }}
-              </li>
-            </ul>
-          </div>
-
-          <div class="trait-card characteristics">
-            <h3>
-              <i class="fa-solid fa-fingerprint"></i>
-              მახასიათებლები
-            </h3>
-            <ul>
-              <li *ngFor="let trait of getMeaning()?.traits">
-                <i class="fa-solid fa-circle-dot"></i>
-                {{ trait }}
-              </li>
-            </ul>
-          </div>
-
-          <div class="trait-card challenges">
-            <h3>
-              <i class="fa-solid fa-triangle-exclamation"></i>
-              გამოწვევები
-            </h3>
-            <ul>
-              <li *ngFor="let challenge of getMeaning()?.challenges">
-                <i class="fa-solid fa-exclamation"></i>
-                {{ challenge }}
-              </li>
-            </ul>
-          </div>
-
-          <div class="trait-card careers">
-            <h3>
-              <i class="fa-solid fa-briefcase"></i>
-              შესაფერისი კარიერა
-            </h3>
-            <ul>
-              <li *ngFor="let career of getMeaning()?.careers">
-                <i class="fa-solid fa-arrow-right"></i>
-                {{ career }}
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Info Section -->
-  <section class="info-section">
-    <div class="info-card">
-      <h2>
-        <i class="fa-solid fa-circle-info"></i>
-        რა არის ცხოვრების გზის რიცხვი?
-      </h2>
-      <p>
-        ცხოვრების გზის რიცხვი არის ნუმეროლოგიის ერთ-ერთი უმთავრესი კომპონენტი. ის გამოითვლება
-        თქვენი დაბადების თარიღიდან და წარმოადგენს თქვენს ბირთვულ პიროვნებას, ტალანტებსა და 
-        უნიკალურ მისიას ამ ცხოვრებაში.
-      </p>
-      <p>
-        ეს რიცხვი გეხმარებათ გაიგოთ, თუ როგორი ხართ თქვენ, რა არის თქვენი მიზანი და რა გზით 
-        უნდა იაროთ წარმატებისკენ. ის ასევე ავლენს თქვენს ძლიერ მხარეებს და გამოწვევებს, რომლებიც
-        შეიძლება წააწყდეთ ცხოვრების გზაზე.
-      </p>
-    </div>
-
-    <div class="example-card">
-      <h3>
-        <i class="fa-solid fa-lightbulb"></i>
-        მაგალითი:
-      </h3>
-      <div class="example-content">
-        <p><strong>დაბადების თარიღი:</strong> 17 დეკემბერი 2025</p>
-        <pre class="example-calc">
+            <div class="example-content">
+                <p><strong>დაბადების თარიღი:</strong> 17 დეკემბერი 2025</p>
+                <pre class="example-calc">
 🔢 დღე: 17
    17 → 1 + 7 = 8
 
@@ -206,29 +182,39 @@
 
 ✅ ცხოვრების გზის რიცხვი: 2
         </pre>
-      </div>
-    </div>
+            </div>
+        </div>
 
-    <div class="master-numbers-card">
-      <h3>
-        <i class="fa-solid fa-crown"></i>
-        Master Numbers (11, 22, 33)
-      </h3>
-      <p>
-        Master Numbers არის განსაკუთრებული რიცხვები ნუმეროლოგიაში, რომლებიც არ მცირდება ერთ
-        ციფრამდე. ისინი ატარებენ უფრო მაღალ ვიბრაციას და მეტ სულიერ პოტენციალს.
-      </p>
-      <ul class="master-list">
-        <li>
-          <strong>11:</strong> სულიერი მესენჯერი - ინტუიცია და განათება
-        </li>
-        <li>
-          <strong>22:</strong> მთავარი მშენებელი - ვიზიონერული ლიდერობა
-        </li>
-        <li>
-          <strong>33:</strong> მთავარი მასწავლებელი - უმაღლესი სიყვარული და მზრუნველობა
-        </li>
-      </ul>
-    </div>
-  </section>
+        <!-- Calculation Steps (when calculated) -->
+        <div class="calculation-steps" *ngIf="showResult && calculationSteps.length > 0">
+            <h3>
+                <i class="fa-solid fa-chart-line"></i>
+                გამოთვლის პროცესი:
+            </h3>
+            <pre class="steps-content">{{ calculationSteps.join('\n') }}</pre>
+        </div>
+
+        <!-- Master Numbers Card -->
+        <div class="master-numbers-card">
+            <h3>
+                <i class="fa-solid fa-crown"></i>
+                Master Numbers (11, 22, 33)
+            </h3>
+            <p>
+                Master Numbers არის განსაკუთრებული რიცხვები ნუმეროლოგიაში, რომლებიც არ მცირდება ერთ
+                ციფრამდე. ისინი ატარებენ უფრო მაღალ ვიბრაციას და მეტ სულიერ პოტენციალს.
+            </p>
+            <ul class="master-list">
+                <li>
+                    <strong>11:</strong> სულიერი მესენჯერი - ინტუიცია და განათება
+                </li>
+                <li>
+                    <strong>22:</strong> მთავარი მშენებელი - ვიზიონერული ლიდერობა
+                </li>
+                <li>
+                    <strong>33:</strong> მთავარი მასწავლებელი - უმაღლესი სიყვარული და მზრუნველობა
+                </li>
+            </ul>
+        </div>
+    </section>
 </div>

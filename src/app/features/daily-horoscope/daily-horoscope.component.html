@@ -1,100 +1,117 @@
 <div class="daily-horoscope-page">
-  <div class="container">
-    
-    <!-- Header -->
-    <div class="page-header">
-      <a routerLink="/" class="back-link">
-        <i class="fa-solid fa-arrow-left"></i>
-        <span>უკან</span>
-      </a>
-      <div class="header-content">
-        <h1 class="page-title">დღის ჰოროსკოპი</h1>
-        <p class="page-date">{{ getCurrentDate() }}</p>
-      </div>
+    <div class="container">
+
+        <!-- Header - მთავარი გვერდის სტილით -->
+        <div class="page-header">
+            <a routerLink="/" class="back-link">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>მთავარი</span>
+            </a>
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="header-icon">
+                        <i class="fa-solid fa-sun"></i>
+                    </div>
+                    <div class="header-text">
+                        <h1 class="page-title">დღის ჰოროსკოპი</h1>
+                        <p class="page-subtitle">{{ getCurrentDate() }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zodiac Selector -->
+        <div class="zodiac-selector">
+            <button *ngFor="let sign of allSigns" [class.active]="selectedSign?.id === sign.id"
+                (click)="selectSign(sign)" class="zodiac-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="getZodiacViewBox(sign.id)" class="btn-svg" [innerHTML]="getZodiacSvgPath(sign.id)"></svg>
+                <span class="btn-name">{{ sign.name }}</span>
+            </button>
+        </div>
+
+        <!-- Horoscope Content -->
+        <div class="horoscope-content" *ngIf="selectedSign">
+
+            <!-- Sign Info -->
+            <div class="sign-info">
+                <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="getZodiacViewBox(selectedSign.id)" class="sign-symbol-svg" [innerHTML]="getZodiacSvgPath(selectedSign.id)"></svg>
+                <div class="sign-details">
+                    <h2 class="sign-name">{{ selectedSign.name }}</h2>
+                    <p class="sign-dates">{{ selectedSign.dateRange }}</p>
+                    <div class="sign-meta">
+                        <span class="meta-item">
+                            <i class="fa-solid fa-fire"></i>
+                            {{ selectedSign.element === 'fire' ? 'ცეცხლი' :
+                            selectedSign.element === 'earth' ? 'მიწა' :
+                            selectedSign.element === 'air' ? 'ჰაერი' : 'წყალი' }}
+                        </span>
+                        <span class="meta-item">
+                            <i class="fa-solid fa-globe"></i>
+                            {{ selectedSign.rulingPlanet }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Horoscope Sections -->
+            <div class="horoscope-sections">
+
+                <div class="section-card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-sparkles"></i>
+                        <h3>ზოგადი</h3>
+                    </div>
+                    <p class="card-text">{{ horoscopeContent.general }}</p>
+                </div>
+
+                <div class="section-card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-heart"></i>
+                        <h3>სიყვარული</h3>
+                    </div>
+                    <p class="card-text">{{ horoscopeContent.love }}</p>
+                </div>
+
+                <div class="section-card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-briefcase"></i>
+                        <h3>კარიერა</h3>
+                    </div>
+                    <p class="card-text">{{ horoscopeContent.career }}</p>
+                </div>
+
+                <div class="section-card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                        <h3>ჯანმრთელობა</h3>
+                    </div>
+                    <p class="card-text">{{ horoscopeContent.health }}</p>
+                </div>
+
+                <div class="section-card lucky-card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-clover"></i>
+                        <h3>საბედნიერო</h3>
+                    </div>
+                    <div class="lucky-items">
+                        <div class="lucky-item">
+                            <span class="lucky-label">რიცხვი</span>
+                            <span class="lucky-value">7</span>
+                        </div>
+                        <div class="lucky-item">
+                            <span class="lucky-label">ფერი</span>
+                            <span class="lucky-value">💛</span>
+                        </div>
+                        <div class="lucky-item">
+                            <span class="lucky-label">დღე</span>
+                            <span class="lucky-value">პარასკევი</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
-
-    <!-- Zodiac Selector -->
-    <div class="zodiac-selector">
-      <button 
-        *ngFor="let sign of allSigns"
-        [class.active]="selectedSign?.id === sign.id"
-        (click)="selectSign(sign)"
-        class="zodiac-btn">
-        <span class="btn-symbol">{{ sign.symbol }}</span>
-        <span class="btn-name">{{ sign.name }}</span>
-      </button>
-    </div>
-
-    <!-- Horoscope Content -->
-    <div class="horoscope-content" *ngIf="selectedSign">
-      
-      <!-- Sign Info -->
-      <div class="sign-info">
-        <div class="sign-symbol-large">{{ selectedSign.symbol }}</div>
-        <div class="sign-details">
-          <h2 class="sign-name">{{ selectedSign.name }}</h2>
-          <p class="sign-dates">{{ selectedSign.dateRange }}</p>
-          <div class="sign-meta">
-            <span class="meta-item">
-              <i class="fa-solid fa-fire"></i>
-              {{ selectedSign.element === 'fire' ? 'ცეცხლი' :
-                 selectedSign.element === 'earth' ? 'მიწა' :
-                 selectedSign.element === 'air' ? 'ჰაერი' : 'წყალი' }}
-            </span>
-            <span class="meta-item">
-              <i class="fa-solid fa-planet-ringed"></i>
-              {{ selectedSign.rulingPlanet }}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Horoscope Sections -->
-      <div class="horoscope-sections">
-        
-        <div class="section-card">
-          <div class="card-header">
-            <i class="fa-solid fa-sparkles"></i>
-            <h3>ზოგადი</h3>
-          </div>
-          <p class="card-text">{{ horoscopeContent.general }}</p>
-        </div>
-
-        <div class="section-card">
-          <div class="card-header">
-            <i class="fa-solid fa-heart"></i>
-            <h3>სიყვარული</h3>
-          </div>
-          <p class="card-text">{{ horoscopeContent.love }}</p>
-        </div>
-
-        <div class="section-card">
-          <div class="card-header">
-            <i class="fa-solid fa-briefcase"></i>
-            <h3>კარიერა</h3>
-          </div>
-          <p class="card-text">{{ horoscopeContent.career }}</p>
-        </div>
-
-        <div class="section-card">
-          <div class="card-header">
-            <i class="fa-solid fa-heart-pulse"></i>
-            <h3>ჯანმრთელობა</h3>
-          </div>
-          <p class="card-text">{{ horoscopeContent.health }}</p>
-        </div>
-
-        <div class="section-card lucky-card">
-          <div class="card-header">
-            <i class="fa-solid fa-clover"></i>
-            <h3>საბედნიერო</h3>
-          </div>
-          <p class="card-text">{{ horoscopeContent.lucky }}</p>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
 </div>

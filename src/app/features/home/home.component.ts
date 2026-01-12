@@ -1,166 +1,258 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ZodiacService } from '../../core/services/zodiac.service';
 import { ZodiacSign } from '../../core/models/astrology.models';
 
 interface Feature {
-  title: string;
-  description: string;
-  icon: string;
-  link: string;
-  gradient: string;
+    title: string;
+    description: string;
+    icon: string;
+    link: string;
+    gradient: string;
 }
 
 interface Star {
-  left: number;
-  top: number;
-  delay: number;
-  size: number;
-  duration: number;
+    left: number;
+    top: number;
+    delay: number;
+    size: number;
+    duration: number;
+    type: 'twinkle' | 'moving' | 'static'; // კაშკაშა, მოძრავი ან სტატიკური
+    brightness: number; // 0.3-1
 }
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [CommonModule, RouterLink],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+    selector: 'app-home',
+    standalone: true,
+    imports: [CommonModule, RouterLink],
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
-  
-  zodiacSigns: ZodiacSign[] = [];
-  stars: Star[] = [];
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  constructor(private zodiacService: ZodiacService) {}
+    zodiacSigns: ZodiacSign[] = [];
+    stars: Star[] = [];
+    private scrollObserver!: IntersectionObserver;
 
-  ngOnInit() {
-    this.zodiacSigns = this.zodiacService.getAllSigns();
-    this.generateStars();
-  }
+    constructor(
+        private zodiacService: ZodiacService,
+        private sanitizer: DomSanitizer
+    ) { }
 
-  getCurrentDate(): string {
-    const months = ['იანვარი', 'თებერვალი', 'მარტი', 'აპრილი', 'მაისი', 'ივნისი', 
-                    'ივლისი', 'აგვისტო', 'სექტემბერი', 'ოქტომბერი', 'ნოემბერი', 'დეკემბერი'];
-    const days = ['კვირა', 'ორშაბათი', 'სამშაბათი', 'ოთხშაბათი', 'ხუთშაბათი', 'პარასკევი', 'შაბათი'];
-    const now = new Date();
-    const dayName = days[now.getDay()];
-    const day = now.getDate();
-    const month = months[now.getMonth()];
-    const year = now.getFullYear();
-    
-    return `${dayName}, ${day} ${month}, ${year}`;
-  }
-
-  getZodiacIcon(signId: string): string {
-    const icons: { [key: string]: string } = {
-      'aries': 'fa-solid fa-mars',           // ვერძი
-      'taurus': 'fa-solid fa-venus',         // კურო
-      'gemini': 'fa-solid fa-mercury',       // ტყუპები
-      'cancer': 'fa-solid fa-moon',          // კირჩხიბი
-      'leo': 'fa-solid fa-sun',              // ლომი
-      'virgo': 'fa-solid fa-mercury',        // ქალწული
-      'libra': 'fa-solid fa-venus',          // სასწორი
-      'scorpio': 'fa-solid fa-mars',         // მორიელი
-      'sagittarius': 'fa-solid fa-jupiter',  // მშვილდოსანი
-      'capricorn': 'fa-solid fa-saturn',     // თხის რქა
-      'aquarius': 'fa-solid fa-uranus',      // მერწყული
-      'pisces': 'fa-solid fa-neptune'        // თევზები
-    };
-    return icons[signId] || 'fa-solid fa-star';
-  }
-
-  getZodiacIconClass(zodiacId: string): string {
-    const iconMap: {[key: string]: string} = {
-      'aries': 'fas fa-fire',
-      'taurus': 'fas fa-mountain',
-      'gemini': 'fas fa-wind',
-      'cancer': 'fas fa-water',
-      'leo': 'fas fa-crown',
-      'virgo': 'fas fa-leaf',
-      'libra': 'fas fa-balance-scale',
-      'scorpio': 'fas fa-spider',
-      'sagittarius': 'fas fa-bow-arrow',
-      'capricorn': 'fas fa-mountain-sun',
-      'aquarius': 'fas fa-droplet',
-      'pisces': 'fas fa-fish'
-    };
-    return iconMap[zodiacId] || 'fas fa-star';
-  }
-
-  getElementIcon(element: string): string {
-    const icons: {[key: string]: string} = {
-      'fire': 'fas fa-fire',
-      'earth': 'fas fa-mountain',
-      'air': 'fas fa-wind',
-      'water': 'fas fa-water'
-    };
-    return icons[element] || 'fas fa-star';
-  }
-
-  generateStars() {
-    // გენერირება 5-6 წერტილისა
-    const count = 5 + Math.floor(Math.random() * 2); // 5 ან 6
-    for (let i = 0; i < count; i++) {
-      this.stars.push({
-        left: Math.random() * 100,
-        top: Math.random() * 100,
-        delay: Math.random() * 5,
-        size: 1 + Math.random() * 2, // 1-3px
-        duration: 15 + Math.random() * 10 // 15-25 წამი
-      });
+    ngOnInit() {
+        this.zodiacSigns = this.zodiacService.getAllSigns();
+        this.generateStars();
     }
-  }
 
-  features: Feature[] = [
-    {
-      title: 'დღიური ჰოროსკოპი',
-      description: 'ყოველდღიური პროგნოზი თქვენი ზოდიაქოს ნიშნისთვის',
-      icon: '☀️',
-      link: '/daily-horoscope',
-      gradient: 'gradient-fire'
-    },
-    {
-      title: 'თვიური ჰოროსკოპი',
-      description: 'გრძელვადიანი პროგნოზი მომავალი თვისთვის',
-      icon: '🌙',
-      link: '/monthly-horoscope',
-      gradient: 'gradient-ocean'
-    },
-    {
-      title: 'შეთავსებები',
-      description: 'გაიგეთ თქვენი თავსებადობა სხვა ნიშნებთან',
-      icon: '💕',
-      link: '/compatibility',
-      gradient: 'gradient-sunset'
-    },
-    {
-      title: 'მთვარის ფაზები',
-      description: 'მთვარის ფაზების კალენდარი და რჩევები',
-      icon: '🌕',
-      link: '/moon-phases',
-      gradient: 'gradient-mystical'
-    },
-    {
-      title: 'ნატალური რუკა',
-      description: 'შეიქმენით და გაანალიზეთ თქვენი ნატალური რუკა',
-      icon: '🔮',
-      link: '/natal-chart',
-      gradient: 'gradient-cosmic'
-    },
-    {
-      title: 'წლიური პროგნოზი',
-      description: 'სრული წლის დეტალური ასტროლოგიური პროგნოზი',
-      icon: '⭐',
-      link: '/yearly-horoscope',
-      gradient: 'gradient-fire'
+    ngAfterViewInit() {
+        this.initScrollAnimations();
     }
-  ];
 
-  moonPhases = [
-    { name: 'ახალი მთვარე', icon: '🌑', date: '18 დეკ' },
-    { name: 'მზარდი მთვარე', icon: '🌓', date: '25 დეკ' },
-    { name: 'სავსე მთვარე', icon: '🌕', date: '2 იან' },
-    { name: 'კლებადი მთვარე', icon: '🌗', date: '9 იან' }
-  ];
+    ngOnDestroy() {
+        if (this.scrollObserver) {
+            this.scrollObserver.disconnect();
+        }
+    }
+
+    private initScrollAnimations() {
+        const options = {
+            root: null,
+            rootMargin: '0px 0px -50px 0px',
+            threshold: 0.1
+        };
+
+        this.scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-visible');
+                    // დავტოვოთ ანიმაცია მხოლოდ ერთხელ
+                    this.scrollObserver.unobserve(entry.target);
+                }
+            });
+        }, options);
+
+        // ყველა ანიმაციური ელემენტის დაკვირვება
+        setTimeout(() => {
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            animatedElements.forEach(el => this.scrollObserver.observe(el));
+        }, 100);
+    }
+
+    getCurrentDate(): string {
+        const months = ['იანვარი', 'თებერვალი', 'მარტი', 'აპრილი', 'მაისი', 'ივნისი',
+            'ივლისი', 'აგვისტო', 'სექტემბერი', 'ოქტომბერი', 'ნოემბერი', 'დეკემბერი'];
+        const days = ['კვირა', 'ორშაბათი', 'სამშაბათი', 'ოთხშაბათი', 'ხუთშაბათი', 'პარასკევი', 'შაბათი'];
+        const now = new Date();
+        const dayName = days[now.getDay()];
+        const day = now.getDate();
+        const month = months[now.getMonth()];
+        const year = now.getFullYear();
+
+        return `${dayName}, ${day} ${month}, ${year}`;
+    }
+
+    getZodiacIcon(signId: string): string {
+        const icons: { [key: string]: string } = {
+            'aries': 'fa-solid fa-mars',           // ვერძი
+            'taurus': 'fa-solid fa-venus',         // კურო
+            'gemini': 'fa-solid fa-mercury',       // ტყუპები
+            'cancer': 'fa-solid fa-moon',          // კირჩხიბი
+            'leo': 'fa-solid fa-sun',              // ლომი
+            'virgo': 'fa-solid fa-mercury',        // ქალწული
+            'libra': 'fa-solid fa-venus',          // სასწორი
+            'scorpio': 'fa-solid fa-mars',         // მორიელი
+            'sagittarius': 'fa-solid fa-jupiter',  // მშვილდოსანი
+            'capricorn': 'fa-solid fa-saturn',     // თხის რქა
+            'aquarius': 'fa-solid fa-uranus',      // მერწყული
+            'pisces': 'fa-solid fa-neptune'        // თევზები
+        };
+        return icons[signId] || 'fa-solid fa-star';
+    }
+
+    getZodiacIconClass(zodiacId: string): string {
+        const iconMap: { [key: string]: string } = {
+            'aries': 'fas fa-fire',
+            'taurus': 'fas fa-mountain',
+            'gemini': 'fas fa-wind',
+            'cancer': 'fas fa-water',
+            'leo': 'fas fa-crown',
+            'virgo': 'fas fa-leaf',
+            'libra': 'fas fa-balance-scale',
+            'scorpio': 'fas fa-spider',
+            'sagittarius': 'fas fa-bow-arrow',
+            'capricorn': 'fas fa-mountain-sun',
+            'aquarius': 'fas fa-droplet',
+            'pisces': 'fas fa-fish'
+        };
+        return iconMap[zodiacId] || 'fas fa-star';
+    }
+
+    getElementIcon(element: string): string {
+        const icons: { [key: string]: string } = {
+            'fire': 'fas fa-fire',
+            'earth': 'fas fa-mountain',
+            'air': 'fas fa-wind',
+            'water': 'fas fa-water'
+        };
+        return icons[element] || 'fas fa-star';
+    }
+
+    getZodiacSvgPath(signId: string): SafeHtml {
+        const paths: { [key: string]: string } = {
+            'aries': '<path fill-rule="evenodd" d="M10.937 2.497a3.083 3.083 0 0 1-.555 2.475.251.251 0 0 1-.38.03l-.585-.585a.487.487 0 0 1-.094-.567 1.57 1.57 0 0 0 .175-.812 1.64 1.64 0 0 0-1.56-1.537A1.627 1.627 0 0 0 6.25 3.124v7.377a.5.5 0 0 1-.5.499h-.5a.5.5 0 0 1-.5-.499V3.123c0-.697-.439-1.332-1.104-1.541A1.63 1.63 0 0 0 1.5 3.125c0 .262.065.508.177.726a.486.486 0 0 1-.094.566l-.585.585a.25.25 0 0 1-.379-.03A3.114 3.114 0 0 1 2.497.062 3.101 3.101 0 0 1 5.5 1.115a3.114 3.114 0 0 1 5.437 1.382"/>',
+            'taurus': '<path fill-rule="evenodd" d="M6.883 3.804A4.499 4.499 0 0 0 8.962.588.51.51 0 0 0 8.466 0h-.495c-.241 0-.466.167-.498.407A3.005 3.005 0 0 1 4.5 3 3.004 3.004 0 0 1 1.528.407C1.495.167 1.271 0 1.029 0H.534a.509.509 0 0 0-.495.588 4.496 4.496 0 0 0 2.079 3.216A3.983 3.983 0 0 0 .602 7.911c.325 1.459 1.501 2.651 2.959 2.982A4.006 4.006 0 0 0 8.5 7a3.981 3.981 0 0 0-1.617-3.196M4.5 4.5C5.879 4.5 7 5.621 7 7S5.879 9.5 4.5 9.5A2.503 2.503 0 0 1 2 7c0-1.379 1.122-2.5 2.5-2.5"/>',
+            'gemini': '<path fill-rule="evenodd" d="M6.75 8.074A12.283 12.283 0 0 0 5.5 8c-.423 0-.838.032-1.25.074V2.926c.412.042.827.074 1.25.074.423 0 .838-.032 1.25-.074v5.148zM11 1.392V.44a.25.25 0 0 0-.367-.22A10.92 10.92 0 0 1 5.5 1.5C3.644 1.5 1.9 1.033.367.22A.249.249 0 0 0 0 .44v.952c0 .197.116.374.295.456a12.59 12.59 0 0 0 2.455.834v5.636a12.59 12.59 0 0 0-2.455.834.502.502 0 0 0-.295.456v.952c0 .189.2.309.367.22A10.92 10.92 0 0 1 5.5 9.5c1.856 0 3.6.467 5.133 1.28a.25.25 0 0 0 .367-.22v-.952a.502.502 0 0 0-.295-.456 12.59 12.59 0 0 0-2.455-.834V2.682a12.59 12.59 0 0 0 2.455-.834.502.502 0 0 0 .295-.456z"/>',
+            'cancer': '<path fill-rule="evenodd" d="M5.5 9.5c-.259 0-.515-.015-.768-.039a2.668 2.668 0 0 0 .65-2.073 2.71 2.71 0 0 0-2.436-2.377A2.69 2.69 0 0 0 .038 7.329C.021 7.451 0 7.573 0 7.7c0 1.065.623 1.977 1.518 2.416.06.028.118.06.179.086A9.442 9.442 0 0 0 5.5 11a9.437 9.437 0 0 0 5.275-1.608.501.501 0 0 0 .225-.418V7.85a.25.25 0 0 0-.41-.192A7.944 7.944 0 0 1 5.5 9.5M9.483.884c-.06-.028-.118-.06-.179-.087a9.46 9.46 0 0 0-9.079.811.504.504 0 0 0-.225.418v1.125a.25.25 0 0 0 .41.191 7.946 7.946 0 0 1 5.859-1.803 2.666 2.666 0 0 0-.65 2.076 2.71 2.71 0 0 0 2.438 2.374 2.69 2.69 0 0 0 2.905-2.318c.017-.122.038-.244.038-.371A2.692 2.692 0 0 0 9.483.884M2.7 6.5c.662 0 1.201.538 1.201 1.2a1.202 1.202 0 0 1-2.401 0c0-.662.539-1.2 1.2-1.2m5.6-4.4a1.201 1.201 0 0 1 0 2.4 1.201 1.201 0 0 1 0-2.4"/>',
+            'leo': '<path fill-rule="evenodd" d="M8.5 8.5c0-.596.351-1.414.689-2.205C9.588 5.366 10 4.404 10 3.5a3.5 3.5 0 1 0-7 0c0 .505.156 1.021.363 1.537C3.242 5.022 3.125 5 3 5A3 3 0 0 0 .006 8.192a3.013 3.013 0 0 0 2.803 2.802A3 3 0 0 0 6 8a3 3 0 0 0-.076-.654c-.138-.639-.446-1.287-.747-1.918C4.845 4.729 4.5 4.005 4.5 3.5c0-1.103.897-2 2-2s2 .897 2 2c0 .596-.351 1.414-.689 2.205C7.412 6.634 7 7.596 7 8.5a2.5 2.5 0 0 0 1.888 2.424.497.497 0 0 0 .612-.487v-.523c0-.208-.126-.4-.323-.468A1.001 1.001 0 0 1 8.5 8.5M3 6.5c.827 0 1.5.673 1.5 1.5S3.827 9.5 3 9.5 1.5 8.827 1.5 8 2.173 6.5 3 6.5"/>',
+            'virgo': '<path fill-rule="evenodd" d="M10 7.5V5a.75.75 0 0 1 1.5 0c0 1.26-.524 2.398-1.362 3.216A1.983 1.983 0 0 1 10 7.5M13 5a2.25 2.25 0 0 0-2.25-2.25c-.264 0-.514.054-.75.138v-.013A2.875 2.875 0 0 0 7.125 0C6.279 0 5.526.372 5 .953A2.858 2.858 0 0 0 2.875 0 2.875 2.875 0 0 0 0 2.875V7.5a.5.5 0 0 0 .5.5H1a.5.5 0 0 0 .5-.5V2.875a1.38 1.38 0 0 1 1.822-1.304c.56.178.928.715.928 1.303V7.5a.5.5 0 0 0 .5.5h.5a.5.5 0 0 0 .5-.5V2.874a1.376 1.376 0 0 1 1.444-1.372c.739.036 1.306.673 1.306 1.413V7.5c0 .568.148 1.096.388 1.571a4.525 4.525 0 0 1-1.437.405.502.502 0 0 0-.451.497v.504c0 .292.249.525.54.499a5.946 5.946 0 0 0 2.337-.711c.446.343.971.587 1.547.686a.498.498 0 0 0 .576-.494v-.51a.502.502 0 0 0-.401-.49 2.004 2.004 0 0 1-.433-.145A5.978 5.978 0 0 0 13 5"/>',
+            'libra': '<path fill-rule="evenodd" d="M10.5 8H8.833a4.457 4.457 0 0 0 1.086-3.857C9.587 2.387 8.191.949 6.439.595A4.505 4.505 0 0 0 1 5c0 1.158.45 2.203 1.168 3H.5a.5.5 0 0 0-.5.5V9a.5.5 0 0 0 .5.5h4A.5.5 0 0 0 5 9v-.659a.513.513 0 0 0-.381-.482A3.002 3.002 0 0 1 2.635 4.09c.27-.91 1-1.656 1.905-1.94A3.01 3.01 0 0 1 8.5 5a2.997 2.997 0 0 1-2.117 2.859c-.221.067-.383.253-.383.483V9a.5.5 0 0 0 .5.5h4A.5.5 0 0 0 11 9v-.5a.5.5 0 0 0-.5-.5m0 4H.5a.5.5 0 0 1-.5-.5V11a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v.5a.5.5 0 0 1-.5.5"/>',
+            'scorpio': '<path fill-rule="evenodd" d="M12 9.449V11a3.5 3.5 0 0 1-3.5-3.5V2.915c0-.74-.567-1.377-1.306-1.413A1.376 1.376 0 0 0 5.75 2.874V7.5a.5.5 0 0 1-.5.5h-.5a.5.5 0 0 1-.5-.5V2.874c0-.588-.368-1.125-.928-1.303A1.38 1.38 0 0 0 1.5 2.875V7.5A.5.5 0 0 1 1 8H.5a.5.5 0 0 1-.5-.5V2.875A2.875 2.875 0 0 1 2.875 0C3.721 0 4.474.372 5 .953A2.855 2.855 0 0 1 7.355.009C8.859.128 10 1.423 10 2.932V7.5c0 1.103.897 2 2 2v-.449a.25.25 0 0 1 .415-.188l1.37 1.199a.25.25 0 0 1 0 .376l-1.37 1.199a.25.25 0 0 1-.415-.188"/>',
+            'sagittarius': '<path fill-rule="evenodd" d="M11 .5v7a.5.5 0 0 1-.5.5H10a.5.5 0 0 1-.5-.5V2.561L5.561 6.5l1.116 1.116a.5.5 0 0 1 0 .707l-.354.354a.5.5 0 0 1-.707 0L4.5 7.561l-2.616 2.616a.5.5 0 0 1-.707 0l-.354-.354a.5.5 0 0 1 0-.707L3.439 6.5 2.323 5.384a.5.5 0 0 1 0-.707l.354-.354a.5.5 0 0 1 .707 0L4.5 5.439 8.439 1.5H3.5A.5.5 0 0 1 3 1V.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5"/>',
+            'capricorn': '<path fill-rule="evenodd" d="M8.75 9.5C7.785 9.5 7 8.715 7 7.75S7.785 6 8.75 6s1.75.785 1.75 1.75S9.715 9.5 8.75 9.5m.319-4.984A3.214 3.214 0 0 0 7 5.019V3A3 3 0 0 0 1.885.874 2.494 2.494 0 0 0 .282.016.252.252 0 0 0 0 .265v.821c0 .208.127.4.323.468A1 1 0 0 1 1 2.5v5a.5.5 0 0 0 .5.5H2a.5.5 0 0 0 .5-.5V3c0-.827.673-1.5 1.5-1.5s1.5.673 1.5 1.5v5c0 .695-.475 1.281-1.117 1.45A.506.506 0 0 0 4 9.936v.512c0 .318.293.555.605.49a3.015 3.015 0 0 0 1.712-1.054A3.227 3.227 0 0 0 8.75 11a3.25 3.25 0 0 0 3.244-3.445 3.261 3.261 0 0 0-2.925-3.039"/>',
+            'aquarius': '<path d="M9.646 4.293L7.5 6.439 5.354 4.293a.502.502 0 0 0-.708 0L2.5 6.439.427 4.366A.25.25 0 0 0 0 4.543v1.31c0 .133.053.26.146.354l2 2a.502.502 0 0 0 .708 0L5 6.061l2.146 2.146a.502.502 0 0 0 .708 0L10 6.061l2.573 2.573A.25.25 0 0 0 13 8.457v-1.31a.504.504 0 0 0-.146-.354l-2.5-2.5a.502.502 0 0 0-.708 0m-7.5-.086l-2-2A.504.504 0 0 1 0 1.853V.543A.25.25 0 0 1 .427.366L2.5 2.439 4.646.293a.502.502 0 0 1 .708 0L7.5 2.439 9.646.293a.502.502 0 0 1 .708 0l2.5 2.5a.504.504 0 0 1 .146.354v1.31a.25.25 0 0 1-.427.177L10 2.061 7.854 4.207a.502.502 0 0 1-.708 0L5 2.061 2.854 4.207a.502.502 0 0 1-.708 0"/>',
+            'pisces': '<path fill-rule="evenodd" d="M10.5 6.25H8.551a11 11 0 0 0 1.23 4.384.25.25 0 0 1-.22.366h-.952a.501.501 0 0 1-.456-.294A12.458 12.458 0 0 1 7.045 6.25H3.956a12.48 12.48 0 0 1-1.108 4.456.502.502 0 0 1-.456.294h-.953a.25.25 0 0 1-.22-.366A11.017 11.017 0 0 0 2.45 6.25H.5a.5.5 0 0 1-.5-.5v-.5a.5.5 0 0 1 .5-.5h1.949A10.99 10.99 0 0 0 1.219.366.25.25 0 0 1 1.439 0h.953c.196 0 .374.115.456.294A12.48 12.48 0 0 1 3.956 4.75h3.089A12.458 12.458 0 0 1 8.153.294.501.501 0 0 1 8.609 0h.952c.188 0 .308.2.22.366a11.006 11.006 0 0 0-1.23 4.384H10.5a.5.5 0 0 1 .5.5v.5a.5.5 0 0 1-.5.5"/>'
+        };
+        return this.sanitizer.bypassSecurityTrustHtml(paths[signId] || '');
+    }
+
+    getZodiacViewBox(signId: string): string {
+        const viewBoxes: { [key: string]: string } = {
+            'aries': '0 0 11 11',
+            'taurus': '0 0 9 11',
+            'gemini': '0 0 11 11',
+            'cancer': '0 0 11 11',
+            'leo': '0 0 10 11',
+            'virgo': '0 0 13 11',
+            'libra': '0 0 11 12',
+            'scorpio': '0 0 14 12',
+            'sagittarius': '0 0 11 11',
+            'capricorn': '0 0 12 11',
+            'aquarius': '0 0 13 9',
+            'pisces': '0 0 11 11'
+        };
+        return viewBoxes[signId] || '0 0 11 11';
+    }
+
+    generateStars() {
+        // ბევრი ვარსკვლავის გენერაცია - 150-200 ცალი
+        const count = 150 + Math.floor(Math.random() * 50);
+        const types: ('twinkle' | 'moving' | 'static')[] = ['twinkle', 'moving', 'static'];
+
+        for (let i = 0; i < count; i++) {
+            // 40% სტატიკური (მხოლოდ კაშკაშა), 40% კაშკაშა, 20% მოძრავი
+            let type: 'twinkle' | 'moving' | 'static';
+            const rand = Math.random();
+            if (rand < 0.4) {
+                type = 'static';
+            } else if (rand < 0.8) {
+                type = 'twinkle';
+            } else {
+                type = 'moving';
+            }
+
+            this.stars.push({
+                left: Math.random() * 100,
+                top: Math.random() * 100,
+                delay: Math.random() * 8,
+                size: 0.5 + Math.random() * 2.5, // 0.5-3px
+                duration: type === 'moving' ? 20 + Math.random() * 30 : 2 + Math.random() * 4, // მოძრავებისთვის გრძელი, კაშკაშისთვის მოკლე
+                type: type,
+                brightness: 0.3 + Math.random() * 0.7
+            });
+        }
+    }
+
+    features: Feature[] = [
+        {
+            title: 'დღიური ჰოროსკოპი',
+            description: 'ყოველდღიური პროგნოზი თქვენი ზოდიაქოს ნიშნისთვის',
+            icon: '☀️',
+            link: '/daily-horoscope',
+            gradient: 'gradient-fire'
+        },
+        {
+            title: 'თვიური ჰოროსკოპი',
+            description: 'გრძელვადიანი პროგნოზი მომავალი თვისთვის',
+            icon: '🌙',
+            link: '/monthly-horoscope',
+            gradient: 'gradient-ocean'
+        },
+        {
+            title: 'შეთავსებები',
+            description: 'გაიგეთ თქვენი თავსებადობა სხვა ნიშნებთან',
+            icon: '💕',
+            link: '/compatibility',
+            gradient: 'gradient-sunset'
+        },
+        {
+            title: 'მთვარის ფაზები',
+            description: 'მთვარის ფაზების კალენდარი და რჩევები',
+            icon: '🌕',
+            link: '/moon-phases',
+            gradient: 'gradient-mystical'
+        },
+        {
+            title: 'ნატალური რუკა',
+            description: 'შეიქმენით და გაანალიზეთ თქვენი ნატალური რუკა',
+            icon: '🔮',
+            link: '/natal-chart',
+            gradient: 'gradient-cosmic'
+        },
+        {
+            title: 'წლიური პროგნოზი',
+            description: 'სრული წლის დეტალური ასტროლოგიური პროგნოზი',
+            icon: '⭐',
+            link: '/yearly-horoscope',
+            gradient: 'gradient-fire'
+        }
+    ];
+
+    moonPhases = [
+        { name: 'ახალი მთვარე', icon: '🌑', date: '18 დეკ' },
+        { name: 'მზარდი მთვარე', icon: '🌓', date: '25 დეკ' },
+        { name: 'სავსე მთვარე', icon: '🌕', date: '2 იან' },
+        { name: 'კლებადი მთვარე', icon: '🌗', date: '9 იან' }
+    ];
 }

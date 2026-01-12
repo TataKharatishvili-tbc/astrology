@@ -1,76 +1,64 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ZodiacService } from '../../core/services/zodiac.service';
 import { ZodiacSign } from '../../core/models/astrology.models';
 
 @Component({
-  selector: 'app-daily-horoscope',
+  selector: 'app-zodiac-signs',
   imports: [CommonModule, RouterLink],
-  templateUrl: './daily-horoscope.component.html',
-  styleUrl: './daily-horoscope.component.scss'
+  templateUrl: './zodiac-signs.component.html',
+  styleUrls: ['./zodiac-signs.component.scss']
 })
-export class DailyHoroscopeComponent implements OnInit {
-  selectedSign?: ZodiacSign;
-  allSigns: ZodiacSign[] = [];
-  horoscopeContent = {
-    general: '',
-    love: '',
-    career: '',
-    health: '',
-    lucky: ''
-  };
+export class ZodiacSignsComponent implements OnInit {
+  zodiacSigns: ZodiacSign[] = [];
 
   constructor(
-    private route: ActivatedRoute,
     private zodiacService: ZodiacService,
     private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
-    this.allSigns = this.zodiacService.getAllSigns();
-
-    this.route.params.subscribe(params => {
-      const signId = params['id'];
-      if (signId) {
-        this.selectedSign = this.zodiacService.getSignById(signId);
-        this.generateHoroscope();
-      } else {
-        this.selectedSign = this.allSigns[0];
-        this.generateHoroscope();
-      }
-    });
+    this.zodiacSigns = this.zodiacService.getAllSigns();
   }
 
-  selectSign(sign: ZodiacSign) {
-    this.selectedSign = sign;
-    this.generateHoroscope();
-  }
-
-  getCurrentDate(): string {
-    const months = ['იანვარი', 'თებერვალი', 'მარტი', 'აპრილი', 'მაისი', 'ივნისი',
-      'ივლისი', 'აგვისტო', 'სექტემბერი', 'ოქტომბერი', 'ნოემბერი', 'დეკემბერი'];
-    const days = ['კვირა', 'ორშაბათი', 'სამშაბათი', 'ოთხშაბათი', 'ხუთშაბათი', 'პარასკევი', 'შაბათი'];
-    const now = new Date();
-    const dayName = days[now.getDay()];
-    const day = now.getDate();
-    const month = months[now.getMonth()];
-    const year = now.getFullYear();
-
-    return `${dayName}, ${day} ${month}, ${year}`;
-  }
-
-  private generateHoroscope() {
-    if (!this.selectedSign) return;
-
-    this.horoscopeContent = {
-      general: `დღეს ${this.selectedSign.name}-ებს ელოდებათ საინტერესო შესაძლებლობები. ვარსკვლავები ხელსაყრელ პოზიციაშია და გირჩევენ გაბედულად იმოქმედოთ. ახალი იდეების განხორციელება შესანიშნავ შედეგებს მოიტანს.`,
-      love: `რომანტიკული ურთიერთობები განსაკუთრებით ჰარმონიულია. სინგლებს შეუძლიათ საინტერესო ადამიანი გაიცნონ, ხოლო წყვილებს - ერთმანეთთან უფრო ახლოს გახდნენ. გულწრფელობა და გახსნილობა აუცილებელია.`,
-      career: `პროფესიულ სფეროში გელოდებათ აღიარება და წარმატება. თქვენი შრომა და ძალისხმევა შენიშნული იქნება. კარგი დროა ახალი პროექტების დასაწყებად ან კარიერული ზრდისთვის.`,
-      health: `ჯანმრთელობის მდგომარეობა სტაბილურია, მაგრამ არ დაგვიწყდეთ რეჟიმის დაცვა და ფიზიკური აქტივობა. დასვენება და რელაქსაციაც მნიშვნელოვანია ენერგიის აღსადგენად.`,
-      lucky: `საბედნიერო რიცხვები: ${this.selectedSign.luckyNumbers.join(', ')} | საბედნიერო ფერი: ${this.selectedSign.luckyColors[0]} | საბედნიერო დღე: ${this.selectedSign.luckyDay}`
+  getZodiacIconClass(zodiacId: string): string {
+    const iconMap: { [key: string]: string } = {
+      'aries': 'fas fa-fire',
+      'taurus': 'fas fa-mountain',
+      'gemini': 'fas fa-wind',
+      'cancer': 'fas fa-water',
+      'leo': 'fas fa-crown',
+      'virgo': 'fas fa-leaf',
+      'libra': 'fas fa-balance-scale',
+      'scorpio': 'fas fa-spider',
+      'sagittarius': 'fas fa-bow-arrow',
+      'capricorn': 'fas fa-mountain-sun',
+      'aquarius': 'fas fa-droplet',
+      'pisces': 'fas fa-fish'
     };
+    return iconMap[zodiacId] || 'fas fa-star';
+  }
+
+  getElementIcon(element: string): string {
+    const icons: { [key: string]: string } = {
+      'fire': 'fas fa-fire',
+      'earth': 'fas fa-mountain',
+      'air': 'fas fa-wind',
+      'water': 'fas fa-water'
+    };
+    return icons[element] || 'fas fa-star';
+  }
+
+  getElementName(element: string): string {
+    const names: { [key: string]: string } = {
+      'fire': 'ცეცხლი',
+      'earth': 'მიწა',
+      'air': 'ჰაერი',
+      'water': 'წყალი'
+    };
+    return names[element] || element;
   }
 
   getZodiacSvgPath(signId: string): SafeHtml {

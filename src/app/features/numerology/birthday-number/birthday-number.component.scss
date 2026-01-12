@@ -1,7 +1,7 @@
 @import 'styles/variables';
 @import 'styles/mixins';
 
-.life-path-container {
+.birthday-container {
     min-height: 100vh;
     padding: $spacing-2xl $spacing-lg;
     background: linear-gradient(135deg,
@@ -14,15 +14,13 @@
     }
 }
 
-// ===================================
 // Main Card Section
-// ===================================
 .main-card-section {
     margin-top: 80px;
     margin-bottom: $spacing-3xl;
 }
 
-.life-path-main-card {
+.birthday-main-card {
     background: rgba($bg-card, 0.3);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
@@ -121,9 +119,7 @@
     }
 }
 
-// ===================================
 // Calculator Content
-// ===================================
 .calculator-content {
     margin-top: $spacing-xl;
 }
@@ -141,71 +137,51 @@
     }
 }
 
-// Hero Section - REMOVED
-// Calculator Section - REMOVED
-.calculator-card {
-    @include glass-morphism;
-    padding: $spacing-2xl;
-    border-radius: $spacing-lg;
-    border: 1px solid rgba($primary-violet, 0.3);
-
-    .card-title {
-        @include flex-center;
-        gap: $spacing-md;
-        font-size: $font-2xl;
-        color: $text-primary;
-        margin-bottom: $spacing-xl;
-
-        i {
-            color: $accent-gold;
-        }
-    }
-}
-
 .calculator-form {
     display: flex;
     flex-direction: column;
     gap: $spacing-lg;
-
-    @media (min-width: $breakpoint-tablet) {
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
 }
 
-.input-group {
-    flex: 1;
-    min-width: 200px;
+.input-group-single {
+    width: 100%;
 
     label {
         display: block;
-        font-size: $font-sm;
+        font-size: $font-base;
         color: $text-secondary;
-        margin-bottom: $spacing-xs;
+        margin-bottom: $spacing-md;
         font-weight: 500;
+        text-align: center;
     }
 
     input {
         width: 100%;
-        padding: $spacing-md $spacing-lg;
+        max-width: 400px;
+        margin: 0 auto;
+        display: block;
+        padding: $spacing-lg $spacing-xl;
         background: rgba($bg-card, 0.3);
-        border: 1px solid rgba($primary-violet, 0.3);
-        border-radius: $spacing-sm;
+        border: 2px solid rgba($primary-violet, 0.3);
+        border-radius: $spacing-md;
         color: $text-primary;
-        font-size: $font-base;
+        font-size: $font-xl;
+        text-align: center;
+        font-weight: 600;
         transition: all 0.3s ease;
 
         &:focus {
             outline: none;
             border-color: $primary-violet;
-            box-shadow: 0 0 0 3px rgba($primary-violet, 0.1);
+            box-shadow: 0 0 0 4px rgba($primary-violet, 0.15);
         }
 
         &::placeholder {
             color: rgba($text-secondary, 0.5);
+            font-size: $font-base;
+            font-weight: normal;
         }
 
-        // Remove spinner arrows
         &::-webkit-inner-spin-button,
         &::-webkit-outer-spin-button {
             -webkit-appearance: none;
@@ -317,23 +293,6 @@
         -webkit-text-fill-color: transparent;
         margin-bottom: $spacing-md;
     }
-
-    .master-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: $spacing-xs;
-        padding: $spacing-xs $spacing-lg;
-        background: $gradient-sunset;
-        border-radius: 20px;
-        font-size: $font-sm;
-        font-weight: 600;
-        color: $text-primary;
-        box-shadow: $shadow-glow-gold;
-
-        i {
-            font-size: $font-base;
-        }
-    }
 }
 
 .meaning-content {
@@ -365,7 +324,7 @@
     gap: $spacing-lg;
 
     @media (min-width: $breakpoint-tablet) {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
@@ -439,16 +398,6 @@
             color: $accent-gold;
         }
     }
-
-    &.careers {
-        h3 i {
-            color: #3b82f6;
-        }
-
-        ul li i {
-            color: #3b82f6;
-        }
-    }
 }
 
 // Info Section
@@ -460,12 +409,12 @@
     gap: $spacing-xl;
 
     @media (min-width: $breakpoint-tablet) {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
     }
 }
 
 .info-card,
-.example-card,
+.numbers-table-card,
 .master-numbers-card {
     @include glass-morphism;
     padding: $spacing-xl;
@@ -500,73 +449,57 @@
     }
 }
 
-.example-card {
-    .example-content {
-        p {
-            margin-bottom: $spacing-md;
-            font-weight: 500;
-            color: $text-primary;
-        }
-
-        .example-calc {
-            background: rgba($bg-card, 0.3);
-            padding: $spacing-lg;
-            border-radius: $spacing-sm;
-            border: 1px solid rgba($primary-violet, 0.2);
-            color: $text-secondary;
-            font-size: $font-sm;
-            line-height: 1.8;
-            overflow-x: auto;
-            white-space: pre;
-        }
+.numbers-table-card {
+    @media (min-width: $breakpoint-tablet) {
+        grid-column: 1 / -1;
     }
-}
 
-.calculation-steps {
-    @include glass-morphism;
-    padding: $spacing-xl;
-    border-radius: $spacing-lg;
-    border: 2px solid rgba($accent-gold, 0.4);
-    animation: fadeInUp 0.6s ease;
+    .numbers-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: $spacing-sm;
+        margin-top: $spacing-md;
+    }
 
-    // @media (min-width: $breakpoint-tablet) {
-    //     grid-column: 1 / -1;
-    // }
-
-    h3 {
+    .number-item {
         display: flex;
         align-items: center;
         gap: $spacing-sm;
-        font-size: $font-xl;
-        color: $text-primary;
-        margin-bottom: $spacing-md;
-
-        i {
-            color: $accent-gold;
-        }
-    }
-
-    .steps-content {
+        padding: $spacing-sm $spacing-md;
         background: rgba($bg-card, 0.3);
-        padding: $spacing-lg;
         border-radius: $spacing-sm;
         border: 1px solid rgba($primary-violet, 0.2);
-        color: $text-secondary;
-        font-size: $font-sm;
-        line-height: 1.8;
-        overflow-x: auto;
-        white-space: pre-wrap;
-        word-wrap: break-word;
+        transition: all 0.3s ease;
+
+        &:hover {
+            border-color: $primary-violet;
+            transform: translateY(-2px);
+        }
+
+        .day-number {
+            font-size: $font-lg;
+            font-weight: bold;
+            color: $accent-gold;
+            min-width: 30px;
+        }
+
+        .day-character {
+            font-size: $font-sm;
+            color: $text-secondary;
+        }
     }
 }
 
 .master-numbers-card {
-    .master-list {
+    .tips-list {
         list-style: none;
         padding: 0;
         margin: 0;
 
         li {
+            display: flex;
+            align-items: flex-start;
+            gap: $spacing-sm;
             padding: $spacing-md;
             margin-bottom: $spacing-sm;
             background: rgba($bg-card, 0.3);
@@ -575,9 +508,14 @@
             font-size: $font-sm;
             color: $text-secondary;
 
-            strong {
+            i {
                 color: $accent-gold;
+                margin-top: 2px;
                 font-size: $font-base;
+            }
+
+            strong {
+                color: $text-primary;
             }
         }
     }
