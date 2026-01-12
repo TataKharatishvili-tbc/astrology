@@ -1,12 +1,8 @@
 <div class="compatibility-page">
     <!-- Falling Emojis Container -->
     <div class="emoji-rain" *ngIf="fallingEmojis.length > 0">
-        <span 
-            *ngFor="let emoji of fallingEmojis" 
-            class="falling-emoji"
-            [style.left.%]="emoji.left"
-            [style.animation-delay.s]="emoji.delay"
-            [style.animation-duration.s]="emoji.duration"
+        <span *ngFor="let emoji of fallingEmojis" class="falling-emoji" [style.left.%]="emoji.left"
+            [style.animation-delay.s]="emoji.delay" [style.animation-duration.s]="emoji.duration"
             [style.font-size.rem]="emoji.size">
             {{emoji.emoji}}
         </span>
@@ -74,7 +70,7 @@
             <!-- Result Section Inside Card -->
             <div class="result-section-inner" *ngIf="showResult && compatibilityResult">
                 <div class="result-divider"></div>
-                
+
                 <div class="result-header">
                     <div class="sign-display">
                         <span class="sign-icon">{{getSignIcon(selectedSign1)}}</span>

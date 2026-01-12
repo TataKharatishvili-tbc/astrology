@@ -24,7 +24,8 @@
         <div class="zodiac-selector">
             <button *ngFor="let sign of allSigns" [class.active]="selectedSign?.id === sign.id"
                 (click)="selectSign(sign)" class="zodiac-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="getZodiacViewBox(sign.id)" class="btn-svg" [innerHTML]="getZodiacSvgPath(sign.id)"></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="getZodiacViewBox(sign.id)" class="btn-svg"
+                    [innerHTML]="getZodiacSvgPath(sign.id)"></svg>
                 <span class="btn-name">{{ sign.name }}</span>
             </button>
         </div>
@@ -34,7 +35,8 @@
 
             <!-- Sign Info -->
             <div class="sign-info">
-                <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="getZodiacViewBox(selectedSign.id)" class="sign-symbol-svg" [innerHTML]="getZodiacSvgPath(selectedSign.id)"></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="getZodiacViewBox(selectedSign.id)"
+                    class="sign-symbol-svg" [innerHTML]="getZodiacSvgPath(selectedSign.id)"></svg>
                 <div class="sign-details">
                     <h2 class="sign-name">{{ selectedSign.name }}</h2>
                     <p class="sign-dates">{{ selectedSign.dateRange }}</p>

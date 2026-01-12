@@ -21,13 +21,10 @@
 
         <!-- Elements Grid -->
         <div class="elements-grid">
-            <div class="element-card" *ngFor="let element of elements" 
-                 [class.fire]="element.id === 'fire'"
-                 [class.earth]="element.id === 'earth'"
-                 [class.air]="element.id === 'air'"
-                 [class.water]="element.id === 'water'"
-                 (click)="selectElement(element)" 
-                 [class.selected]="selectedElement?.id === element.id">
+            <div class="element-card" *ngFor="let element of elements" [class.fire]="element.id === 'fire'"
+                [class.earth]="element.id === 'earth'" [class.air]="element.id === 'air'"
+                [class.water]="element.id === 'water'" (click)="selectElement(element)"
+                [class.selected]="selectedElement?.id === element.id">
                 <div class="card-glow"></div>
                 <div class="card-content">
                     <div class="element-icon-wrapper">
@@ -54,11 +51,9 @@
         <div class="element-details" *ngIf="selectedElement" id="element-details">
             <div class="details-header">
                 <div class="header-content">
-                    <div class="detail-icon-wrapper" 
-                         [class.fire]="selectedElement.id === 'fire'"
-                         [class.earth]="selectedElement.id === 'earth'"
-                         [class.air]="selectedElement.id === 'air'"
-                         [class.water]="selectedElement.id === 'water'">
+                    <div class="detail-icon-wrapper" [class.fire]="selectedElement.id === 'fire'"
+                        [class.earth]="selectedElement.id === 'earth'" [class.air]="selectedElement.id === 'air'"
+                        [class.water]="selectedElement.id === 'water'">
                         <i [class]="getElementIconClass(selectedElement.id)"></i>
                     </div>
                     <div class="header-info">

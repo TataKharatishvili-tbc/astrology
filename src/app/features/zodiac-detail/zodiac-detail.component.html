@@ -22,20 +22,19 @@
 
         <!-- Sign Info - horoscope სტილით -->
         <div class="sign-info">
-            <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="getZodiacViewBox(sign.id)" class="sign-symbol-svg" [innerHTML]="getZodiacSvgPath(sign.id)"></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="getZodiacViewBox(sign.id)" class="sign-symbol-svg"
+                [innerHTML]="getZodiacSvgPath(sign.id)"></svg>
             <div class="sign-details">
                 <h2 class="sign-name">{{ sign.name }}</h2>
                 <p class="sign-dates">{{ sign.dateRange }}</p>
                 <div class="sign-meta">
-                    <span class="meta-item element"
-                        [class.fire]="sign.element === 'fire'"
-                        [class.earth]="sign.element === 'earth'"
-                        [class.air]="sign.element === 'air'"
+                    <span class="meta-item element" [class.fire]="sign.element === 'fire'"
+                        [class.earth]="sign.element === 'earth'" [class.air]="sign.element === 'air'"
                         [class.water]="sign.element === 'water'">
                         <i [class]="getElementIcon(sign.element)"></i>
                         {{ sign.element === 'fire' ? 'ცეცხლი' :
-                           sign.element === 'earth' ? 'მიწა' :
-                           sign.element === 'air' ? 'ჰაერი' : 'წყალი' }}
+                        sign.element === 'earth' ? 'მიწა' :
+                        sign.element === 'air' ? 'ჰაერი' : 'წყალი' }}
                     </span>
                     <span class="meta-item">
                         <i class="fa-solid fa-globe"></i>
@@ -106,7 +105,8 @@
                                 საუკეთესო
                             </span>
                             <div class="compat-items">
-                                <span class="compat-badge best" *ngFor="let comp of sign.compatibility.best">{{ comp }}</span>
+                                <span class="compat-badge best" *ngFor="let comp of sign.compatibility.best">{{ comp
+                                    }}</span>
                             </div>
                         </div>
                         <div class="compat-row">
@@ -115,7 +115,8 @@
                                 კარგი
                             </span>
                             <div class="compat-items">
-                                <span class="compat-badge good" *ngFor="let comp of sign.compatibility.good">{{ comp }}</span>
+                                <span class="compat-badge good" *ngFor="let comp of sign.compatibility.good">{{ comp
+                                    }}</span>
                             </div>
                         </div>
                         <div class="compat-row">
@@ -124,7 +125,8 @@
                                 რთული
                             </span>
                             <div class="compat-items">
-                                <span class="compat-badge challenging" *ngFor="let comp of sign.compatibility.challenging">{{ comp }}</span>
+                                <span class="compat-badge challenging"
+                                    *ngFor="let comp of sign.compatibility.challenging">{{ comp }}</span>
                             </div>
                         </div>
                     </div>
@@ -167,11 +169,10 @@
                 </div>
             </div>
             <div class="signs-selector">
-                <a *ngFor="let otherSign of allSigns" 
-                   [routerLink]="['/zodiac', otherSign.id]" 
-                   class="sign-btn"
-                   [class.active]="otherSign.id === sign.id">
-                    <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="getZodiacViewBox(otherSign.id)" class="btn-svg" [innerHTML]="getZodiacSvgPath(otherSign.id)"></svg>
+                <a *ngFor="let otherSign of allSigns" [routerLink]="['/zodiac', otherSign.id]" class="sign-btn"
+                    [class.active]="otherSign.id === sign.id">
+                    <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="getZodiacViewBox(otherSign.id)"
+                        class="btn-svg" [innerHTML]="getZodiacSvgPath(otherSign.id)"></svg>
                     <span class="btn-name">{{ otherSign.name }}</span>
                 </a>
             </div>

@@ -21,10 +21,8 @@
 
         <!-- Planets Grid -->
         <div class="planets-grid">
-            <div class="planet-card" *ngFor="let planet of planets; let i = index"
-                (click)="selectPlanet(planet)" 
-                [class.selected]="selectedPlanet?.id === planet.id"
-                [style.--delay]="i * 0.1 + 's'">
+            <div class="planet-card" *ngFor="let planet of planets; let i = index" (click)="selectPlanet(planet)"
+                [class.selected]="selectedPlanet?.id === planet.id" [style.--delay]="i * 0.1 + 's'">
                 <div class="card-glow"></div>
                 <div class="card-content">
                     <div class="planet-header">

@@ -22,19 +22,16 @@
 
         <!-- Zodiac Grid -->
         <div class="zodiac-grid">
-            <a *ngFor="let sign of zodiacSigns; let i = index" 
-               [routerLink]="['/zodiac', sign.id]"
-               class="zodiac-card" 
-               [class.element-fire]="sign.element === 'fire'"
-               [class.element-earth]="sign.element === 'earth'" 
-               [class.element-air]="sign.element === 'air'"
-               [class.element-water]="sign.element === 'water'" 
-               [style.--delay]="i * 0.05 + 's'">
+            <a *ngFor="let sign of zodiacSigns; let i = index" [routerLink]="['/zodiac', sign.id]" class="zodiac-card"
+                [class.element-fire]="sign.element === 'fire'" [class.element-earth]="sign.element === 'earth'"
+                [class.element-air]="sign.element === 'air'" [class.element-water]="sign.element === 'water'"
+                [style.--delay]="i * 0.05 + 's'">
 
                 <div class="card-glow"></div>
                 <div class="card-content">
                     <div class="card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="getZodiacViewBox(sign.id)" class="zodiac-svg" [innerHTML]="getZodiacSvgPath(sign.id)"></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="getZodiacViewBox(sign.id)"
+                            class="zodiac-svg" [innerHTML]="getZodiacSvgPath(sign.id)"></svg>
                     </div>
                     <h3 class="zodiac-name">{{ sign.name }}</h3>
                     <p class="zodiac-dates">{{ sign.dateRange }}</p>

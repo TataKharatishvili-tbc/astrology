@@ -200,10 +200,10 @@ export class CompatibilityComponent {
         this.compatibilityResult = result;
         this.showResult = true;
         this.animatedPercentage = 0;
-        
+
         // პროცენტის ანიმაცია
         this.animatePercentage(result.percentage);
-        
+
         // ემოჯების ანიმაცია
         this.createFallingEmojis(result.percentage);
     }
@@ -213,7 +213,7 @@ export class CompatibilityComponent {
         const steps = 60;
         const increment = targetPercentage / steps;
         const stepDuration = duration / steps;
-        
+
         let current = 0;
         const interval = setInterval(() => {
             current += increment;
@@ -228,7 +228,7 @@ export class CompatibilityComponent {
 
     createFallingEmojis(percentage: number) {
         this.fallingEmojis = [];
-        
+
         // ემოჯების არჩევა თავსებადობის მიხედვით
         let emojis: string[];
         if (percentage >= 80) {
@@ -238,9 +238,9 @@ export class CompatibilityComponent {
         } else {
             emojis = ['🌙', '⚡', '💫', '🔮', '🌠', '✨'];
         }
-        
+
         const emojiCount = percentage >= 80 ? 30 : percentage >= 60 ? 20 : 12;
-        
+
         for (let i = 0; i < emojiCount; i++) {
             this.fallingEmojis.push({
                 id: i,
@@ -251,7 +251,7 @@ export class CompatibilityComponent {
                 size: 1 + Math.random() * 1.5
             });
         }
-        
+
         // 5 წამის შემდეგ გავასუფთავოთ
         setTimeout(() => {
             this.fallingEmojis = [];

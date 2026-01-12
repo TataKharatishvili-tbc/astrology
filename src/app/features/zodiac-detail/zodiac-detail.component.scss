@@ -45,9 +45,12 @@
 }
 
 @keyframes twinkle-bg {
-    0%, 100% {
+
+    0%,
+    100% {
         opacity: 0.4;
     }
+
     50% {
         opacity: 0.7;
     }
@@ -66,6 +69,7 @@
         opacity: 0;
         transform: translateY(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -135,10 +139,13 @@
 }
 
 @keyframes star-pulse {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
         filter: drop-shadow(0 0 5px rgba($primary-violet, 0.5));
     }
+
     50% {
         transform: scale(1.1);
         filter: drop-shadow(0 0 15px rgba($primary-violet, 0.8));
@@ -180,7 +187,7 @@
     position: relative;
     z-index: 1;
     flex-shrink: 0;
-    
+
     @include mobile {
         width: 80px;
         height: 80px;
@@ -188,9 +195,12 @@
 }
 
 @keyframes symbol-float {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0) rotate(-5deg);
     }
+
     50% {
         transform: translateY(-10px) rotate(5deg);
     }
@@ -243,6 +253,7 @@
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -303,16 +314,19 @@
             border-color: rgba(#f97316, 0.3);
             color: #f97316;
         }
+
         &.earth {
             background: rgba(#84cc16, 0.15);
             border-color: rgba(#84cc16, 0.3);
             color: #84cc16;
         }
+
         &.air {
             background: rgba(#06b6d4, 0.15);
             border-color: rgba(#06b6d4, 0.3);
             color: #06b6d4;
         }
+
         &.water {
             background: rgba(#8b5cf6, 0.15);
             border-color: rgba(#8b5cf6, 0.3);
@@ -419,7 +433,7 @@
         font-size: $font-sm;
         font-weight: 600;
         margin: 0 0 $spacing-sm;
-        
+
         i {
             font-size: 10px;
         }
@@ -494,9 +508,11 @@
     &.best {
         color: #ef4444;
     }
+
     &.good {
         color: #10b981;
     }
+
     &.challenging {
         color: #f59e0b;
     }
@@ -518,10 +534,12 @@
         background: rgba(#ef4444, 0.1);
         border: 1px solid rgba(#ef4444, 0.2);
     }
+
     &.good {
         background: rgba(#10b981, 0.1);
         border: 1px solid rgba(#10b981, 0.2);
     }
+
     &.challenging {
         background: rgba(#f59e0b, 0.1);
         border: 1px solid rgba(#f59e0b, 0.2);
