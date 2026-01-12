@@ -14,6 +14,22 @@ export const routes: Routes = [
         loadComponent: () => import('./features/daily-horoscope/daily-horoscope.component').then(m => m.DailyHoroscopeComponent)
     },
     {
+        path: 'monthly-horoscope',
+        loadComponent: () => import('./features/monthly-horoscope/monthly-horoscope.component').then(m => m.MonthlyHoroscopeComponent)
+    },
+    {
+        path: 'monthly-horoscope/:id',
+        loadComponent: () => import('./features/monthly-horoscope/monthly-horoscope.component').then(m => m.MonthlyHoroscopeComponent)
+    },
+    {
+        path: 'yearly-horoscope',
+        loadComponent: () => import('./features/yearly-horoscope/yearly-horoscope.component').then(m => m.YearlyHoroscopeComponent)
+    },
+    {
+        path: 'yearly-horoscope/:id',
+        loadComponent: () => import('./features/yearly-horoscope/yearly-horoscope.component').then(m => m.YearlyHoroscopeComponent)
+    },
+    {
         path: 'moon-phases',
         loadComponent: () => import('./features/moon-calendar/moon-calendar.component').then(m => m.MoonCalendarComponent)
     },

@@ -1,0 +1,74 @@
+<div class="yearly-horoscope-page">
+    <div class="container">
+        <div class="page-header">
+            <!-- <a routerLink="/" class="back-link">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>მთავარი</span>
+            </a> -->
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="header-icon">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+                    <div class="header-text">
+                        <h1 class="page-title">წლიური ჰოროსკოპი</h1>
+                        <p class="page-subtitle">{{ selectedSign?.name }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="zodiac-selector">
+            <button *ngFor="let sign of allSigns" [class.active]="selectedSign?.id === sign.id"
+                (click)="selectSign(sign)" class="zodiac-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="getZodiacViewBox(sign.id)" class="btn-svg"
+                    [innerHTML]="getZodiacSvgPath(sign.id)"></svg>
+                <span class="btn-name">{{ sign.name }}</span>
+            </button>
+        </div>
+        <div class="horoscope-content" *ngIf="selectedSign">
+            <div class="sign-info">
+                <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="getZodiacViewBox(selectedSign.id)"
+                    class="sign-symbol-svg" [innerHTML]="getZodiacSvgPath(selectedSign.id)"></svg>
+                <div class="sign-details">
+                    <h2 class="sign-name">{{ selectedSign.name }}</h2>
+                    <p class="sign-dates">{{ selectedSign.dateRange }}</p>
+                    <div class="sign-meta">
+                        <span class="meta-item">
+                            <i class="fa-solid fa-fire" *ngIf="selectedSign?.element === 'fire'"></i>
+                            <i class="fa-solid fa-earth" *ngIf="selectedSign?.element === 'earth'"></i>
+                            <i class="fa-solid fa-wind" *ngIf="selectedSign?.element === 'air'"></i>
+                            <i class="fa-solid fa-water" *ngIf="selectedSign?.element === 'water'"></i>
+                            {{ selectedSign.element === 'fire' ? 'ცეცხლი' :
+                            selectedSign.element === 'earth' ? 'მიწა' :
+                            selectedSign.element === 'air' ? 'ჰაერი' : 'წყალი' }}
+                        </span>
+                        <span class="meta-item">
+                            <i class="fa-solid fa-globe"></i>
+                            {{ selectedSign.rulingPlanet }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="horoscope-section">
+                <h3>ზოგადი</h3>
+                <p>{{ horoscopeContent.general }}</p>
+            </div>
+            <div class="horoscope-section">
+                <h3>სიყვარული</h3>
+                <p>{{ horoscopeContent.love }}</p>
+            </div>
+            <div class="horoscope-section">
+                <h3>კარიერა</h3>
+                <p>{{ horoscopeContent.career }}</p>
+            </div>
+            <div class="horoscope-section">
+                <h3>ჯანმრთელობა</h3>
+                <p>{{ horoscopeContent.health }}</p>
+            </div>
+            <div class="horoscope-section">
+                <h3>იღბალი</h3>
+                <p>{{ horoscopeContent.lucky }}</p>
+            </div>
+        </div>
+    </div>
+</div>
