@@ -1,13 +1,41 @@
 @import 'styles/variables';
 @import 'styles/mixins';
 
+
+
 .moon-calendar {
     min-height: 100vh;
     padding: $spacing-2xl $spacing-lg;
-    background: linear-gradient(135deg,
-            $bg-primary 0%,
-            darken($bg-primary, 3%) 50%,
-            $bg-primary 100%);
+    position: relative;
+    background: linear-gradient(180deg,
+            #0a0a12 0%,
+            #0d0d1a 30%,
+            #0f0f1f 60%,
+            #0a0a14 100%);
+    overflow-x: hidden;
+
+    // ვარსკვლავების ეფექტი
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            radial-gradient(1px 1px at 20px 30px, white, transparent),
+            radial-gradient(1px 1px at 40px 70px, rgba(255, 255, 255, 0.8), transparent),
+            radial-gradient(1.5px 1.5px at 90px 40px, white, transparent),
+            radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.6), transparent),
+            radial-gradient(1.2px 1.2px at 160px 120px, white, transparent),
+            radial-gradient(1px 1px at 200px 50px, rgba(255, 255, 255, 0.7), transparent),
+            radial-gradient(1.5px 1.5px at 250px 160px, white, transparent),
+            radial-gradient(1px 1px at 300px 90px, rgba(255, 255, 255, 0.5), transparent),
+            radial-gradient(1px 1px at 350px 140px, white, transparent),
+            radial-gradient(1.2px 1.2px at 400px 60px, rgba(255, 255, 255, 0.8), transparent);
+        background-size: 450px 200px;
+        animation: twinkle-bg 8s ease-in-out infinite;
+        opacity: 0.5;
+        z-index: 0;
+        pointer-events: none;
+    }
 
     @include mobile {
         padding: $spacing-xl $spacing-md;
@@ -19,16 +47,30 @@
 // ===================================
 // Calendar Container
 // ===================================
+
+@keyframes twinkle-bg {
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+}
+
 .calendar-container {
     margin-bottom: $spacing-3xl;
-    background: rgba($bg-card, 0.25);
+    // background: rgba(30, 27, 75, 0.3);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba($primary-violet, 0.15);
-    border-radius: $radius-2xl;
+    border: 1px solid rgba(white, 0.05);
+    border-radius: $radius-xl;
     padding: $spacing-xl;
     box-shadow: $shadow-xl;
     overflow: hidden;
+    @include smooth-transition;
 }
 
 .table-wrapper {
@@ -395,7 +437,7 @@
 .current-phase-info {
     margin-top: 80px;
     margin-bottom: $spacing-3xl;
-    background: rgba($bg-card, 0.3);
+    background: transparent;
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid rgba($primary-violet, 0.2);
@@ -557,7 +599,8 @@
 }
 
 .recommendation-card {
-    background: rgba($bg-card, 0.4);
+    background: rgba($bg-card, 0.25);
+    backdrop-filter: blur(15px);
     border-radius: $radius-xl;
     padding: $spacing-xl;
     border: 1px solid rgba($primary-violet, 0.2);
@@ -634,9 +677,8 @@
 }
 
 .zodiac-influence {
-    background: linear-gradient(135deg,
-            rgba($primary-violet, 0.1) 0%,
-            rgba($accent-gold, 0.05) 100%);
+    background: rgba($bg-card, 0.25);
+    backdrop-filter: blur(15px);
     border: 1px solid rgba($primary-violet, 0.2);
     border-radius: $radius-xl;
     padding: $spacing-xl;
