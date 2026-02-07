@@ -5,7 +5,7 @@
 
 <div class="admin-form-container">
     <form [formGroup]="horoscopeForm" (ngSubmit)="onSubmit()" class="admin-form">
-        
+
         <div class="form-row">
             <div class="form-group">
                 <label for="date">თარიღი</label>
@@ -33,7 +33,8 @@
             <div class="form-group full-width">
                 <label for="general">ზოგადი პროგნოზი</label>
                 <div class="textarea-wrapper">
-                    <textarea id="general" formControlName="general" rows="3" placeholder="შეიყვანეთ ზოგადი პროგნოზი..."></textarea>
+                    <textarea id="general" formControlName="general" rows="3"
+                        placeholder="შეიყვანეთ ზოგადი პროგნოზი..."></textarea>
                 </div>
             </div>
 

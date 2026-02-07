@@ -3,7 +3,7 @@
 
 .admin-page-header {
     margin-bottom: $spacing-xl;
-    
+
     h2 {
         display: flex;
         align-items: center;
@@ -11,12 +11,12 @@
         color: white;
         font-size: 1.8rem;
         margin-bottom: $spacing-xs;
-        
+
         i {
             color: $accent-gold;
         }
     }
-    
+
     p {
         color: $text-secondary;
     }
@@ -30,7 +30,8 @@
     padding: $spacing-xl;
 }
 
-.admin-form { // Scoped properly
+.admin-form {
+    // Scoped properly
     display: flex;
     flex-direction: column;
     gap: $spacing-xl;
@@ -40,7 +41,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: $spacing-lg;
-    
+
     @media (max-width: 768px) {
         grid-template-columns: 1fr;
     }
@@ -50,7 +51,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: $spacing-lg;
-    
+
     @media (max-width: 768px) {
         grid-template-columns: 1fr;
     }
@@ -60,21 +61,22 @@
     display: flex;
     flex-direction: column;
     gap: $spacing-xs;
-    
+
     label {
         color: $text-secondary;
         font-size: 0.9rem;
         font-weight: 500;
     }
-    
+
     &.full-width {
         grid-column: 1 / -1;
     }
 }
 
-.input-wrapper, .textarea-wrapper {
+.input-wrapper,
+.textarea-wrapper {
     position: relative;
-    
+
     i {
         position: absolute;
         left: $spacing-md;
@@ -92,10 +94,12 @@
 }
 
 .textarea-wrapper .input-icon {
-     // Specific class for textarea icons if needed
+    // Specific class for textarea icons if needed
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
     width: 100%;
     background: rgba($bg-primary, 0.6);
     border: 1px solid rgba(white, 0.1);
@@ -104,13 +108,13 @@ input, select, textarea {
     color: white;
     font-family: inherit;
     transition: all 0.3s ease;
-    
+
     &:focus {
         outline: none;
         border-color: $primary-violet;
         box-shadow: 0 0 0 3px rgba($primary-violet, 0.1);
     }
-    
+
     &::placeholder {
         color: rgba(white, 0.3);
     }
@@ -120,16 +124,17 @@ textarea {
     resize: vertical;
     min-height: 100px;
     padding-left: $spacing-md; // Default padding if no icon
-    
+
     // If it has a wrapper with an icon, adjust padding
 }
 
 // Special adjustment for textareas with icons inside wrappers
 .textarea-wrapper:has(i) textarea {
-     padding-left: $spacing-2xl;
+    padding-left: $spacing-2xl;
 }
+
 // Fallback if :has isn't supported or complex hierarchy
-.textarea-wrapper i + textarea {
+.textarea-wrapper i+textarea {
     padding-left: $spacing-2xl;
 }
 
@@ -140,7 +145,7 @@ select {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 4.5L6 8L9.5 4.5' stroke='white' stroke-opacity='0.5' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right $spacing-md center;
-    
+
     option {
         background: $bg-secondary;
         color: white;
@@ -151,7 +156,7 @@ select {
     display: flex;
     justify-content: flex-end;
     margin-top: $spacing-md;
-    
+
     .btn-submit {
         display: flex;
         align-items: center;
@@ -164,12 +169,12 @@ select {
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
-        
+
         &:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba($primary-violet, 0.3);
         }
-        
+
         &:active {
             transform: translateY(0);
         }
