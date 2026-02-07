@@ -44,25 +44,25 @@
                         შეიყვანეთ დაბადების დღე
                     </h3>
 
-                <form class="calculator-form" (ngSubmit)="calculate()">
-                    <div class="input-group-single">
-                        <label for="day">დაბადების დღე (1-31)</label>
-                        <input type="number" id="day" [(ngModel)]="day" name="day" min="1" max="31"
-                            placeholder="შეიყვანეთ 1-დან 31-მდე" required />
-                    </div>
+                    <form class="calculator-form" (ngSubmit)="calculate()">
+                        <div class="input-group-single">
+                            <label for="day">დაბადების დღე (1-31)</label>
+                            <input type="number" id="day" [(ngModel)]="day" name="day" min="1" max="31"
+                                placeholder="შეიყვანეთ 1-დან 31-მდე" required />
+                        </div>
 
-                    <div class="button-group">
-                        <button type="submit" class="calc-button" [disabled]="!day">
-                            <i class="fa-solid fa-search"></i>
-                            ნახვა
-                        </button>
-                        <button type="button" class="reset-button" (click)="reset()" *ngIf="showResult">
-                            <i class="fa-solid fa-rotate-left"></i>
-                            თავიდან
-                        </button>
-                    </div>
-                </form>
-            </div>
+                        <div class="button-group">
+                            <button type="submit" class="calc-button" [disabled]="!day">
+                                <i class="fa-solid fa-search"></i>
+                                ნახვა
+                            </button>
+                            <button type="button" class="reset-button" (click)="reset()" *ngIf="showResult">
+                                <i class="fa-solid fa-rotate-left"></i>
+                                თავიდან
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </section>

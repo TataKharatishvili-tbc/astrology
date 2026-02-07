@@ -157,25 +157,25 @@ export class LifePathComponent implements OnInit {
     const count = 150 + Math.floor(Math.random() * 50);
 
     for (let i = 0; i < count; i++) {
-        let type: 'twinkle' | 'moving' | 'static';
-        const rand = Math.random();
-        if (rand < 0.4) {
-            type = 'static';
-        } else if (rand < 0.8) {
-            type = 'twinkle';
-        } else {
-            type = 'moving';
-        }
+      let type: 'twinkle' | 'moving' | 'static';
+      const rand = Math.random();
+      if (rand < 0.4) {
+        type = 'static';
+      } else if (rand < 0.8) {
+        type = 'twinkle';
+      } else {
+        type = 'moving';
+      }
 
-        this.stars.push({
-            left: Math.random() * 100,
-            top: Math.random() * 100,
-            delay: Math.random() * 8,
-            size: 0.5 + Math.random() * 2.5,
-            duration: type === 'moving' ? 20 + Math.random() * 30 : 2 + Math.random() * 4,
-            type: type,
-            brightness: 0.3 + Math.random() * 0.7
-        });
+      this.stars.push({
+        left: Math.random() * 100,
+        top: Math.random() * 100,
+        delay: Math.random() * 8,
+        size: 0.5 + Math.random() * 2.5,
+        duration: type === 'moving' ? 20 + Math.random() * 30 : 2 + Math.random() * 4,
+        type: type,
+        brightness: 0.3 + Math.random() * 0.7
+      });
     }
   }
 

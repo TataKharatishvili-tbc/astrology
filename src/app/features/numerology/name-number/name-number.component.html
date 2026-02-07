@@ -44,25 +44,25 @@
                         შეიყვანეთ თქვენი სრული სახელი
                     </h3>
 
-                <form class="calculator-form" (ngSubmit)="calculate()">
-                    <div class="input-group-single">
-                        <label for="fullName">სრული სახელი (ქართულად ან ლათინურად)</label>
-                        <input type="text" id="fullName" [(ngModel)]="fullName" name="fullName"
-                            placeholder="მაგ: Giorgi Beridze ან გიორგი ბერიძე" required />
-                    </div>
+                    <form class="calculator-form" (ngSubmit)="calculate()">
+                        <div class="input-group-single">
+                            <label for="fullName">სრული სახელი (ქართულად ან ლათინურად)</label>
+                            <input type="text" id="fullName" [(ngModel)]="fullName" name="fullName"
+                                placeholder="მაგ: Giorgi Beridze ან გიორგი ბერიძე" required />
+                        </div>
 
-                    <div class="button-group">
-                        <button type="submit" class="calc-button" [disabled]="!fullName || fullName.trim() === ''">
-                            <i class="fa-solid fa-calculator"></i>
-                            გამოთვლა
-                        </button>
-                        <button type="button" class="reset-button" (click)="reset()" *ngIf="showResult">
-                            <i class="fa-solid fa-rotate-left"></i>
-                            თავიდან
-                        </button>
-                    </div>
-                </form>
-            </div>
+                        <div class="button-group">
+                            <button type="submit" class="calc-button" [disabled]="!fullName || fullName.trim() === ''">
+                                <i class="fa-solid fa-calculator"></i>
+                                გამოთვლა
+                            </button>
+                            <button type="button" class="reset-button" (click)="reset()" *ngIf="showResult">
+                                <i class="fa-solid fa-rotate-left"></i>
+                                თავიდან
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
