@@ -50,6 +50,25 @@ export const routes: Routes = [
         loadComponent: () => import('./features/numerology/name-number/name-number.component').then(m => m.NameNumberComponent)
     },
     {
+        path: 'admin',
+        redirectTo: 'admin/login',
+        pathMatch: 'full'
+    },
+    {
+        path: 'admin/login',
+        loadComponent: () => import('./features/admin/login/admin-login.component').then(m => m.AdminLoginComponent)
+    },
+    {
+        path: 'admin/dashboard',
+        loadComponent: () => import('./features/admin/dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent),
+        children: [
+            {
+                path: 'horoscopes',
+                loadComponent: () => import('./features/admin/daily-horoscope/admin-daily-horoscope.component').then(m => m.AdminDailyHoroscopeComponent)
+            }
+        ]
+    },
+    {
         path: 'compatibility',
         loadComponent: () => import('./features/compatibility/compatibility.component').then(m => m.CompatibilityComponent)
     },

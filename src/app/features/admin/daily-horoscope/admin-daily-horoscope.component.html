@@ -1,0 +1,100 @@
+<div class="admin-page-header">
+    <h2><i class="fa-solid fa-sun"></i> დღიური ჰოროსკოპის დამატება</h2>
+    <p>შეიყვანეთ მონაცემები დღიური პროგნოზისთვის</p>
+</div>
+
+<div class="admin-form-container">
+    <form [formGroup]="horoscopeForm" (ngSubmit)="onSubmit()" class="admin-form">
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="date">თარიღი</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-calendar"></i>
+                    <input type="date" id="date" formControlName="date">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="sign">ზოდიაქოს ნიშანი</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-star"></i>
+                    <select id="sign" formControlName="sign">
+                        <option value="" disabled>აირჩიეთ ნიშანი</option>
+                        <option *ngFor="let zodiac of zodiacSigns" [value]="zodiac.value">
+                            {{zodiac.label}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="form-group full-width">
+                <label for="general">ზოგადი პროგნოზი</label>
+                <div class="textarea-wrapper">
+                    <textarea id="general" formControlName="general" rows="3" placeholder="შეიყვანეთ ზოგადი პროგნოზი..."></textarea>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="love">სიყვარული</label>
+                    <div class="textarea-wrapper">
+                        <i class="fa-solid fa-heart input-icon"></i>
+                        <textarea id="love" formControlName="love" rows="2"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="career">კარიერა</label>
+                    <div class="textarea-wrapper">
+                        <i class="fa-solid fa-briefcase input-icon"></i>
+                        <textarea id="career" formControlName="career" rows="2"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="health">ჯანმრთელობა</label>
+                    <div class="textarea-wrapper">
+                        <i class="fa-solid fa-heart-pulse input-icon"></i>
+                        <textarea id="health" formControlName="health" rows="2"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="finance">ფინანსები</label>
+                    <div class="textarea-wrapper">
+                        <i class="fa-solid fa-coins input-icon"></i>
+                        <textarea id="finance" formControlName="finance" rows="2"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="luckyNumber">იღბლიანი რიცხვი</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-dice"></i>
+                        <input type="number" id="luckyNumber" formControlName="luckyNumber">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="luckyColor">იღბლიანი ფერი</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-palette"></i>
+                        <input type="text" id="luckyColor" formControlName="luckyColor">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">
+                <i class="fa-solid fa-save"></i>
+                შენახვა
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,177 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+.admin-page-header {
+    margin-bottom: $spacing-xl;
+    
+    h2 {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        color: white;
+        font-size: 1.8rem;
+        margin-bottom: $spacing-xs;
+        
+        i {
+            color: $accent-gold;
+        }
+    }
+    
+    p {
+        color: $text-secondary;
+    }
+}
+
+.admin-form-container {
+    background: rgba($bg-card, 0.4);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(white, 0.05);
+    border-radius: $radius-xl;
+    padding: $spacing-xl;
+}
+
+.admin-form { // Scoped properly
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xl;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-lg;
+    
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-lg;
+    
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    
+    label {
+        color: $text-secondary;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+    
+    &.full-width {
+        grid-column: 1 / -1;
+    }
+}
+
+.input-wrapper, .textarea-wrapper {
+    position: relative;
+    
+    i {
+        position: absolute;
+        left: $spacing-md;
+        top: 50%; // Center for inputs
+        transform: translateY(-50%);
+        color: $primary-violet;
+        opacity: 0.7;
+        pointer-events: none;
+    }
+
+    &.textarea-wrapper i {
+        top: $spacing-md; // Top align for textareas
+        transform: none;
+    }
+}
+
+.textarea-wrapper .input-icon {
+     // Specific class for textarea icons if needed
+}
+
+input, select, textarea {
+    width: 100%;
+    background: rgba($bg-primary, 0.6);
+    border: 1px solid rgba(white, 0.1);
+    border-radius: $radius-lg;
+    padding: $spacing-sm $spacing-md $spacing-sm $spacing-2xl; // Left padding for icon
+    color: white;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    
+    &:focus {
+        outline: none;
+        border-color: $primary-violet;
+        box-shadow: 0 0 0 3px rgba($primary-violet, 0.1);
+    }
+    
+    &::placeholder {
+        color: rgba(white, 0.3);
+    }
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+    padding-left: $spacing-md; // Default padding if no icon
+    
+    // If it has a wrapper with an icon, adjust padding
+}
+
+// Special adjustment for textareas with icons inside wrappers
+.textarea-wrapper:has(i) textarea {
+     padding-left: $spacing-2xl;
+}
+// Fallback if :has isn't supported or complex hierarchy
+.textarea-wrapper i + textarea {
+    padding-left: $spacing-2xl;
+}
+
+
+select {
+    appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 4.5L6 8L9.5 4.5' stroke='white' stroke-opacity='0.5' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right $spacing-md center;
+    
+    option {
+        background: $bg-secondary;
+        color: white;
+    }
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: $spacing-md;
+    
+    .btn-submit {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        background: linear-gradient(135deg, $primary-violet, $primary-purple);
+        color: white;
+        border: none;
+        padding: $spacing-sm $spacing-xl;
+        border-radius: $radius-lg;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba($primary-violet, 0.3);
+        }
+        
+        &:active {
+            transform: translateY(0);
+        }
+    }
+}

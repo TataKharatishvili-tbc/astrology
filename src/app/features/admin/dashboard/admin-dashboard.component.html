@@ -1,0 +1,103 @@
+<div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fa-solid fa-user-shield"></i>
+            <span>Admin Panel</span>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a routerLink="/admin/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-item">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>მთავარი</span>
+            </a>
+            <a routerLink="/admin/dashboard/users" routerLinkActive="active" class="nav-item">
+                <i class="fa-solid fa-users"></i>
+                <span>მომხმარებლები</span>
+            </a>
+            <a routerLink="/admin/dashboard/horoscopes" routerLinkActive="active" class="nav-item">
+                <i class="fa-solid fa-star"></i>
+                <span>ჰოროსკოპები</span>
+            </a>
+            <a routerLink="/admin/dashboard/content" routerLinkActive="active" class="nav-item">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <span>კონტენტი</span>
+            </a>
+             <a routerLink="/admin/dashboard/settings" routerLinkActive="active" class="nav-item">
+                <i class="fa-solid fa-gear"></i>
+                <span>პარამეტრები</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button (click)="logout()" class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>გასვლა</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="top-header">
+            <div class="header-search">
+                <i class="fa-solid fa-search"></i>
+                <input type="text" placeholder="ძებნა...">
+            </div>
+            <div class="header-profile">
+                <div class="notification-badge">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="badge">3</span>
+                </div>
+                <div class="avatar">
+                    <img src="assets/images/admin-avatar.png" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=random'">
+                </div>
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+             <div class="dashboard-welcome">
+                <h1>მოგესალმებით ადმინისტრატორის პანელში</h1>
+                <p>აქედან შეგიძლიათ მართოთ საიტის კონტენტი</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon users">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>მომხმარებლები</h3>
+                        <p class="stat-value">1,234</p>
+                        <span class="stat-change positive">+12%</span>
+                    </div>
+                </div>
+
+                 <div class="stat-card">
+                    <div class="stat-icon views">
+                        <i class="fa-solid fa-eye"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>ნახვები</h3>
+                        <p class="stat-value">45.2K</p>
+                        <span class="stat-change positive">+5%</span>
+                    </div>
+                </div>
+
+                 <div class="stat-card">
+                    <div class="stat-icon content">
+                        <i class="fa-solid fa-file-lines"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>სტატიები</h3>
+                        <p class="stat-value">128</p>
+                        <span class="stat-change">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Router Outlet for nested admin routes -->
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+</div>
