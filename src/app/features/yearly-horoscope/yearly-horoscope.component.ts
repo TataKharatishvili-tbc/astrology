@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ZodiacService } from '../../core/services/zodiac.service';
+import { YearlyHoroscopeService, YearlyHoroscope } from '../../core/services/yearly-horoscope.service';
 import { ZodiacSign } from '../../core/models/astrology.models';
 
 @Component({
@@ -15,17 +16,13 @@ import { ZodiacSign } from '../../core/models/astrology.models';
 export class YearlyHoroscopeComponent implements OnInit {
   selectedSign?: ZodiacSign;
   allSigns: ZodiacSign[] = [];
-  horoscopeContent = {
-    general: '',
-    love: '',
-    career: '',
-    health: '',
-    lucky: ''
-  };
+  yearlyHoroscope: YearlyHoroscope | null = null;
+  loading: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private zodiacService: ZodiacService,
+    private yearlyHoroscopeService: YearlyHoroscopeService,
     private sanitizer: DomSanitizer
   ) { }
 
@@ -35,26 +32,29 @@ export class YearlyHoroscopeComponent implements OnInit {
       const signId = params['id'];
       if (signId) {
         this.selectedSign = this.zodiacService.getSignById(signId);
-        this.generateHoroscope();
+        this.loadHoroscope();
       } else {
         this.selectedSign = this.allSigns[0];
-        this.generateHoroscope();
+        this.loadHoroscope();
       }
     });
   }
 
   selectSign(sign: ZodiacSign) {
     this.selectedSign = sign;
-    this.generateHoroscope();
+    this.loadHoroscope();
   }
 
-  generateHoroscope() {
-    // TODO: Fetch yearly horoscope data
-    this.horoscopeContent.general = 'წლიური პროგნოზი...';
-    this.horoscopeContent.love = 'წლიური სიყვარული...';
-    this.horoscopeContent.career = 'წლიური კარიერა...';
-    this.horoscopeContent.health = 'წლიური ჯანმრთელობა...';
-    this.horoscopeContent.lucky = 'წლიური იღბალი...';
+  private async loadHoroscope() {
+    if (!this.selectedSign) return;
+
+    this.loading = true;
+    this.yearlyHoroscope = await this.yearlyHoroscopeService.getCurrentYearHoroscope(this.selectedSign.id);
+    this.loading = false;
+  }
+
+  getCurrentYear(): string {
+    return new Date().getFullYear().toString();
   }
 
   // Returns SVG path for zodiac sign by id

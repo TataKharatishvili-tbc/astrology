@@ -1,33 +1,270 @@
-@import 'styles/variables';
-@import 'styles/mixins';
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
 
 .birthday-container {
     min-height: 100vh;
     padding: $spacing-2xl $spacing-lg;
-    background: linear-gradient(135deg,
-            $bg-primary 0%,
-            darken($bg-primary, 3%) 50%,
-            $bg-primary 100%);
+    position: relative;
+    overflow: hidden;
 
     @include mobile {
         padding: $spacing-xl $spacing-md;
     }
 }
 
+// Animated Background - Clean Dark Space
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.deep-space {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+            #0a0a12 0%,
+            #0d0d1a 30%,
+            #0f0f1f 60%,
+            #0a0a14 100%);
+}
+
+// Stars - Multiple Types
+.stars-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+
+    // Static stars - just glow, no animation
+    &.star-static {
+        box-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+    }
+
+    // Twinkle stars - only brightness changes
+    &.star-twinkle {
+        animation: twinkle-only linear infinite;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+    }
+
+    // Moving stars - slow drift across sky
+    &.star-moving {
+        animation: star-drift linear infinite;
+        box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+    }
+}
+
+// Twinkle animation - only opacity/brightness
+@keyframes twinkle-only {
+
+    0%,
+    100% {
+        opacity: 0.3;
+        box-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+    }
+
+    50% {
+        opacity: 1;
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.9), 0 0 15px rgba(255, 255, 255, 0.4);
+    }
+}
+
+// Slow drift animation
+@keyframes star-drift {
+    0% {
+        transform: translate(0, 0);
+        opacity: 0.4;
+    }
+
+    25% {
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: translate(50px, -30px);
+        opacity: 0.6;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(100px, -60px);
+        opacity: 0.4;
+    }
+}
+
 // Main Card Section
 .main-card-section {
-    margin-top: 80px;
+    position: relative;
+    z-index: 2;
+    margin-top: 40px;
     margin-bottom: $spacing-3xl;
 }
 
-.birthday-main-card {
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+// Header Section Styles
+.page-header {
+    margin-bottom: $spacing-2xl;
+    animation: fade-slide-down 0.6s ease-out;
+}
+
+@keyframes fade-slide-down {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    color: $text-secondary;
+    text-decoration: none;
     background: rgba($bg-card, 0.3);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba($primary-violet, 0.2);
-    border-radius: $radius-2xl;
-    padding: $spacing-2xl;
-    box-shadow: 0 10px 40px rgba($primary-violet, 0.15);
+    border: 1px solid rgba(white, 0.05);
+    border-radius: $radius-full;
+    margin-bottom: $spacing-lg;
+    backdrop-filter: blur(10px);
+    @include smooth-transition;
+
+    &:hover {
+        color: $accent-gold;
+        border-color: rgba($accent-gold, 0.3);
+        transform: translateX(-5px);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    i {
+        font-size: $font-sm;
+    }
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-lg;
+    flex-wrap: wrap;
+
+    @include mobile {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+}
+
+.header-icon {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba($accent-gold, 0.15), rgba($primary-violet, 0.1));
+    border: 1px solid rgba($accent-gold, 0.2);
+    border-radius: $radius-xl;
+
+    i {
+        font-size: 2rem;
+        color: $accent-gold;
+        animation: icon-glow 3s ease-in-out infinite;
+    }
+}
+
+@keyframes icon-glow {
+
+    0%,
+    100% {
+        transform: rotate(0deg) scale(1);
+        filter: drop-shadow(0 0 5px rgba(255, 193, 7, 0.5));
+    }
+
+    50% {
+        transform: rotate(15deg) scale(1.1);
+        filter: drop-shadow(0 0 15px rgba(255, 193, 7, 0.8));
+    }
+}
+
+.header-text {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+
+    .page-title {
+        font-size: $font-3xl;
+        font-weight: 700;
+        color: $text-primary;
+        margin: 0;
+
+        @include mobile {
+            font-size: $font-2xl;
+        }
+    }
+
+    .page-subtitle {
+        font-size: $font-base;
+        color: $text-secondary;
+        margin: 0;
+    }
+}
+
+.birthday-main-card {
+    background: rgba($bg-card, 0.2);
+    border: 1px solid rgba(white, 0.05);
+    border-radius: $radius-xl;
+    padding: $spacing-xl $spacing-lg;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
     max-width: 1200px;
     margin: 0 auto;
 }

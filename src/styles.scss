@@ -2,8 +2,8 @@
 // გლობალური სტილები - ასტროლოგიური საიტი
 // ===================================
 
-@import './styles/variables';
-@import './styles/mixins';
+@use './styles/variables' as *;
+@use './styles/mixins' as *;
 
 // Reset და Base სტილები
 * {

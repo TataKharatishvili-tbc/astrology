@@ -12,7 +12,7 @@
                     </div>
                     <div class="header-text">
                         <h1 class="page-title">თვიური ჰოროსკოპი</h1>
-                        <p class="page-subtitle">{{ selectedSign?.name }}</p>
+                        <p class="page-subtitle">{{ getCurrentMonth() }}</p>
                     </div>
                 </div>
             </div>
@@ -49,25 +49,51 @@
                     </div>
                 </div>
             </div>
-            <div class="horoscope-section">
-                <h3>ზოგადი</h3>
-                <p>{{ horoscopeContent.general }}</p>
+
+            <div class="loading" *ngIf="loading">
+                <div class="spinner"></div>
+                <p>იტვირთება...</p>
             </div>
-            <div class="horoscope-section">
-                <h3>სიყვარული</h3>
-                <p>{{ horoscopeContent.love }}</p>
+
+            <div class="no-data" *ngIf="!loading && !monthlyHoroscope">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <p>ამ თვისთვის ჰოროსკოპი ჯერ არ არის ხელმისაწვდომი</p>
             </div>
-            <div class="horoscope-section">
-                <h3>კარიერა</h3>
-                <p>{{ horoscopeContent.career }}</p>
-            </div>
-            <div class="horoscope-section">
-                <h3>ჯანმრთელობა</h3>
-                <p>{{ horoscopeContent.health }}</p>
-            </div>
-            <div class="horoscope-section">
-                <h3>იღბალი</h3>
-                <p>{{ horoscopeContent.lucky }}</p>
+
+            <div *ngIf="!loading && monthlyHoroscope">
+                <div class="horoscope-section">
+                    <h3>ზოგადი</h3>
+                    <p>{{ monthlyHoroscope.general }}</p>
+                </div>
+                <div class="horoscope-section">
+                    <h3>სიყვარული</h3>
+                    <p>{{ monthlyHoroscope.love }}</p>
+                </div>
+                <div class="horoscope-section">
+                    <h3>კარიერა</h3>
+                    <p>{{ monthlyHoroscope.career }}</p>
+                </div>
+                <div class="horoscope-section">
+                    <h3>ჯანმრთელობა</h3>
+                    <p>{{ monthlyHoroscope.health }}</p>
+                </div>
+                <div class="horoscope-section">
+                    <h3>ფინანსები</h3>
+                    <p>{{ monthlyHoroscope.finance }}</p>
+                </div>
+                <div class="horoscope-section lucky">
+                    <h3>იღბალი</h3>
+                    <div class="lucky-items">
+                        <span class="lucky-item">
+                            <i class="fa-solid fa-hashtag"></i>
+                            საიღბლო რიცხვი: {{ monthlyHoroscope.luckyNumber }}
+                        </span>
+                        <span class="lucky-item">
+                            <i class="fa-solid fa-palette"></i>
+                            საიღბლო ფერი: {{ monthlyHoroscope.luckyColor }}
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

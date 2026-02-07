@@ -1,32 +1,48 @@
 <div class="birthday-container">
+    <!-- Clean Dark Background with Stars -->
+    <div class="hero-bg">
+        <div class="deep-space"></div>
+    </div>
+
+    <!-- Many Floating Stars - Different Types -->
+    <div class="stars-container">
+        <div class="star" *ngFor="let star of stars" [class.star-twinkle]="star.type === 'twinkle'"
+            [class.star-moving]="star.type === 'moving'" [class.star-static]="star.type === 'static'"
+            [style.left.%]="star.left" [style.top.%]="star.top" [style.width.px]="star.size"
+            [style.height.px]="star.size" [style.animation-delay]="star.delay + 's'"
+            [style.animation-duration]="star.duration + 's'" [style.opacity]="star.brightness">
+        </div>
+    </div>
+
     <!-- Main Card Section -->
     <section class="main-card-section">
-        <div class="birthday-main-card">
-            <div class="card-header-main">
-                <div class="header-left">
-                    <h1 class="main-title">
-                        <i class="fa-solid fa-cake-candles"></i>
-                        დაბადების რიცხვი
-                    </h1>
-                    <p class="main-subtitle">
-                        დაბადების რიცხვი არის ერთ-ერთი ყველაზე მნიშვნელოვანი ინფორმაცია ადამიანის შესახებ.
-                        ის გვიამბობს პიროვნულ მახასიათებლებზე, ნასწავლ გაკვეთილებზე და სისუსტეებზე, რომლებიც
-                        უნდა ავიცილოთ.
-                    </p>
-                </div>
-                <div class="header-right">
-                    <div class="icon-display">
-                        <i class="fa-solid fa-cake-candles"></i>
+        <div class="container">
+            <!-- Header -->
+            <div class="page-header">
+                <a routerLink="/" class="back-link">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>მთავარი</span>
+                </a>
+                <div class="header-content">
+                    <div class="header-left">
+                        <div class="header-icon">
+                            <i class="fa-solid fa-cake-candles"></i>
+                        </div>
+                        <div class="header-text">
+                            <h1 class="page-title">დაბადების რიცხვი</h1>
+                            <p class="page-subtitle">გაიგეთ რას ამბობს თქვენი დაბადების რიცხვი თქვენს პიროვნებაზე</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Calculator Form -->
-            <div class="calculator-content">
-                <h3 class="calculator-title">
-                    <i class="fa-solid fa-calendar-day"></i>
-                    შეიყვანეთ დაბადების დღე
-                </h3>
+            <div class="birthday-main-card">
+                <!-- Calculator Form -->
+                <div class="calculator-content">
+                    <h3 class="calculator-title">
+                        <i class="fa-solid fa-calendar-day"></i>
+                        შეიყვანეთ დაბადების დღე
+                    </h3>
 
                 <form class="calculator-form" (ngSubmit)="calculate()">
                     <div class="input-group-single">
@@ -46,6 +62,7 @@
                         </button>
                     </div>
                 </form>
+            </div>
             </div>
         </div>
     </section>

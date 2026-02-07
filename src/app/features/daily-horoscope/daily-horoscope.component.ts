@@ -1,30 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ZodiacService } from '../../core/services/zodiac.service';
+import { HoroscopeService, DailyHoroscope } from '../../core/services/horoscope.service';
 import { ZodiacSign } from '../../core/models/astrology.models';
 
 @Component({
   selector: 'app-daily-horoscope',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './daily-horoscope.component.html',
   styleUrl: './daily-horoscope.component.scss'
 })
 export class DailyHoroscopeComponent implements OnInit {
   selectedSign?: ZodiacSign;
   allSigns: ZodiacSign[] = [];
-  horoscopeContent = {
-    general: '',
-    love: '',
-    career: '',
-    health: '',
-    lucky: ''
-  };
+  todayHoroscope: DailyHoroscope | null = null;
+  loading = true;
 
   constructor(
     private route: ActivatedRoute,
     private zodiacService: ZodiacService,
+    private horoscopeService: HoroscopeService,
     private sanitizer: DomSanitizer
   ) { }
 
@@ -35,17 +32,24 @@ export class DailyHoroscopeComponent implements OnInit {
       const signId = params['id'];
       if (signId) {
         this.selectedSign = this.zodiacService.getSignById(signId);
-        this.generateHoroscope();
       } else {
         this.selectedSign = this.allSigns[0];
-        this.generateHoroscope();
       }
+      this.loadHoroscope();
     });
   }
 
   selectSign(sign: ZodiacSign) {
     this.selectedSign = sign;
-    this.generateHoroscope();
+    this.loadHoroscope();
+  }
+
+  private async loadHoroscope() {
+    if (!this.selectedSign) return;
+
+    this.loading = true;
+    this.todayHoroscope = await this.horoscopeService.getTodayHoroscope(this.selectedSign.id);
+    this.loading = false;
   }
 
   getCurrentDate(): string {
@@ -59,18 +63,6 @@ export class DailyHoroscopeComponent implements OnInit {
     const year = now.getFullYear();
 
     return `${dayName}, ${day} ${month}, ${year}`;
-  }
-
-  private generateHoroscope() {
-    if (!this.selectedSign) return;
-
-    this.horoscopeContent = {
-      general: `დღეს ${this.selectedSign.name}-ებს ელოდებათ საინტერესო შესაძლებლობები. ვარსკვლავები ხელსაყრელ პოზიციაშია და გირჩევენ გაბედულად იმოქმედოთ. ახალი იდეების განხორციელება შესანიშნავ შედეგებს მოიტანს.`,
-      love: `რომანტიკული ურთიერთობები განსაკუთრებით ჰარმონიულია. სინგლებს შეუძლიათ საინტერესო ადამიანი გაიცნონ, ხოლო წყვილებს - ერთმანეთთან უფრო ახლოს გახდნენ. გულწრფელობა და გახსნილობა აუცილებელია.`,
-      career: `პროფესიულ სფეროში გელოდებათ აღიარება და წარმატება. თქვენი შრომა და ძალისხმევა შენიშნული იქნება. კარგი დროა ახალი პროექტების დასაწყებად ან კარიერული ზრდისთვის.`,
-      health: `ჯანმრთელობის მდგომარეობა სტაბილურია, მაგრამ არ დაგვიწყდეთ რეჟიმის დაცვა და ფიზიკური აქტივობა. დასვენება და რელაქსაციაც მნიშვნელოვანია ენერგიის აღსადგენად.`,
-      lucky: `საბედნიერო რიცხვები: ${this.selectedSign.luckyNumbers.join(', ')} | საბედნიერო ფერი: ${this.selectedSign.luckyColors[0]} | საბედნიერო დღე: ${this.selectedSign.luckyDay}`
-    };
   }
 
   getZodiacSvgPath(signId: string): SafeHtml {

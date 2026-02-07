@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ZodiacService } from '../../core/services/zodiac.service';
+import { MonthlyHoroscopeService, MonthlyHoroscope } from '../../core/services/monthly-horoscope.service';
 import { ZodiacSign } from '../../core/models/astrology.models';
 
 @Component({
@@ -15,17 +16,13 @@ import { ZodiacSign } from '../../core/models/astrology.models';
 export class MonthlyHoroscopeComponent implements OnInit {
   selectedSign?: ZodiacSign;
   allSigns: ZodiacSign[] = [];
-  horoscopeContent = {
-    general: '',
-    love: '',
-    career: '',
-    health: '',
-    lucky: ''
-  };
+  monthlyHoroscope: MonthlyHoroscope | null = null;
+  loading: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private zodiacService: ZodiacService,
+    private monthlyHoroscopeService: MonthlyHoroscopeService,
     private sanitizer: DomSanitizer
   ) { }
 
@@ -35,26 +32,34 @@ export class MonthlyHoroscopeComponent implements OnInit {
       const signId = params['id'];
       if (signId) {
         this.selectedSign = this.zodiacService.getSignById(signId);
-        this.generateHoroscope();
+        this.loadHoroscope();
       } else {
         this.selectedSign = this.allSigns[0];
-        this.generateHoroscope();
+        this.loadHoroscope();
       }
     });
   }
 
   selectSign(sign: ZodiacSign) {
     this.selectedSign = sign;
-    this.generateHoroscope();
+    this.loadHoroscope();
   }
 
-  generateHoroscope() {
-    // TODO: Fetch monthly horoscope data
-    this.horoscopeContent.general = 'თვიური პროგნოზი...';
-    this.horoscopeContent.love = 'თვიური სიყვარული...';
-    this.horoscopeContent.career = 'თვიური კარიერა...';
-    this.horoscopeContent.health = 'თვიური ჯანმრთელობა...';
-    this.horoscopeContent.lucky = 'თვიური იღბალი...';
+  private async loadHoroscope() {
+    if (!this.selectedSign) return;
+
+    this.loading = true;
+    this.monthlyHoroscope = await this.monthlyHoroscopeService.getCurrentMonthHoroscope(this.selectedSign.id);
+    this.loading = false;
+  }
+
+  getCurrentMonth(): string {
+    const months = ['იანვარი', 'თებერვალი', 'მარტი', 'აპრილი', 'მაისი', 'ივნისი',
+      'ივლისი', 'აგვისტო', 'სექტემბერი', 'ოქტომბერი', 'ნოემბერი', 'დეკემბერი'];
+    const now = new Date();
+    const month = months[now.getMonth()];
+    const year = now.getFullYear();
+    return `${month}, ${year}`;
   }
 
   // Returns SVG path for zodiac sign by id

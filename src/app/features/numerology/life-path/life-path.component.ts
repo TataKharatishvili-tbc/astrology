@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -12,16 +12,27 @@ interface LifePathMeaning {
   strengths: string[];
 }
 
+interface Star {
+  left: number;
+  top: number;
+  delay: number;
+  size: number;
+  duration: number;
+  type: 'twinkle' | 'moving' | 'static';
+  brightness: number;
+}
+
 @Component({
   selector: 'app-life-path',
   imports: [CommonModule, FormsModule],
   templateUrl: './life-path.component.html',
   styleUrl: './life-path.component.scss'
 })
-export class LifePathComponent {
+export class LifePathComponent implements OnInit {
   day: number | null = null;
   month: number | null = null;
   year: number | null = null;
+  stars: Star[] = [];
 
   lifePathNumber: number | null = null;
   calculationSteps: string[] = [];
@@ -137,6 +148,36 @@ export class LifePathComponent {
       strengths: ['სიყვარული', 'მზრუნველობა', 'განკურნება']
     }
   ];
+
+  ngOnInit() {
+    this.generateStars();
+  }
+
+  generateStars() {
+    const count = 150 + Math.floor(Math.random() * 50);
+
+    for (let i = 0; i < count; i++) {
+        let type: 'twinkle' | 'moving' | 'static';
+        const rand = Math.random();
+        if (rand < 0.4) {
+            type = 'static';
+        } else if (rand < 0.8) {
+            type = 'twinkle';
+        } else {
+            type = 'moving';
+        }
+
+        this.stars.push({
+            left: Math.random() * 100,
+            top: Math.random() * 100,
+            delay: Math.random() * 8,
+            size: 0.5 + Math.random() * 2.5,
+            duration: type === 'moving' ? 20 + Math.random() * 30 : 2 + Math.random() * 4,
+            type: type,
+            brightness: 0.3 + Math.random() * 0.7
+        });
+    }
+  }
 
   calculate() {
     if (!this.day || !this.month || !this.year) {

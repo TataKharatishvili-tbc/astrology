@@ -1,5 +1,5 @@
-@import 'styles/variables';
-@import 'styles/mixins';
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
 
 // ===================================
 // Daily Horoscope Page - Modern Style
@@ -576,5 +576,47 @@
 
     .section-card {
         padding: $spacing-lg;
+    }
+}
+
+// ===================================
+// Loading & No Data States
+// ===================================
+
+.loading,
+.no-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-lg;
+    padding: $spacing-3xl $spacing-2xl;
+    min-height: 300px;
+    animation: fade-up 0.6s ease-out both;
+
+    i {
+        font-size: 4rem;
+        color: $accent-gold;
+
+        &.fa-spinner {
+            animation: spin 1s linear infinite;
+        }
+    }
+
+    p {
+        color: $text-secondary;
+        font-size: $font-lg;
+        text-align: center;
+        margin: 0;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
     }
 }

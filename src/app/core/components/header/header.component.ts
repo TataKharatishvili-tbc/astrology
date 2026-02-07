@@ -92,11 +92,7 @@ export class HeaderComponent {
                 },
             ]
         },
-        {
-            label: 'ნატალური რუკა',
-            path: '/natal-chart',
-            icon: 'fa-solid fa-compass'
-        },
+
         {
             label: 'ნუმეროლოგია',
             icon: 'fa-solid fa-calculator',
@@ -124,26 +120,31 @@ export class HeaderComponent {
             ]
         },
         {
-            label: 'სტატიები',
-            icon: 'fa-solid fa-book-open',
-            children: [
-                {
-                    label: 'ასტროლოგიის საფუძვლები',
-                    path: '/articles/basics',
-                    description: 'დამწყებთათვის'
-                },
-                {
-                    label: 'რეტროგრადული პლანეტები',
-                    path: '/articles/retrograde',
-                    description: 'გავლენა და მნიშვნელობა'
-                },
-                {
-                    label: 'ტრანზიტები',
-                    path: '/articles/transits',
-                    description: 'პლანეტური ტრანზიტები'
-                }
-            ]
-        }
+            label: 'ნატალური რუკა',
+            path: '/natal-chart',
+            icon: 'fa-solid fa-compass'
+        },
+        // {
+        //     label: 'სტატიები',
+        //     icon: 'fa-solid fa-book-open',
+        //     children: [
+        //         {
+        //             label: 'ასტროლოგიის საფუძვლები',
+        //             path: '/articles/basics',
+        //             description: 'დამწყებთათვის'
+        //         },
+        //         {
+        //             label: 'რეტროგრადული პლანეტები',
+        //             path: '/articles/retrograde',
+        //             description: 'გავლენა და მნიშვნელობა'
+        //         },
+        //         {
+        //             label: 'ტრანზიტები',
+        //             path: '/articles/transits',
+        //             description: 'პლანეტური ტრანზიტები'
+        //         }
+        //     ]
+        // }
     ];
 
     @HostListener('window:scroll', [])
